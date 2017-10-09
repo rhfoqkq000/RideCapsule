@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">travel</string>
+    <string name="title_tourist">관광지정보</string>
+    <string name="title_sns">SNS</string>
+    <string name="title_capsule">타임캡슐</string>
+    <string name="title_house">숙박</string>
+    <string name="title_mypage">마이페이지</string>
+</resources>
