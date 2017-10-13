@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.horse.travel.ApiClient;
 import com.example.horse.travel.R;
 import com.volokh.danylo.hashtaghelper.HashTagHelper;
 
@@ -36,9 +37,7 @@ public class ActivitySnsWrite extends AppCompatActivity {
     @OnClick(R.id.testBtn)
     void getAllHashTag(){
         List<String> allHashTags = mTextHashTagHelper.getAllHashTags();
-        Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.url))
-                .addConverterFactory(GsonConverterFactory.create()).build();
-        InterfaceSnsWrite write = client.create(InterfaceSnsWrite.class);
+        InterfaceSnsWrite write = ApiClient.getClient().create(InterfaceSnsWrite.class);
         Call<SnsWriteDTO> call = write.writeSns(snsWriteText.getText().toString(),"9",allHashTags);
 
         call.enqueue(new Callback<SnsWriteDTO>() {
