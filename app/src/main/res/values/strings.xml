@@ -5,4 +5,5 @@
     <string name="title_capsule">타임캡슐</string>
     <string name="title_house">숙박</string>
     <string name="title_mypage">마이페이지</string>
+    <string name="retrofit_url">http://192.168.219.148:5000</string>
 </resources>
