@@ -1,31 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="10"
-    >
-    <TextView
-        android:id="@+id/titleText"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="글쓰기"
-        android:layout_weight="1"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        />
-    <EditText
-        android:id="@+id/snsWriteText"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_weight="8"
-        android:hint="#hashtag and @mention."
-        android:inputType="text"/>
+        android:orientation="vertical">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="글쓰기"
-        android:id="@+id/testBtn"
-        android:layout_weight="1"/>
-</LinearLayout>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="200dp"
+            android:padding="8dp"
+            android:id="@+id/snsWriteText"
+            android:inputType="text"
+            android:hint="글을 입력하세요"
+            android:gravity="top"/>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="2dp">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/capsule_date"
+                android:text="날짜선택"/>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="2dp">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/testBtn"
+                android:text="글쓰기"/>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</ScrollView>
