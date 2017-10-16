@@ -12,10 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.example.horse.travel.R;
 import com.volokh.danylo.hashtaghelper.HashTagHelper;
 
 import java.util.List;
+
 
 /**
  * Created by qazz92 on 2017. 10. 12..
@@ -43,6 +46,8 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         SpannableString content = new SpannableString(item.getEmail());
         content.setSpan(new UnderlineSpan(), 0, item.getEmail().length(), 0);
 
+        String[] imgArr = item.getImgs().split(",");
+
         HashTagHelper mTextHashTagHelper = HashTagHelper.Creator.create(res.getColor(R.color.blue), new HashTagHelper.OnHashTagClickListener() {
             @Override
             public void onHashTagClicked(String hashTag) {
@@ -63,13 +68,21 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
             @Override
             public void onClick(View view) {
                 Log.d("LIKE","CLICK");
+                holder.like.setImageResource(R.drawable.like);
             }
         });
 
         holder.userIdTextView.setText(content);
         holder.contentTextView.setText(item.getPost());
+
+        RequestOptions options = new RequestOptions();
+        options.fitCenter().override(Target.SIZE_ORIGINAL, holder.myImageView.getHeight());
+//        options.fitCenter();
+
         Glide.with(holder.myImageView.getContext())
-                .load("http://172.30.1.5:5000/test.jpg")
+                .load("http://220.84.195.101:5000/"+imgArr[0])
+//                .apply(options)
+//                .apply(bitmapTransform(new BlurTransformation(25)))
                 .into(holder.myImageView);
     }
 
@@ -102,5 +115,9 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
     {
         this.items = items;
         notifyDataSetChanged();
+    }
+
+    private void like(){
+        
     }
 }

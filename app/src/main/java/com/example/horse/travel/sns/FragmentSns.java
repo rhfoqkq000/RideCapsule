@@ -3,8 +3,6 @@ package com.example.horse.travel.sns;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,13 +17,10 @@ import com.example.horse.travel.R;
 import com.example.horse.travel.sns.list.InterfaceSnsList;
 import com.example.horse.travel.sns.list.SnsListDTO;
 import com.example.horse.travel.sns.list.SnsListItem;
-import com.example.horse.travel.sns.list.SnsListViewAdapter;
 import com.example.horse.travel.sns.list.SnsRecyclerAdapter;
+import com.example.horse.travel.sns.write.ActivityImageSelect;
 import com.example.horse.travel.sns.write.ActivitySnsWrite;
 
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,7 +54,7 @@ public class FragmentSns extends Fragment {
         writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),ActivitySnsWrite.class);
+                Intent intent = new Intent(getActivity(),ActivityImageSelect.class);
                 startActivity(intent);
             }
         });
@@ -83,18 +78,8 @@ public class FragmentSns extends Fragment {
         call.enqueue(new Callback<SnsListDTO>() {
             @Override
             public void onResponse(Call<SnsListDTO> call, Response<SnsListDTO> response) {
-                for (int i=0;i<response.body().getResult_body().size();i++){
-                    SnsListItem result_body = response.body().getResult_body().get(i);
-                    Log.d(""+i,result_body.getPost());
-                }
+                Log.d("URL",response.raw().request().url().toString());
                 adapter.addNew(response.body().getResult_body());
-//                adapter.notifyDataSetChanged();
-//
-//                for (int i=0;i<size;i++){
-//                    SnsListDTO.Result_body result_body = response.body().getResult_body().get(i);
-//                    Log.d(""+i,result_body.getPost());
-////                    adapter.addItem(result_body.getPost(),result_body.getEmail());
-//                }
             }
 
             @Override

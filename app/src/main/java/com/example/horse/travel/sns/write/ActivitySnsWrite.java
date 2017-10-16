@@ -34,25 +34,25 @@ public class ActivitySnsWrite extends AppCompatActivity {
     EditText snsWriteText;
 
 
-    @OnClick(R.id.testBtn)
-    void getAllHashTag(){
-        List<String> allHashTags = mTextHashTagHelper.getAllHashTags();
-        InterfaceSnsWrite write = ApiClient.getClient().create(InterfaceSnsWrite.class);
-        Call<SnsWriteDTO> call = write.writeSns(snsWriteText.getText().toString(),"9",allHashTags);
-
-        call.enqueue(new Callback<SnsWriteDTO>() {
-            @Override
-            public void onResponse(Call<SnsWriteDTO> call, Response<SnsWriteDTO> response) {
-                Toast.makeText(getApplicationContext(),response.body().getResult_body(),Toast.LENGTH_LONG).show();
-                finish();
-            }
-
-            @Override
-            public void onFailure(Call<SnsWriteDTO> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"글을 저장하는데 실패했습니다. 잠시후 다시 시도해 주세요.",Toast.LENGTH_LONG).show();
-            }
-        });
-    }
+//    @OnClick(R.id.testBtn)
+//    void getAllHashTag(){
+//        List<String> allHashTags = mTextHashTagHelper.getAllHashTags();
+//        InterfaceSnsWrite write = ApiClient.getClient().create(InterfaceSnsWrite.class);
+//        Call<SnsWriteDTO> call = write.writeSns(snsWriteText.getText().toString(),allHashTags,,"9");
+//
+//        call.enqueue(new Callback<SnsWriteDTO>() {
+//            @Override
+//            public void onResponse(Call<SnsWriteDTO> call, Response<SnsWriteDTO> response) {
+//                Toast.makeText(getApplicationContext(),response.body().getResult_body(),Toast.LENGTH_LONG).show();
+//                finish();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<SnsWriteDTO> call, Throwable t) {
+//                Toast.makeText(getApplicationContext(),"글을 저장하는데 실패했습니다. 잠시후 다시 시도해 주세요.",Toast.LENGTH_LONG).show();
+//            }
+//        });
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
