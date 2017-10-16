@@ -80,7 +80,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
 //        options.fitCenter();
 
         Glide.with(holder.myImageView.getContext())
-                .load("http://168.115.9.99:5000/"+imgArr[0])
+                .load("http://220.84.195.101:5000/"+imgArr[0])
 //                .apply(options)
 //                .apply(bitmapTransform(new BlurTransformation(25)))
                 .into(holder.myImageView);
