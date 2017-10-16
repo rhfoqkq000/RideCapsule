@@ -26,6 +26,8 @@ import java.util.List;
 
 public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.ViewHolder> {
 
+    private final String IMG_URL = "http://168.115.8.109:5000/";
+
     private List<SnsListItem> items;
 
 //    public SnsRecyclerAdapter(List<SnsListItem> items) {
@@ -41,7 +43,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Resources res = holder.itemView.getContext().getResources();
-        SnsListItem item = items.get(position);
+        final SnsListItem item = items.get(position);
 
         SpannableString content = new SpannableString(item.getEmail());
         content.setSpan(new UnderlineSpan(), 0, item.getEmail().length(), 0);
@@ -80,7 +82,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
 //        options.fitCenter();
 
         Glide.with(holder.myImageView.getContext())
-                .load("http://220.84.195.101:5000/"+imgArr[0])
+                .load(IMG_URL+imgArr[0])
 //                .apply(options)
 //                .apply(bitmapTransform(new BlurTransformation(25)))
                 .into(holder.myImageView);

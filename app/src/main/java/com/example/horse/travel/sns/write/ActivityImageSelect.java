@@ -7,19 +7,14 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
-import com.example.horse.travel.ApiClient;
 import com.example.horse.travel.R;
 import com.sangcomz.fishbun.FishBun;
 import com.sangcomz.fishbun.define.Define;
-import com.volokh.danylo.hashtaghelper.HashTagHelper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -52,29 +47,33 @@ public class ActivityImageSelect extends AppCompatActivity {
         setContentView(R.layout.activity_image_select);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        getImageFromGallery();
 
+//        select_imgs_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+    }
 
-        select_imgs_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FishBun.with(ActivityImageSelect.this)
-                        .MultiPageMode()
-                        .setMaxCount(10)
-                        .setMinCount(1)
-                        .setPickerSpanCount(5)
-                        .setActionBarColor(Color.parseColor("#ffffff"), Color.parseColor("#ffffff"), true)
-                        .setActionBarTitleColor(Color.parseColor("#000000"))
-                        .setAlbumSpanCount(2, 3)
-                        .setButtonInAlbumActivity(false)
-                        .setCamera(true)
-                        .exceptGif(true)
-                        .setReachLimitAutomaticClose(true)
-                        .setAllViewTitle("All")
-                        .setActionBarTitle("사진선택")
-                        .textOnNothingSelected("Please select one or more!")
-                        .startAlbum();
-            }
-        });
+    void getImageFromGallery(){
+        FishBun.with(ActivityImageSelect.this)
+                .MultiPageMode()
+                .setMaxCount(10)
+                .setMinCount(1)
+                .setPickerSpanCount(5)
+                .setActionBarColor(Color.parseColor("#ffffff"), Color.parseColor("#ffffff"), true)
+                .setActionBarTitleColor(Color.parseColor("#000000"))
+                .setAlbumSpanCount(2, 3)
+                .setButtonInAlbumActivity(false)
+                .setCamera(true)
+                .exceptGif(true)
+                .setReachLimitAutomaticClose(true)
+                .setAllViewTitle("All")
+                .setActionBarTitle("사진선택")
+                .textOnNothingSelected("Please select one or more!")
+                .startAlbum();
     }
 
     @Override
@@ -98,29 +97,29 @@ public class ActivityImageSelect extends AppCompatActivity {
                         }
                     }
 
-                    InterfaceSnsWrite uploadImage = ApiClient.getClient().create(InterfaceSnsWrite.class);
-                    MultipartBody.Part[] imagesParts = new MultipartBody.Part[imgFileArr.size()];
-
-                    int user_id = 9;
-
-                    for (int i = 0; i < imgFileArr.size(); i++) {
-                        File file = imgFileArr.get(i);
-                        RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
-                        imagesParts[i] = MultipartBody.Part.createFormData("imagefile", file.getName(), requestBody);
-                    }
-
-                    Call<SnsWriteDTO> call = uploadImage.writeSns("post",null,imagesParts,user_id);
-                    call.enqueue(new Callback<SnsWriteDTO>() {
-                        @Override
-                        public void onResponse(Call<SnsWriteDTO> call, Response<SnsWriteDTO> response) {
-                            Log.e("IMAGE UPLOAD", ""+response.body().getResult_code());
-                        }
-
-                        @Override
-                        public void onFailure(Call<SnsWriteDTO> call, Throwable t) {
-                            t.printStackTrace();
-                        }
-                    });
+//                    InterfaceSnsWrite uploadImage = ApiClient.getClient().create(InterfaceSnsWrite.class);
+//                    MultipartBody.Part[] imagesParts = new MultipartBody.Part[imgFileArr.size()];
+//
+//                    int user_id = 9;
+//
+//                    for (int i = 0; i < imgFileArr.size(); i++) {
+//                        File file = imgFileArr.get(i);
+//                        RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+//                        imagesParts[i] = MultipartBody.Part.createFormData("imagefile", file.getName(), requestBody);
+//                    }
+//
+//                    Call<SnsWriteDTO> call = uploadImage.writeSns("post",null,imagesParts,user_id);
+//                    call.enqueue(new Callback<SnsWriteDTO>() {
+//                        @Override
+//                        public void onResponse(Call<SnsWriteDTO> call, Response<SnsWriteDTO> response) {
+//                            Log.e("IMAGE UPLOAD", ""+response.body().getResult_code());
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<SnsWriteDTO> call, Throwable t) {
+//                            t.printStackTrace();
+//                        }
+//                    });
 
                     break;
                 }
