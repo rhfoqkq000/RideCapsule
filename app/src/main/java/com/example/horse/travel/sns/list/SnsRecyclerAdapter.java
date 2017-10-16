@@ -15,9 +15,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.example.horse.travel.R;
+import com.example.horse.travel.sns.like.SnsItemLike;
+import com.example.horse.travel.sns.like.SnsItemLikeDTO;
 import com.volokh.danylo.hashtaghelper.HashTagHelper;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -66,13 +72,39 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
             }
         });
 
-        holder.like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("LIKE","CLICK");
-                holder.like.setImageResource(R.drawable.like);
-            }
-        });
+
+        if (item.getLike_id()==0){
+            holder.like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("LIKE","CLICK");
+                    Call<SnsItemLikeDTO> call = like("1","9");
+                    call.enqueue(new Callback<SnsItemLikeDTO>() {
+                        @Override
+                        public void onResponse(Call<SnsItemLikeDTO> call, Response<SnsItemLikeDTO> response) {
+                            Log.d("LIKE_SUC",response.body().getResult_code()+"");
+                            if (response.body().getResult_code()==200){
+                                holder.like.setImageResource(R.drawable.like);
+
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<SnsItemLikeDTO> call, Throwable t) {
+                            Log.d("LIKE_FAIL",t.getMessage());
+                        }
+                    });
+
+                }
+            });
+        } else {
+            holder.like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("UNLIKE","CLICK");
+                    holder.like.setImageResource(R.drawable.normal);
+                }
+            });
+        }
 
         holder.userIdTextView.setText(content);
         holder.contentTextView.setText(item.getPost());
@@ -119,7 +151,12 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         notifyDataSetChanged();
     }
 
-    private void like(){
-        
+    private Call<SnsItemLikeDTO> like(String content_id,String user_id){
+        SnsItemLike like = new SnsItemLike();
+        return like.like(content_id,user_id);
+    }
+
+    private void unlike(){
+
     }
 }
