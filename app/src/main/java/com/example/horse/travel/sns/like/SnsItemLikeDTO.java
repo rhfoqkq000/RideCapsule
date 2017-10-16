@@ -6,7 +6,7 @@ package com.example.horse.travel.sns.like;
 
 public class SnsItemLikeDTO {
     private int result_code;
-    private String result_body;
+    private int result_body;
 
     public int getResult_code() {
         return result_code;
@@ -16,11 +16,11 @@ public class SnsItemLikeDTO {
         this.result_code = result_code;
     }
 
-    public String getResult_body() {
+    public int getResult_body() {
         return result_body;
     }
 
-    public void setResult_body(String result_body) {
+    public void setResult_body(int result_body) {
         this.result_body = result_body;
     }
 }

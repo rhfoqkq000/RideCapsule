@@ -28,6 +28,7 @@
         <activity android:name=".capsule.ActivityCapsuleImg" />
         <activity android:name=".sns.write.ActivityImageSelect"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".sns.write.ActivityImageFilter" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

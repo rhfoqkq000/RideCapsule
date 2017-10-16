@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 
 import com.example.horse.travel.R;
@@ -49,12 +50,15 @@ public class ActivityImageSelect extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getImageFromGallery();
 
-//        select_imgs_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        select_imgs_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActivityImageSelect.this, ActivityImageFilter.class);
+                startActivity(intent);
+
+
+            }
+        });
     }
 
     void getImageFromGallery(){
@@ -84,18 +88,19 @@ public class ActivityImageSelect extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     //FishBun에서 가져온 이미지 uri 저장
                     ArrayList<Uri> path = data.getParcelableArrayListExtra(Define.INTENT_PATH);
-                    ArrayList<File> imgFileArr = new ArrayList<>();
-                    for(int i = 0; i < path.size(); i++){
-                        try {
-                            File file = new File(getPath(path.get(i)));
-                            //compressor = 이미지 용량 줄여줌 화질이나 사이즈 변화가 얼마나 있는지는 아직 확인안함
-                            File compressedImageFile = new Compressor(this).compressToFile(file);
-//                            Log.e("AFTER RESIZING SIZE OF FILE"+i, String.valueOf(compressedImageFile.length()/1024));
-                            imgFileArr.add(compressedImageFile);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    ImageSingleton.getInstance().setImgUri(path);
+//                    ArrayList<File> imgFileArr = new ArrayList<>();
+//                    for(int i = 0; i < path.size(); i++){
+//                        try {
+//                            File file = new File(getPath(path.get(i)));
+//                            //compressor = 이미지 용량 줄여줌 화질이나 사이즈 변화가 얼마나 있는지는 아직 확인안함
+//                            File compressedImageFile = new Compressor(this).compressToFile(file);
+////                            Log.e("AFTER RESIZING SIZE OF FILE"+i, String.valueOf(compressedImageFile.length()/1024));
+//                            imgFileArr.add(compressedImageFile);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
 
 //                    InterfaceSnsWrite uploadImage = ApiClient.getClient().create(InterfaceSnsWrite.class);
 //                    MultipartBody.Part[] imagesParts = new MultipartBody.Part[imgFileArr.size()];

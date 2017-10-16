@@ -34,7 +34,8 @@ import retrofit2.Response;
 
 public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.ViewHolder> {
 
-    private final String IMG_URL = "http://168.115.8.109:5000/";
+//    private final String IMG_URL = "http://168.115.8.109:5000/";
+    private final String IMG_URL = "http://220.84.195.101:5000/";
 
     private List<SnsListItem> items;
 
@@ -74,16 +75,11 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
             }
         });
 
-
-        if (item.getLike_id()!=0){
-            Log.d("ID",item.getLike_id()+" | "+position);
-            holder.like.setImageResource(R.drawable.like);
-        }
-
         holder.userIdTextView.setText(content);
         holder.contentTextView.setText(item.getPost());
         holder.contentTextView.setTag(item.getId());
-        holder.like.setTag(item.getLike_id());
+        holder.sns_good.setText(String.valueOf(item.getLike_count()));
+//        holder.like.setTag(item.getLike_id());
 
         RequestOptions options = new RequestOptions();
         options.fitCenter().override(Target.SIZE_ORIGINAL, holder.myImageView.getHeight());
@@ -95,12 +91,17 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
 //                .apply(bitmapTransform(new BlurTransformation(25)))
                 .into(holder.myImageView);
 
+        if (item.getLike_id()!=0){
+            Log.d("ID",item.getLike_id()+" | "+position+" | "+item.getLike_id());
+            holder.like.setImageResource(R.drawable.like);
+        } else {
+            Log.d("ID",item.getLike_id()+" | "+position+" | "+item.getLike_id());
+        }
 
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String isLike = holder.like.getTag().toString();
-                if (Integer.parseInt(isLike)==0){
+                if (item.getLike_id()==0){
                     Log.d("LIKE","CLICK");
                     Call<SnsItemLikeDTO> call = like(holder.contentTextView.getTag().toString(),"9");
                     call.enqueue(new Callback<SnsItemLikeDTO>() {
@@ -110,7 +111,9 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
                                     if (response.body().getResult_code()==200){
                                         Log.d("Result","LIKE_SUCCESS!!");
                                         holder.like.setImageResource(R.drawable.like);
-                                        holder.like.setTag(response.body().getResult_body());
+                                        holder.sns_good.setText(String.valueOf(item.getLike_count()+1));
+                                        item.setLike_id(response.body().getResult_body());
+                                        item.setLike_count(item.getLike_count()+1);
                                     }
                                 }
                                 @Override
@@ -127,7 +130,9 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
                             if (response.body().getResult_code()==200) {
                                 Log.d("Result","UNLIKE_SUCCESS!!");
                                 holder.like.setImageResource(R.drawable.normal);
-                                holder.like.setTag("0");
+                                holder.sns_good.setText(String.valueOf(item.getLike_count()-1));
+                                item.setLike_id(0);
+                                item.setLike_count(item.getLike_count()-1);
                             }
                         }
 
@@ -140,6 +145,16 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
             }
         });
 
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return items.get(position).getId();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override
@@ -158,13 +173,14 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         TextView userIdTextView;
         ImageView like;
         ImageView myImageView;
-
+        TextView sns_good;
         ViewHolder(View itemView) {
             super(itemView);
             contentTextView = itemView.findViewById(R.id.sns_con);
             userIdTextView = itemView.findViewById(R.id.user_id);
             like = itemView.findViewById(R.id.love);
             myImageView = itemView.findViewById(R.id.main_img);
+            sns_good = itemView.findViewById(R.id.sns_good);
         }
     }
     public void addNew(List<SnsListItem> items)
