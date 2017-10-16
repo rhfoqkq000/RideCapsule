@@ -22,7 +22,7 @@ public class FragmentCapsule extends Fragment {
 
     @OnClick(R.id.capsule_button)
     void capsuleClick(){
-        Intent intent = new Intent(getActivity(), ActivityCapsule.class);
+        Intent intent = new Intent(getActivity(), ActivityCapsuleImg.class);
         startActivity(intent);
     }
 
