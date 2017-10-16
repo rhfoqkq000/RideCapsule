@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import com.example.horse.travel.ApiClient;
 import com.example.horse.travel.R;
 import com.example.horse.travel.capsule.retrofit.InterfaceCapsule;
 import com.example.horse.travel.capsule.retrofit.MasterCapsule;
@@ -74,9 +75,7 @@ public class ActivityCapsule extends AppCompatActivity {
     }
 
     void getJson(){
-        Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
-                .addConverterFactory(GsonConverterFactory.create()).build();
-        InterfaceCapsule json = client.create(InterfaceCapsule.class);
+        InterfaceCapsule json = ApiClient.getClient().create(InterfaceCapsule.class);
         Call<MasterCapsule> call =
                 json.capsule(capsuleContent, capsule_date.getText().toString(), 9);
         call.enqueue(new Callback<MasterCapsule>() {

@@ -25,6 +25,7 @@
         </activity>
         <activity android:name=".sns.write.ActivitySnsWrite" />
         <activity android:name=".capsule.ActivityCapsule" />
+        <activity android:name=".capsule.ActivityCapsuleImg" />
         <activity android:name=".sns.write.ActivityImageSelect"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
