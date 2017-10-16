@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.horse.travel">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,6 +25,7 @@
         </activity>
         <activity android:name=".sns.write.ActivitySnsWrite" />
         <activity android:name=".capsule.ActivityCapsule" />
+        <activity android:name=".capsule.ActivityCapsuleImg" />
         <activity android:name=".sns.write.ActivityImageSelect"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
