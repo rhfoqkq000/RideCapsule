@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <Button
+        android:id="@+id/capsule_img_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="이미지 선택"
+        android:visibility="visible" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/capsule_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:visibility="gone" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sliderDots"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:visibility="gone" />
+
+
+</LinearLayout>

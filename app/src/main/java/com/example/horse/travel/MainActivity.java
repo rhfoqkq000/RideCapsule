@@ -32,33 +32,40 @@ public class MainActivity extends AppCompatActivity {
 
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             Fragment fragment = null;
+            FragmentTourist fragmentTourist = new FragmentTourist();
+            FragmentSample fragmentSample = new FragmentSample();
+            FragmentSns fragmentSns = new FragmentSns();
+            FragmentCapsule fragmentCapsule = new FragmentCapsule();
+            FragmentInn fragmentInn = new FragmentInn();
+            FragmentMypage fragmentMypage = new FragmentMypage();
+
             @Override
 //            bottomNavigation item추가
             public void onTabSelected(int tabId) {
 
 //                관광지 정보
                 if (tabId == R.id.bottom_tourist){
-                   fragment = new FragmentTourist();
+                   fragment = fragmentSample;
                 }
 
 //                sns
                 else if (tabId == R.id.bottom_sns){
-                    fragment = new FragmentSns();
+                    fragment = fragmentSns;
                 }
 
 //                타임캡슐
                 else if (tabId == R.id.bottom_capsule){
-                    fragment = new FragmentCapsule();
+                    fragment = fragmentCapsule;
                 }
 
 //                숙박
                 else if (tabId == R.id.bottom_house){
-                    fragment = new FragmentInn();
+                    fragment = fragmentInn;
                 }
 
 //                마이페이지
                 else if (tabId == R.id.bottom_mypage){
-                    fragment = new FragmentMypage();
+                    fragment = fragmentMypage;
                 }
                 getSupportFragmentManager()
                         .beginTransaction()
