@@ -68,6 +68,7 @@ public class FragmentSns extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         snsRe.setLayoutManager(layoutManager);
         adapter = new SnsRecyclerAdapter();
+        adapter.setHasStableIds(true);
         snsRe.setAdapter(adapter);
         getSnsList();
     }
