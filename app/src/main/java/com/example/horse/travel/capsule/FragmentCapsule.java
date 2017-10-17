@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.horse.travel.R;
+import com.example.horse.travel.sns.FragmentSns;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -17,6 +18,17 @@ import butterknife.OnClick;
  */
 
 public class FragmentCapsule extends Fragment {
+
+    public static FragmentCapsule newInstance(int arg) {
+        FragmentCapsule fragment = new FragmentCapsule();
+
+        // Set the arguments.
+        Bundle args = new Bundle();
+
+        args.putInt("ARG", arg);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @OnClick(R.id.capsule_button)
     void capsuleClick(){
