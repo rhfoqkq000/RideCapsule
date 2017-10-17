@@ -34,6 +34,17 @@ import retrofit2.Response;
 
 public class FragmentSns extends Fragment {
 
+    public static FragmentSns newInstance(int arg) {
+        FragmentSns fragment = new FragmentSns();
+
+        // Set the arguments.
+        Bundle args = new Bundle();
+
+        args.putInt("ARG", arg);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @BindView(R.id.writeBtn)
     Button writeBtn;
 
@@ -65,6 +76,7 @@ public class FragmentSns extends Fragment {
 
 
     private void initViews() {
+        Log.d("INIT","온크");
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         snsRe.setLayoutManager(layoutManager);
         adapter = new SnsRecyclerAdapter();

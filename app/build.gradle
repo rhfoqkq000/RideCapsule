@@ -48,7 +48,7 @@ dependencies {
 //    circleimageview
     compile 'de.hdodenhof:circleimageview:2.2.0'
 //    bottomNavigation
-    compile 'com.roughike:bottom-bar:2.0'
+    compile 'com.roughike:bottom-bar:2.3.1'
 //    butterknife
     compile "com.jakewharton:butterknife:8.0.1"
 //    hashtaging
