@@ -19,9 +19,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-<<<<<<< HEAD
-
-=======
     FragmentManager fragmentManager;
     Fragment active;
     Fragment fragmentSample = FragmentSample.newInstance(1);
@@ -29,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     Fragment fragmentCapsule = FragmentCapsule.newInstance(3);
     Fragment fragmentInn = FragmentInn.newInstance(4);
     Fragment fragmentMypage = FragmentMypage.newInstance(5);
->>>>>>> d1e6638be2b3fbfa0c03fe26919bad6ea15a11e1
 
 //    butterknife 각 layout에서 id연결
     @BindView(R.id.bottombar)
@@ -104,23 +100,8 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
     }
-
-<<<<<<< HEAD
-
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
-            Fragment fragment = null;
-
-            FragmentTourist fragmentTourist = new FragmentTourist();
-            FragmentSample fragmentSample = new FragmentSample();
-            FragmentSns fragmentSns = new FragmentSns();
-            FragmentCapsule fragmentCapsule = new FragmentCapsule();
-            FragmentInn fragmentInn = new FragmentInn();
-            FragmentMypage fragmentMypage = new FragmentMypage();
-
-=======
     private void setUIListeners() {
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
->>>>>>> d1e6638be2b3fbfa0c03fe26919bad6ea15a11e1
             @Override
             public void onTabSelected(@IdRes int tabId) {
                 switch (tabId) {
