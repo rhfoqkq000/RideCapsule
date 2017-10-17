@@ -17,6 +17,8 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
+
+
 //    butterknife 각 layout에서 id연결
     @BindView(R.id.bottombar)
     BottomBar bottomBar;
@@ -30,8 +32,10 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
+
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             Fragment fragment = null;
+
             FragmentTourist fragmentTourist = new FragmentTourist();
             FragmentSample fragmentSample = new FragmentSample();
             FragmentSns fragmentSns = new FragmentSns();
