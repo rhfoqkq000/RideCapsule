@@ -1,6 +1,7 @@
 package com.example.horse.travel.sns.list;
 
 import android.content.res.Resources;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -36,12 +37,8 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
 
 //    private final String IMG_URL = "http://168.115.8.109:5000/";
     private final String IMG_URL = "http://220.84.195.101:5000/";
-
     private List<SnsListItem> items;
 
-//    public SnsRecyclerAdapter(List<SnsListItem> items) {
-//        this.items = items;
-//    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -54,8 +51,9 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         Resources res = holder.itemView.getContext().getResources();
         final SnsListItem item = items.get(position);
 
-        SpannableString content = new SpannableString(item.getEmail());
-        content.setSpan(new UnderlineSpan(), 0, item.getEmail().length(), 0);
+
+//        SpannableString content = new SpannableString(item.getNickname());
+//        content.setSpan(new UnderlineSpan(), 0, item.getNickname().length(), 0);
 
         String[] imgArr = item.getImgs().split(",");
 
@@ -75,10 +73,18 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
             }
         });
 
-        holder.userIdTextView.setText(content);
+        holder.userIdTextView.setText(item.getNickname());
         holder.contentTextView.setText(item.getPost());
         holder.contentTextView.setTag(item.getId());
         holder.sns_good.setText(String.valueOf(item.getLike_count()));
+
+        if (item.getLike_user().equals("none")){
+            holder.like_users.setVisibility(View.GONE);
+        } else if (item.getLike_user().equals(item.getNickname())){
+            holder.like_users.setText("본인(?!)");
+        } else {
+            holder.like_users.setText(item.getLike_user());
+        }
 //        holder.like.setTag(item.getLike_id());
 
         RequestOptions options = new RequestOptions();
@@ -160,12 +166,13 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
     @Override
     public int getItemCount() {
 
-        int size = 0;
-
-        if (items != null){
-            size =  items.size();
-        }
-        return size;
+//        int size = 0;
+//
+//        if (items != null){
+//            size =  items.size();
+//        }
+//        return size;
+        return items == null ? 0 : items.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -174,6 +181,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         ImageView like;
         ImageView myImageView;
         TextView sns_good;
+        TextView like_users;
         ViewHolder(View itemView) {
             super(itemView);
             contentTextView = itemView.findViewById(R.id.sns_con);
@@ -181,11 +189,16 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
             like = itemView.findViewById(R.id.love);
             myImageView = itemView.findViewById(R.id.main_img);
             sns_good = itemView.findViewById(R.id.sns_good);
+            like_users = itemView.findViewById(R.id.like_users);
         }
     }
     public void addNew(List<SnsListItem> items)
     {
         this.items = items;
+        notifyDataSetChanged();
+    }
+    public void removeAll(){
+        this.items = null;
         notifyDataSetChanged();
     }
 

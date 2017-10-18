@@ -9,6 +9,15 @@ import java.util.List;
 public class SnsListDTO {
     private int result_code;
     private List<SnsListItem> result_body;
+    private int items_count;
+
+    public int getItems_count() {
+        return items_count;
+    }
+
+    public void setItems_count(int items_count) {
+        this.items_count = items_count;
+    }
 
     public int getResult_code() {
         return result_code;
