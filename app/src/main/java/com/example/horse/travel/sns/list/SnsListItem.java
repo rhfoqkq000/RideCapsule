@@ -9,9 +9,18 @@ import java.util.ArrayList;
 public class SnsListItem {
     private String email;
     private int id;
+    private String nickname;
     private int like_count;
     private int like_id;
     private String like_user;
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     public int getLike_count() {
         return like_count;
