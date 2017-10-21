@@ -36,18 +36,27 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FragmentTourist extends Fragment implements ActionBar.TabListener{
 
-    @BindView(R.id.tv1)
-    TextView tv1;
-    @BindView(R.id.tv2)
-    TextView tv2;
+    @BindView(R.id.tour_title1)
+    TextView tour_title1;
+    @BindView(R.id.tour_title2)
+    TextView tour_title2;
+
+    @BindView(R.id.city)
+    Button cityBtn;
+    @OnClick(R.id.city)
+    void clickCity(){
+        cityDialog(areaData.getCitys());
+    }
     @BindView(R.id.town)
-    Button btn1;
-    @BindView(R.id.pager)
-    ViewPager mViewPager;
+    Button townBtn;
     @OnClick(R.id.town)
     void clickTown(){
-        DialogSelectOption(region);
+        townDialog(region);
     }
+
+    @BindView(R.id.pager)
+    ViewPager mViewPager;
+
 
     AreaData areaData = new AreaData();
 
@@ -58,13 +67,10 @@ public class FragmentTourist extends Fragment implements ActionBar.TabListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_tourist, container, false);
         ButterKnife.bind(this, rootview);
-
         //날씨 불러옴
         setWeather(areaData.getLat(), areaData.getLon());
-
         //프레그먼트 생성
         fragment_create(areaData.citys);
-
         return rootview;
     }
 
@@ -81,17 +87,15 @@ public class FragmentTourist extends Fragment implements ActionBar.TabListener{
         setWeather(areaData.getLat(), areaData.getLon());
     }
 
-
-    private void DialogSelectOption(final String[] region) {
-
-        AlertDialog.Builder ab = new AlertDialog.Builder(getContext());
-        ab.setTitle("지역을 선택해주세요");
-        ab.setSingleChoiceItems(region, -1,
+    private void cityDialog(final String[] region) {
+        AlertDialog.Builder cityBuilder = new AlertDialog.Builder(getContext());
+        cityBuilder.setTitle("도시를 선택해주세요");
+        cityBuilder.setSingleChoiceItems(region, -1,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         // 각 리스트를 선택했을때
                         setLatAndLonOfCity(region[whichButton]);
-                        btn1.setText(region[whichButton]);
+                        cityBtn.setText(region[whichButton]);
                     }
                 }).setPositiveButton("선택",
                 new DialogInterface.OnClickListener() {
@@ -107,7 +111,32 @@ public class FragmentTourist extends Fragment implements ActionBar.TabListener{
                         dialog.cancel();
                     }
                 });
-        ab.show();
+        cityBuilder.show();
+    }
+    private void townDialog(final String[] region) {
+        AlertDialog.Builder townBuilder = new AlertDialog.Builder(getContext());
+        townBuilder.setTitle("상세 지역을 선택해주세요");
+        townBuilder.setSingleChoiceItems(region, -1,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // 각 리스트를 선택했을때
+                        townBtn.setText(region[whichButton]);
+                    }
+                }).setPositiveButton("선택",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // 선택 버튼 클릭시 , 여기서 선택한 값을 메인 Activity 로 넘기면 된다.
+                        setWeather(areaData.getLat(), areaData.getLon());
+
+                    }
+                }).setNegativeButton("취소",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // 취소 버튼 클릭시
+                        dialog.cancel();
+                    }
+                });
+        townBuilder.show();
     }
 
     private void setWeather(String lat, String lon) {
@@ -119,10 +148,10 @@ public class FragmentTourist extends Fragment implements ActionBar.TabListener{
             public void onResponse(Call<WeatherRepo> call, Response<WeatherRepo> response) {
                 //현재온도
                 Log.i("MainActivity", response.body().getWeather().getHourly().get(0).getTemperature().getTc());
-                tv1.setText(response.body().getWeather().getHourly().get(0).getTemperature().getTc());
+                tour_title1.setText(response.body().getWeather().getHourly().get(0).getTemperature().getTc());
                 //현재 하늘 상태
                 Log.i("MainActivity", response.body().getWeather().getHourly().get(0).getSky().getName());
-                tv2.setText(response.body().getWeather().getHourly().get(0).getSky().getName());
+                tour_title2.setText(response.body().getWeather().getHourly().get(0).getSky().getName());
             }
 
             @Override
@@ -207,7 +236,7 @@ public class FragmentTourist extends Fragment implements ActionBar.TabListener{
         setWeather(areaData.getLat(), areaData.getLon());
         //town버튼 눌렀을 때 위도 경도 설정
 
-        btn1.setText("전체");
+        townBtn.setText("전체");
     }
 
     @Override
