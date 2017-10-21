@@ -34,7 +34,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by horse on 2017. 10. 9..
  */
 
-public class FragmentTourist extends Fragment implements ActionBar.TabListener{
+public class FragmentTourist extends Fragment {
 
     @BindView(R.id.tour_title1)
     TextView tour_title1;
@@ -70,14 +70,14 @@ public class FragmentTourist extends Fragment implements ActionBar.TabListener{
         //날씨 불러옴
         setWeather(areaData.getLat(), areaData.getLon());
         //프레그먼트 생성
-        fragment_create(areaData.citys);
+        //fragment_create(areaData.citys);
         return rootview;
     }
 
 
     //***********************************************
 
-    AppSectionsPagerAdapter mAppSectionsPagerAdapter;
+    //AppSectionsPagerAdapter mAppSectionsPagerAdapter;
 
     String[] region = areaData.getSeoUl(); //초기값 서울
 
@@ -187,7 +187,7 @@ public class FragmentTourist extends Fragment implements ActionBar.TabListener{
         this.region = region;
     }
 
-    private void fragment_create(String[] city) {
+/*    private void fragment_create(String[] city) {
         //어댑터를 생성한다. 섹션마다 프래그먼트를 생성하여 리턴해준다.
         mAppSectionsPagerAdapter = new AppSectionsPagerAdapter(getFragmentManager());
 
@@ -291,5 +291,5 @@ public class FragmentTourist extends Fragment implements ActionBar.TabListener{
         public CharSequence getPageTitle(int position) {
             return areaData.citys[position];
         }
-    }
+    }*/
 }
