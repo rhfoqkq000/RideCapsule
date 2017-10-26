@@ -1,20 +1,17 @@
 package com.example.horse.travel.sns.list;
 
 import android.content.res.Resources;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 import com.example.horse.travel.R;
 import com.example.horse.travel.sns.like.SnsItemLike;
 import com.example.horse.travel.sns.like.SnsItemLikeDTO;
@@ -35,10 +32,9 @@ import retrofit2.Response;
 
 public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.ViewHolder> {
 
-//    private final String IMG_URL = "http://168.115.8.109:5000/";
-    private final String IMG_URL = "http://220.84.195.101:5000/";
+    private final String IMG_URL = "http://192.168.0.6:5000/";
+//    private final String IMG_URL = "http://220.84.195.101:5000/";
     private List<SnsListItem> items;
-
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -48,34 +44,43 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+        setUI(holder, position);
+    }
+
+    private void setUI(final ViewHolder holder, int position) {
         Resources res = holder.itemView.getContext().getResources();
         final SnsListItem item = items.get(position);
 
+        setHashTagTextView(holder, res, item);
 
-//        SpannableString content = new SpannableString(item.getNickname());
-//        content.setSpan(new UnderlineSpan(), 0, item.getNickname().length(), 0);
+        setUserIdTextView(holder, item);
 
-        String[] imgArr = item.getImgs().split(",");
+        setLike(holder,item, position);
 
-        HashTagHelper mTextHashTagHelper = HashTagHelper.Creator.create(res.getColor(R.color.blue), new HashTagHelper.OnHashTagClickListener() {
-            @Override
-            public void onHashTagClicked(String hashTag) {
-                Log.d("TAG",hashTag);
-            }
-        });
+        setImage(holder, item);
 
-        mTextHashTagHelper.handle(holder.contentTextView);
+    }
 
-        holder.userIdTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("UserID",holder.userIdTextView.getText().toString());
-            }
-        });
+    private void setImage(final ViewHolder holder, SnsListItem item) {
+//        RequestOptions options = new RequestOptions();
+//        options.fitCenter().override(Target.SIZE_ORIGINAL, holder.myImageView.getHeight());
+//        options.fitCenter();
+        final String[] imgArr = item.getImgs().split(",");
+        Glide.with(holder.myImageView.getContext())
+                .load(IMG_URL+imgArr[0])
+//                .apply(options)
+//                .apply(bitmapTransform(new BlurTransformation(25)))
+                .into(holder.myImageView);
+    }
 
-        holder.userIdTextView.setText(item.getNickname());
-        holder.contentTextView.setText(item.getPost());
-        holder.contentTextView.setTag(item.getId());
+    private void setLike(final ViewHolder holder, final SnsListItem item, int position) {
+        if (item.getLike_id()!=0){
+            Log.d("ID",item.getLike_id()+" | "+position+" | "+item.getLike_id());
+            holder.like.setImageResource(R.drawable.like);
+        } else {
+            Log.d("ID",item.getLike_id()+" | "+position+" | "+item.getLike_id());
+        }
+
         holder.sns_good.setText(String.valueOf(item.getLike_count()));
 
         if (item.getLike_user().equals("none")){
@@ -84,24 +89,6 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
             holder.like_users.setText("본인(?!)");
         } else {
             holder.like_users.setText(item.getLike_user());
-        }
-//        holder.like.setTag(item.getLike_id());
-
-        RequestOptions options = new RequestOptions();
-        options.fitCenter().override(Target.SIZE_ORIGINAL, holder.myImageView.getHeight());
-//        options.fitCenter();
-
-        Glide.with(holder.myImageView.getContext())
-                .load(IMG_URL+imgArr[0])
-//                .apply(options)
-//                .apply(bitmapTransform(new BlurTransformation(25)))
-                .into(holder.myImageView);
-
-        if (item.getLike_id()!=0){
-            Log.d("ID",item.getLike_id()+" | "+position+" | "+item.getLike_id());
-            holder.like.setImageResource(R.drawable.like);
-        } else {
-            Log.d("ID",item.getLike_id()+" | "+position+" | "+item.getLike_id());
         }
 
         holder.like.setOnClickListener(new View.OnClickListener() {
@@ -114,19 +101,19 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
                         @Override
                         public void onResponse(Call<SnsItemLikeDTO> call, Response<SnsItemLikeDTO> response) {
 //                           Log.d("LIKE_SUC",response.body().getResult_code()+"");
-                                    if (response.body().getResult_code()==200){
-                                        Log.d("Result","LIKE_SUCCESS!!");
-                                        holder.like.setImageResource(R.drawable.like);
-                                        holder.sns_good.setText(String.valueOf(item.getLike_count()+1));
-                                        item.setLike_id(response.body().getResult_body());
-                                        item.setLike_count(item.getLike_count()+1);
-                                    }
-                                }
-                                @Override
-                                public void onFailure(Call<SnsItemLikeDTO> call, Throwable t) {
-                                    Log.d("LIKE_FAIL",t.getMessage());
-                                }
-                            });
+                            if (response.body().getResult_code()==200){
+                                Log.d("Result","LIKE_SUCCESS!!");
+                                holder.like.setImageResource(R.drawable.like);
+                                holder.sns_good.setText(String.valueOf(item.getLike_count()+1));
+                                item.setLike_id(response.body().getResult_body());
+                                item.setLike_count(item.getLike_count()+1);
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<SnsItemLikeDTO> call, Throwable t) {
+                            Log.d("LIKE_FAIL",t.getMessage());
+                        }
+                    });
                 } else {
                     Log.d("UNLIKE","CLICK");
                     Call<SnsItemUnLikeDTO> call = unlike(holder.contentTextView.getTag().toString(),"9");
@@ -150,7 +137,32 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
                 }
             }
         });
+    }
 
+    private void setUserIdTextView(final ViewHolder holder, SnsListItem item) {
+        //        SpannableString content = new SpannableString(item.getNickname());
+//        content.setSpan(new UnderlineSpan(), 0, item.getNickname().length(), 0);
+        holder.userIdTextView.setText(item.getNickname());
+        holder.userIdTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("UserID",holder.userIdTextView.getText().toString());
+            }
+        });
+    }
+
+    private void setHashTagTextView(ViewHolder holder, Resources res, SnsListItem item) {
+        HashTagHelper mTextHashTagHelper = HashTagHelper.Creator.create(res.getColor(R.color.blue), new HashTagHelper.OnHashTagClickListener() {
+            @Override
+            public void onHashTagClicked(String hashTag) {
+                Log.d("TAG",hashTag);
+            }
+        });
+
+        mTextHashTagHelper.handle(holder.contentTextView);
+
+        holder.contentTextView.setText(item.getPost());
+        holder.contentTextView.setTag(item.getId());
     }
 
     @Override
@@ -179,14 +191,20 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         TextView contentTextView;
         TextView userIdTextView;
         ImageView like;
-        ImageView myImageView;
+        CustomImageView myImageView;
         TextView sns_good;
         TextView like_users;
+
+
+//        ViewPager sns_viewPager;
+//        LinearLayout sliderDotsPanel;
         ViewHolder(View itemView) {
             super(itemView);
             contentTextView = itemView.findViewById(R.id.sns_con);
             userIdTextView = itemView.findViewById(R.id.user_id);
             like = itemView.findViewById(R.id.love);
+//            sns_viewPager = itemView.findViewById(R.id.sns_viewPager);
+//            sliderDotsPanel = itemView.findViewById(R.id.sns_sliderDots);
             myImageView = itemView.findViewById(R.id.main_img);
             sns_good = itemView.findViewById(R.id.sns_good);
             like_users = itemView.findViewById(R.id.like_users);
