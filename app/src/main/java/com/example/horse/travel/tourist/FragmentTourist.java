@@ -44,6 +44,8 @@ public class FragmentTourist extends Fragment {
     TextView weather_sky;
     @BindView(R.id.weather_tem)
     TextView weather_tem;
+    @BindView(R.id.weather_img)
+    ImageView weatherImg;
 
     @BindView(R.id.city)
     Button cityBtn;
@@ -58,13 +60,27 @@ public class FragmentTourist extends Fragment {
         townDialog(region);
     }
 
-    @BindView(R.id.weather_img)
-    ImageView weatherImg;
-
     @BindView(R.id.festival_title1)
     TextView festival_title1;
     @BindView(R.id.festival_title2)
     TextView festival_title2;
+    @BindView(R.id.festival_title3)
+    TextView festival_title3;
+    @BindView(R.id.festival_title4)
+    TextView festival_title4;
+    @BindView(R.id.festival_title5)
+    TextView festival_title5;
+
+    @BindView(R.id.tour_title1)
+    TextView tour_title1;
+    @BindView(R.id.tour_title2)
+    TextView tour_title2;
+    @BindView(R.id.tour_title3)
+    TextView tour_title3;
+    @BindView(R.id.tour_title4)
+    TextView tour_title4;
+    @BindView(R.id.tour_title5)
+    TextView tour_title5;
 
     @BindView(R.id.pager)
     ViewPager mViewPager;
@@ -85,6 +101,8 @@ public class FragmentTourist extends Fragment {
         setWeather(areaData.getLat(), areaData.getLon());
         //축제 불러옴
         festivalRetrofit();
+        //여행지 불러옴
+        tourRetrofit();
         //프레그먼트 생성
         //fragment_create(areaData.citys);
         return rootview;
@@ -234,7 +252,7 @@ public class FragmentTourist extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create()).build();
         FestivalRepo.FestivalAppInterface festialService = client.create(FestivalRepo.FestivalAppInterface.class);
         //요청 파라미터 입력
-        Call<FestivalRepo> call = festialService.get_festival_retrofit("mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "2", "1", "AND", "TourList", "A", "Y", "1", "1", "20171001", "json");
+        Call<FestivalRepo> call = festialService.get_festival_retrofit("mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "5", "1", "AND", "TourList", "A", "Y", "1", "20171001", "json");
 
         call.enqueue(new Callback<FestivalRepo>() {
             @Override
@@ -244,10 +262,40 @@ public class FragmentTourist extends Fragment {
                 Log.d("MainActivity", response.body().getResponse().getHeader().getResultMsg());
                 festival_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
                 festival_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
+                festival_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
+                festival_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
+                festival_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
             }
 
             @Override
             public void onFailure(Call<FestivalRepo> call, Throwable t) {
+                t.printStackTrace();
+            }
+
+        });
+    }
+    public void tourRetrofit() {
+        Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        TourListRepo.TourListAppInterface tourService = client.create(TourListRepo.TourListAppInterface.class);
+        //요청 파라미터 입력
+        Call<TourListRepo> call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "A", "12", "1", "json");
+
+        call.enqueue(new Callback<TourListRepo>() {
+            @Override
+            public void onResponse(Call<TourListRepo> call, Response<TourListRepo> response) {
+                //파라미터 받아서 처리하기
+                Log.d("MainActivity", response.raw().request().url().toString()); // uri 출력
+                Log.d("MainActivity", response.body().getResponse().getHeader().getResultMsg());
+                tour_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
+                tour_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
+                tour_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
+                tour_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
+                tour_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
+            }
+
+            @Override
+            public void onFailure(Call<TourListRepo> call, Throwable t) {
                 t.printStackTrace();
             }
 

@@ -300,6 +300,12 @@ public class TourListRepo {
     public interface TourListAppInterface {
         @GET("/openapi/service/rest/KorService/areaBasedList")
         Call<TourListRepo> get_tour_retrofit(@Query("numOfRows") String numOfRows, @Query("pageNo") String pageNo, @Query("MobileOS") String MobileOS, @Query("MobileApp") String MobileApp, @Query("ServiceKey") String ServiceKey,
+                                             @Query("listYN") String listYN, @Query("arrange") String arrange, @Query("contentTypeId") String contentTypeId, @Query("areaCode") String areaCode,
+                                             @Query("_type") String type);
+        Call<TourListRepo> get_tour_retrofit(@Query("numOfRows") String numOfRows, @Query("pageNo") String pageNo, @Query("MobileOS") String MobileOS, @Query("MobileApp") String MobileApp, @Query("ServiceKey") String ServiceKey,
+                                             @Query("listYN") String listYN, @Query("arrange") String arrange, @Query("contentTypeId") String contentTypeId, @Query("areaCode") String areaCode, @Query("sigunguCode") String sigunguCode,
+                                             @Query("_type") String type);
+        Call<TourListRepo> get_tour_retrofit(@Query("numOfRows") String numOfRows, @Query("pageNo") String pageNo, @Query("MobileOS") String MobileOS, @Query("MobileApp") String MobileApp, @Query("ServiceKey") String ServiceKey,
                                              @Query("listYN") String listYN, @Query("arrange") String arrange, @Query("contentTypeId") String contentTypeId, @Query("areaCode") String areaCode, @Query("sigunguCode") String sigunguCode,
                                              @Query("cat1") String cat1, @Query("cat2") String cat2, @Query("cat3") String cat3, @Query("_type") String type);
     }

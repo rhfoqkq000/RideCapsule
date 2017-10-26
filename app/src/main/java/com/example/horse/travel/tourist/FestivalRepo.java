@@ -301,6 +301,11 @@ public class FestivalRepo {
     }
     public interface FestivalAppInterface {
         @GET("/openapi/service/rest/KorService/searchFestival")
+        //시로만
+        Call<FestivalRepo> get_festival_retrofit(@Query("ServiceKey") String ServiceKey, @Query("numOfRows") String numOfRows, @Query("pageNo") String pageNo, @Query("MobileOS") String MobileOS, @Query("MobileApp") String MobileApp,
+                                                 @Query("arrange") String arrange, @Query("listYN") String listYN, @Query("areaCode") String areaCode,
+                                                 @Query("eventStartDate") String eventStartDate, @Query("_type") String type);
+        //시, 구로 조회
         Call<FestivalRepo> get_festival_retrofit(@Query("ServiceKey") String ServiceKey, @Query("numOfRows") String numOfRows, @Query("pageNo") String pageNo, @Query("MobileOS") String MobileOS, @Query("MobileApp") String MobileApp,
                                                  @Query("arrange") String arrange, @Query("listYN") String listYN, @Query("areaCode") String areaCode, @Query("sigunguCode") String sigunguCode,
                                                  @Query("eventStartDate") String eventStartDate, @Query("_type") String type);
