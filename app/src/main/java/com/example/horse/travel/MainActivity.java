@@ -10,6 +10,7 @@ import com.example.horse.travel.capsule.FragmentCapsule;
 import com.example.horse.travel.inn.FragmentInn;
 import com.example.horse.travel.mypage.FragmentMypage;
 import com.example.horse.travel.sns.FragmentSns;
+import com.example.horse.travel.sns.write.ImageSingleton;
 import com.example.horse.travel.tourist.FragmentTourist;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -42,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
 //
         createFragments();
         setUIListeners();
-
 
         // 절대 지우지 말것!! 혹시나...
 //        final FragmentTourist fragmentTourist = new FragmentTourist();

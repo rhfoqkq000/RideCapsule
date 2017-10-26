@@ -28,6 +28,7 @@
                     android:layout_height="wrap_content"
                     android:text="닫기"/>
                 <TextView
+                    android:id="@+id/image_select_nextBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -41,6 +42,73 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/select_imgs_btn"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/select_photo_img1"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+            <ImageView
+                android:layout_weight="1"
+                android:id="@+id/select_photo_img2"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+            <ImageView
+                android:layout_weight="1"
+                android:id="@+id/select_photo_img3"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+            <ImageView
+                android:layout_weight="1"
+                android:id="@+id/select_photo_img4"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+            <ImageView
+                android:layout_weight="1"
+                android:id="@+id/select_photo_img5"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_weight="1"
+                android:id="@+id/select_photo_img6"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+            <ImageView
+                android:layout_weight="1"
+                android:id="@+id/select_photo_img7"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+            <ImageView
+                android:layout_weight="1"
+                android:id="@+id/select_photo_img8"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+            <ImageView
+                android:layout_weight="1"
+                android:id="@+id/select_photo_img9"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+            <ImageView
+                android:layout_weight="1"
+                android:id="@+id/select_photo_img10"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
 

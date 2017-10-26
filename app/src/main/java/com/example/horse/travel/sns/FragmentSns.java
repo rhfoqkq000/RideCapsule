@@ -2,7 +2,6 @@ package com.example.horse.travel.sns;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.horse.travel.ApiClient;
@@ -54,7 +52,6 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
     @BindView(R.id.writeBtn)
     Button writeBtn;
 
-//    SnsListViewAdapter adapter;
     @BindView(R.id.snsRecyclerView)
     RecyclerView snsRe;
 
@@ -79,12 +76,30 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         snsRe.setLayoutManager(layoutManager);
         adapter = new SnsRecyclerAdapter();
+        adapter.setContext(getContext());
         adapter.setHasStableIds(true);
         snsRe.setAdapter(adapter);
 
-        getSnsList(init_page);
+//        getSnsList(init_page);
 
-        // onClickListener
+        List<SnsListItem> testList = new ArrayList<>();
+        SnsListItem item = new SnsListItem();
+        item.setEmail("1@1.com");
+        item.setId(9);
+        item.setImgs("1.jpg");
+        item.setLike_count(0);
+        item.setLike_id(9);
+        item.setLike_user("pmkjkr");
+        item.setNickname("pmkjkr1");
+        item.setPost("POST");
+        item.setUpdated_at("0000-00-00");
+        testList.add(item);
+
+        allItems.addAll(testList);
+        int curSize = adapter.getItemCount();
+        adapter.addNew(allItems);
+        adapter.notifyItemRangeChanged(curSize,allItems.size()-1);
+
         writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,7 +111,7 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 Log.d("SCROLL","END! | "+page);
-                getSnsList(page+1);
+//                getSnsList(page+1);
             }
         };
         // endless scrolling

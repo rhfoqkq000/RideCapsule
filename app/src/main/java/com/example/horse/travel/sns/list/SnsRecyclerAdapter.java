@@ -1,6 +1,10 @@
 package com.example.horse.travel.sns.list;
 
+import android.content.Context;
 import android.content.res.Resources;
+import android.media.ImageReader;
+import android.support.annotation.Dimension;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,15 +14,15 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 import com.example.horse.travel.R;
 import com.example.horse.travel.sns.like.SnsItemLike;
 import com.example.horse.travel.sns.like.SnsItemLikeDTO;
 import com.example.horse.travel.sns.like.SnsItemUnLike;
 import com.example.horse.travel.sns.like.SnsItemUnLikeDTO;
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 import com.volokh.danylo.hashtaghelper.HashTagHelper;
 
+import java.util.Iterator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -33,9 +37,11 @@ import retrofit2.Response;
 public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.ViewHolder> {
 
     private final String IMG_URL = "http://192.168.0.6:5000/";
-//    private final String IMG_URL = "http://220.84.195.101:5000/";
     private List<SnsListItem> items;
-
+    private Context context;
+    public void setContext(Context context) {
+        this.context = context;
+    }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.listview_sns,viewGroup,false);
@@ -51,13 +57,35 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         Resources res = holder.itemView.getContext().getResources();
         final SnsListItem item = items.get(position);
 
+//        SpannableString content = new SpannableString(viewpager_item.getNickname());
+//        content.setSpan(new UnderlineSpan(), 0, viewpager_item.getNickname().length(), 0);
         setHashTagTextView(holder, res, item);
-
         setUserIdTextView(holder, item);
-
         setLike(holder,item, position);
-
         setImage(holder, item);
+
+
+        String[] imgArr2 = {"https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
+                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
+                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
+                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
+                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
+                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
+                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
+                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
+                "https://cloud.githubusercontent.com/assets/24774495/22066926/ae842142-ddc1-11e6-813b-caee856360ff.png",
+                "http://post.phinf.naver.net/MjAxNzEwMTFfMjIz/MDAxNTA3NzA5MDczOTEz.0fB_BKAw7rBnAJ-C4TQIoHRADtVpzXr0sH8rlR_m4-kg.NfcSSgumIvBGCIZcsI3p2ImwrnG4gTReLFukNzzykDkg.JPEG/AP_keynote_2017_wrap-up_iPhone8.jpg?type=w1200"};
+
+
+        SnsImageSlideAdapter testAdapter = new SnsImageSlideAdapter(context, imgArr2);
+        holder.viewPager.setAdapter(testAdapter);
+        holder.indicator.setViewPager(holder.viewPager);
+
+//        holder.like.setTag(viewpager_item.getLike_id());
+
+//        RequestOptions options = new RequestOptions();
+//        options.fitCenter().override(Target.SIZE_ORIGINAL, holder.myImageView.getHeight());
+//        options.fitCenter();
 
     }
 
@@ -191,9 +219,10 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         TextView contentTextView;
         TextView userIdTextView;
         ImageView like;
-        CustomImageView myImageView;
         TextView sns_good;
         TextView like_users;
+        CustomPager viewPager;
+        DotsIndicator indicator;
 
 
 //        ViewPager sns_viewPager;
@@ -203,11 +232,10 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
             contentTextView = itemView.findViewById(R.id.sns_con);
             userIdTextView = itemView.findViewById(R.id.user_id);
             like = itemView.findViewById(R.id.love);
-//            sns_viewPager = itemView.findViewById(R.id.sns_viewPager);
-//            sliderDotsPanel = itemView.findViewById(R.id.sns_sliderDots);
-            myImageView = itemView.findViewById(R.id.main_img);
             sns_good = itemView.findViewById(R.id.sns_good);
             like_users = itemView.findViewById(R.id.like_users);
+            viewPager = itemView.findViewById(R.id.viewPager);
+            indicator = itemView.findViewById(R.id.dots_indicator);
         }
     }
     public void addNew(List<SnsListItem> items)

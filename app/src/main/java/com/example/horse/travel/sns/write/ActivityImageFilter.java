@@ -20,6 +20,8 @@ public class ActivityImageFilter extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_filter);
 
+        Log.e("ActivityImageFilter", "LLLL");
+
         ArrayList<Uri> uris = ImageSingleton.getInstance().getImgUri();
 
         for (Uri uri : uris){
