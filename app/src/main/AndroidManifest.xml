@@ -24,10 +24,12 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/app_name">
         </activity>
         <activity android:name=".sns.write.ActivitySnsWrite" />
         <activity android:name=".capsule.ActivityCapsuleContent"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".sns.write.ActivityImageSelect"
             android:theme="@style/AppTheme.NoActionBar"/>

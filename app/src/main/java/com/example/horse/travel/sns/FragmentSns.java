@@ -83,6 +83,7 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootview = inflater.inflate(R.layout.fragment_sns, container, false);
+
         ButterKnife.bind(this, rootview);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();

@@ -15,17 +15,15 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-
-        Handler hd = new Handler();
-
-        hd.postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {
-                finish();       // 3 초후 이미지를 닫아버림
+
+                Intent mainIntent = new Intent(SplashActivity.this,MainActivity.class);
+                SplashActivity.this.startActivity(mainIntent);
+                SplashActivity.this.finish();
             }
-        }, 3000);
+        }, 1500);
 
     }
 }
