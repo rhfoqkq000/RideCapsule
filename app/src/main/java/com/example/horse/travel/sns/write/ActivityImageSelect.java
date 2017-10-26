@@ -1,10 +1,13 @@
 package com.example.horse.travel.sns.write;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
@@ -26,6 +29,7 @@ import com.sangcomz.fishbun.define.Define;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -148,6 +152,11 @@ public class ActivityImageSelect extends AppCompatActivity {
                     ImageSingleton.getInstance().setImgUri(path);
 
                     for(int i = 0; i < path.size(); i++){
+                        try {
+                            path.set(i, bitmapToUri(getResizedBitmapFromUri(getApplicationContext(), path.get(i)), getFileName(path.get(i))));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
                         Glide.with(this)
                                 .load(path.get(i))
                                 .into(imgViewArr.get(i));
@@ -239,7 +248,10 @@ public class ActivityImageSelect extends AppCompatActivity {
         try {
             File f = new File(getApplicationContext().getCacheDir(), fileName);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            originalBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+//            originalBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+
+            Bitmap resized = Bitmap.createScaledBitmap(originalBitmap,(int)(originalBitmap.getWidth()*0.8), (int)(originalBitmap.getHeight()*0.8), true);
+            resized.compress(Bitmap.CompressFormat.PNG, 0, bos);
             byte[] bitmapdata = bos.toByteArray();
             FileOutputStream fos = new FileOutputStream(f);
             fos.write(bitmapdata);
@@ -252,4 +264,16 @@ public class ActivityImageSelect extends AppCompatActivity {
         return null;
     }
 
+    public static Bitmap getResizedBitmapFromUri(Context c, Uri uri)
+            throws FileNotFoundException {
+        BitmapFactory.Options o = new BitmapFactory.Options();
+        o.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o);
+        BitmapFactory.Options o2 = new BitmapFactory.Options();
+        o2.inSampleSize = 2;
+        Bitmap bitmap = BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o2);
+        // 1560, 3120
+        Log.e("FFFFFFF", String.valueOf(bitmap.getWidth()));
+        return bitmap;
+    }
 }

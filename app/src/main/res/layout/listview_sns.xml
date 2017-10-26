@@ -4,8 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
     android:layout_marginBottom="10dp"
     android:orientation="vertical">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,20 +39,23 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="5dp"
-            android:text="아이디" />
+            />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/sns_location"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="장소"
-            android:textSize="10dp" />
+            android:gravity="end"
+            android:textSize="15sp"
+            android:layout_marginEnd="15dp"/>
 
     </LinearLayout>
 
     <com.example.horse.travel.sns.list.CustomPager
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:id="@+id/viewPager" />
 
@@ -114,18 +119,18 @@
                 android:layout_marginEnd="10dp"
                 app:layout_constraintBottom_toBottomOf="@+id/love"
                 android:id="@+id/good"
-                android:text="가볼래"/>
+                android:text="@string/sns_like_title"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/sns_good"
                 app:layout_constraintRight_toRightOf="@+id/good"
-                android:text="100"/>
+                />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="개" />
+                android:text="@string/sns_like_count" />
         </LinearLayout>
 
 
@@ -136,6 +141,6 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
-            android:text="글내용"/>
+            />
     </LinearLayout>
 </LinearLayout>

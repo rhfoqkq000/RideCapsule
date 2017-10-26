@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.horse.travel.capsule.FragmentCapsule;
 import com.example.horse.travel.inn.FragmentInn;
 import com.example.horse.travel.mypage.FragmentMypage;
@@ -29,7 +30,19 @@ public class MainActivity extends AppCompatActivity {
     Fragment fragmentInn = FragmentInn.newInstance(4);
     Fragment fragmentMypage = FragmentMypage.newInstance(5);
 
-//    butterknife 각 layout에서 id연결
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        Glide.get(this).trimMemory(level);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        Glide.get(this).clearMemory();
+    }
+
+    //    butterknife 각 layout에서 id연결
     @BindView(R.id.bottombar)
     BottomBar bottomBar;
 

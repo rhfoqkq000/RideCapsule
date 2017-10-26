@@ -1,7 +1,11 @@
 package com.example.horse.travel.sns;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +15,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.horse.travel.ApiClient;
 import com.example.horse.travel.EndlessRecyclerViewScrollListener;
 import com.example.horse.travel.R;
@@ -50,8 +56,15 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         return fragment;
     }
 
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        Glide.get(getContext()).clearMemory();
+
+    }
+
     @BindView(R.id.writeBtn)
-    Button writeBtn;
+    FloatingActionButton writeBtn;
 
     @BindView(R.id.snsRecyclerView)
     RecyclerView snsRe;
@@ -72,35 +85,22 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         final View rootview = inflater.inflate(R.layout.fragment_sns, container, false);
 
         ButterKnife.bind(this, rootview);
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+
         swipeRefreshLayout.setOnRefreshListener(this);
         allItems = new ArrayList<>();
+
         // recyclerview init
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         snsRe.setLayoutManager(layoutManager);
-        adapter = new SnsRecyclerAdapter();
+        RequestOptions options = new RequestOptions().placeholder(R.drawable.image_loding);
+        adapter = new SnsRecyclerAdapter(Glide.with(this),options);
         adapter.setContext(getContext());
         adapter.setHasStableIds(true);
         snsRe.setAdapter(adapter);
 
         getSnsList(init_page);
-
-//        List<SnsListItem> testList = new ArrayList<>();
-//        SnsListItem item = new SnsListItem();
-//        item.setEmail("1@1.com");
-//        item.setId(9);
-//        item.setImgs("1.jpg");
-//        item.setLike_count(0);
-//        item.setLike_id(9);
-//        item.setLike_user("pmkjkr");
-//        item.setNickname("pmkjkr1");
-//        item.setPost("POST");
-//        item.setUpdated_at("0000-00-00");
-//        testList.add(item);
-
-//        allItems.addAll(testList);
-//        int curSize = adapter.getItemCount();
-//        adapter.addNew(allItems);
-//        adapter.notifyItemRangeChanged(curSize,allItems.size()-1);
 
         writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +109,7 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
                 startActivity(intent);
             }
         });
+
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
@@ -116,6 +117,7 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
                 getSnsList(page+1);
             }
         };
+
         // endless scrolling
         snsRe.addOnScrollListener(endlessRecyclerViewScrollListener);
         return rootview;
@@ -125,13 +127,17 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         Call<SnsListDTO> call = list.listSns(page);
         call.enqueue(new Callback<SnsListDTO>() {
             @Override
-            public void onResponse(Call<SnsListDTO> call, Response<SnsListDTO> response) {
+            public void onResponse(@NonNull Call<SnsListDTO> call, @NonNull Response<SnsListDTO> response) {
                 Log.d("URL",response.raw().request().url().toString());
                 if (response.body().getItems_count()!=0){
                     allItems.addAll(response.body().getResult_body());
                     int curSize = adapter.getItemCount();
                     adapter.addNew(allItems);
-                    adapter.notifyItemRangeChanged(curSize,allItems.size()-1);
+                    if (isRe){
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        adapter.notifyItemRangeChanged(curSize,allItems.size()-1);
+                    }
                 } else {
                     Log.d("SCROLL","END!");
                 }
@@ -140,7 +146,7 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
                 }
             }
             @Override
-            public void onFailure(Call<SnsListDTO> call, Throwable t) {
+            public void onFailure(@NonNull Call<SnsListDTO> call, @NonNull Throwable t) {
                 Log.d("RETROFIT",t.getMessage());
                 Toast.makeText(getContext(),"글을 불러오는데 실패했습니다. 잠시후 다시 시도해 주세요.",Toast.LENGTH_LONG).show();
             }
@@ -149,9 +155,21 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
 
     @Override
     public void onRefresh() {
+        refresh();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (adapter != null && !allItems.isEmpty()){
+            Log.d("ONRESUME","재실행");
+            refresh();
+        }
+    }
+
+    private void refresh(){
+        endlessRecyclerViewScrollListener.resetState();
         adapter.removeAll();
         allItems.clear();
-        endlessRecyclerViewScrollListener.resetState();
         isRe = true;
         getSnsList(1);
     }
