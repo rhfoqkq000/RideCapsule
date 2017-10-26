@@ -15,24 +15,12 @@ public class SnsListDTO {
         return items_count;
     }
 
-    public void setItems_count(int items_count) {
-        this.items_count = items_count;
-    }
-
     public int getResult_code() {
         return result_code;
     }
 
-    public void setResult_code(int result_code) {
-        this.result_code = result_code;
-    }
-
     public List<SnsListItem> getResult_body() {
         return result_body;
-    }
-
-    public void setResult_body(List<SnsListItem> result_body) {
-        this.result_body = result_body;
     }
 
 //    public class Result_body {

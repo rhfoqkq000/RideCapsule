@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".sns.write.ActivityImageSelect"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000000"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/filter1"
+            android:src="@drawable/chat"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+        <ImageView
+            android:id="@+id/filter2"
+            android:src="@drawable/chat"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+        <ImageView
+            android:id="@+id/filter3"
+            android:src="@drawable/chat"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/filter4"
+            android:src="@drawable/chat"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+        <ImageView
+            android:id="@+id/filter5"
+            android:src="@drawable/chat"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+        <ImageView
+            android:id="@+id/filter6"
+            android:src="@drawable/chat"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/filter7"
+            android:src="@drawable/chat"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+        <ImageView
+            android:id="@+id/filter8"
+            android:src="@drawable/chat"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+        <ImageView
+            android:id="@+id/filter9"
+            android:src="@drawable/chat"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+    </LinearLayout>
+
+</LinearLayout>
