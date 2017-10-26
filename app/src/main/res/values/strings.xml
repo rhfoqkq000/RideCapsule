@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">travel</string>
+    <string name="app_name">발자취</string>
     <string name="title_tourist">관광지정보</string>
     <string name="title_sns">SNS</string>
     <string name="title_capsule">타임캡슐</string>

@@ -5,6 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F9F8F3"
     tools:context="com.example.horse.travel.MainActivity">
 
     <FrameLayout
@@ -18,8 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:background="#fff"
+        android:background="#F9F8F3"
         app:bb_inActiveTabAlpha="1.9"
-        app:bb_tabXmlResource="@xml/bottombar" />
+        app:bb_tabXmlResource="@xml/bottombar"/>
 
 </RelativeLayout>
