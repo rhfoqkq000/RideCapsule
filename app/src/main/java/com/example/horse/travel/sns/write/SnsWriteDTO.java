@@ -12,15 +12,7 @@ class SnsWriteDTO {
         return result_code;
     }
 
-    public void setResult_code(int result_code) {
-        this.result_code = result_code;
-    }
-
     public String getResult_body() {
         return result_body;
-    }
-
-    public void setResult_body(String result_body) {
-        this.result_body = result_body;
     }
 }

@@ -1,10 +1,11 @@
 package com.example.horse.travel.sns.list;
 
+import android.content.Context;
 import android.content.res.Resources;
-import android.support.v7.widget.LinearLayoutManager;
+import android.media.ImageReader;
+import android.support.annotation.Dimension;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,16 +13,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 import com.example.horse.travel.R;
 import com.example.horse.travel.sns.like.SnsItemLike;
 import com.example.horse.travel.sns.like.SnsItemLikeDTO;
 import com.example.horse.travel.sns.like.SnsItemUnLike;
 import com.example.horse.travel.sns.like.SnsItemUnLikeDTO;
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 import com.volokh.danylo.hashtaghelper.HashTagHelper;
 
+import java.util.Iterator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -35,10 +35,13 @@ import retrofit2.Response;
 
 public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.ViewHolder> {
 
-//    private final String IMG_URL = "http://168.115.8.109:5000/";
-    private final String IMG_URL = "http://220.84.195.101:5000/";
+    private final String IMG_URL = "http://192.168.0.6:5000/";
     private List<SnsListItem> items;
+    private Context context;
 
+    public void setContext(Context context) {
+        this.context = context;
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -51,9 +54,8 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         Resources res = holder.itemView.getContext().getResources();
         final SnsListItem item = items.get(position);
 
-
-//        SpannableString content = new SpannableString(item.getNickname());
-//        content.setSpan(new UnderlineSpan(), 0, item.getNickname().length(), 0);
+//        SpannableString content = new SpannableString(viewpager_item.getNickname());
+//        content.setSpan(new UnderlineSpan(), 0, viewpager_item.getNickname().length(), 0);
 
         String[] imgArr = item.getImgs().split(",");
 
@@ -78,6 +80,22 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         holder.contentTextView.setTag(item.getId());
         holder.sns_good.setText(String.valueOf(item.getLike_count()));
 
+        String[] imgArr2 = {"https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
+                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
+                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
+                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
+                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
+                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
+                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
+                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
+                "https://cloud.githubusercontent.com/assets/24774495/22066926/ae842142-ddc1-11e6-813b-caee856360ff.png",
+                "http://post.phinf.naver.net/MjAxNzEwMTFfMjIz/MDAxNTA3NzA5MDczOTEz.0fB_BKAw7rBnAJ-C4TQIoHRADtVpzXr0sH8rlR_m4-kg.NfcSSgumIvBGCIZcsI3p2ImwrnG4gTReLFukNzzykDkg.JPEG/AP_keynote_2017_wrap-up_iPhone8.jpg?type=w1200"};
+
+
+        SnsImageSlideAdapter testAdapter = new SnsImageSlideAdapter(context, imgArr2);
+        holder.viewPager.setAdapter(testAdapter);
+        holder.indicator.setViewPager(holder.viewPager);
+
         if (item.getLike_user().equals("none")){
             holder.like_users.setVisibility(View.GONE);
         } else if (item.getLike_user().equals(item.getNickname())){
@@ -85,17 +103,11 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         } else {
             holder.like_users.setText(item.getLike_user());
         }
-//        holder.like.setTag(item.getLike_id());
+//        holder.like.setTag(viewpager_item.getLike_id());
 
-        RequestOptions options = new RequestOptions();
-        options.fitCenter().override(Target.SIZE_ORIGINAL, holder.myImageView.getHeight());
+//        RequestOptions options = new RequestOptions();
+//        options.fitCenter().override(Target.SIZE_ORIGINAL, holder.myImageView.getHeight());
 //        options.fitCenter();
-
-        Glide.with(holder.myImageView.getContext())
-                .load(IMG_URL+imgArr[0])
-//                .apply(options)
-//                .apply(bitmapTransform(new BlurTransformation(25)))
-                .into(holder.myImageView);
 
         if (item.getLike_id()!=0){
             Log.d("ID",item.getLike_id()+" | "+position+" | "+item.getLike_id());
@@ -179,17 +191,19 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         TextView contentTextView;
         TextView userIdTextView;
         ImageView like;
-        ImageView myImageView;
         TextView sns_good;
         TextView like_users;
+        CustomPager viewPager;
+        DotsIndicator indicator;
         ViewHolder(View itemView) {
             super(itemView);
             contentTextView = itemView.findViewById(R.id.sns_con);
             userIdTextView = itemView.findViewById(R.id.user_id);
             like = itemView.findViewById(R.id.love);
-            myImageView = itemView.findViewById(R.id.main_img);
             sns_good = itemView.findViewById(R.id.sns_good);
             like_users = itemView.findViewById(R.id.like_users);
+            viewPager = itemView.findViewById(R.id.viewPager);
+            indicator = itemView.findViewById(R.id.dots_indicator);
         }
     }
     public void addNew(List<SnsListItem> items)
