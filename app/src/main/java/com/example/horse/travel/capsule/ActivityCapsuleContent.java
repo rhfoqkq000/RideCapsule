@@ -67,16 +67,6 @@ public class ActivityCapsuleContent extends AppCompatActivity {
     EditText capsule_edit;
     @BindView(R.id.capsule_date)
     Button capsule_date;
-    @BindView(R.id.add_mail_cardview1)
-    CardView add_mail_cardview1;
-    @BindView(R.id.add_mail_cardview2)
-    CardView add_mail_cardview2;
-    @BindView(R.id.add_mail_cardview3)
-    CardView add_mail_cardview3;
-    @BindView(R.id.add_mail_cardview4)
-    CardView add_mail_cardview4;
-    @BindView(R.id.add_mail_cardview5)
-    CardView add_mail_cardview5;
     @BindView(R.id.add_mail_bt1)
     Button add_mail_bt1;
     @BindView(R.id.add_mail_bt2)
@@ -121,39 +111,39 @@ public class ActivityCapsuleContent extends AppCompatActivity {
 
     @OnClick(R.id. add_mail_bt1)
     void add_mail_bt1() {
-        add_mail_cardview1.setVisibility(View.GONE);
+        add_mail_bt1.setVisibility(View.GONE);
         together_mail1.setVisibility(View.VISIBLE);
-        add_mail_cardview2.setVisibility(View.VISIBLE);
+        add_mail_bt2.setVisibility(View.VISIBLE);
         count += 1;
     }
 
     @OnClick(R.id. add_mail_bt2)
     void add_mail_bt2() {
-        add_mail_cardview2.setVisibility(View.GONE);
+        add_mail_bt2.setVisibility(View.GONE);
         together_mail2.setVisibility(View.VISIBLE);
-        add_mail_cardview3.setVisibility(View.VISIBLE);
+        add_mail_bt3.setVisibility(View.VISIBLE);
         count += 1;
     }
 
     @OnClick(R.id. add_mail_bt3)
     void add_mail_bt3() {
-        add_mail_cardview3.setVisibility(View.GONE);
+        add_mail_bt3.setVisibility(View.GONE);
         together_mail3.setVisibility(View.VISIBLE);
-        add_mail_cardview4.setVisibility(View.VISIBLE);
+        add_mail_bt4.setVisibility(View.VISIBLE);
         count += 1;
     }
 
     @OnClick(R.id. add_mail_bt4)
     void add_mail_bt4() {
-        add_mail_cardview4.setVisibility(View.GONE);
+        add_mail_bt4.setVisibility(View.GONE);
         together_mail4.setVisibility(View.VISIBLE);
-        add_mail_cardview5.setVisibility(View.VISIBLE);
+        add_mail_bt5.setVisibility(View.VISIBLE);
         count += 1;
     }
 
     @OnClick(R.id. add_mail_bt5)
     void add_mail_bt5() {
-        add_mail_cardview5.setVisibility(View.GONE);
+        add_mail_bt5.setVisibility(View.GONE);
         together_mail5.setVisibility(View.VISIBLE);
         count += 1;
     }
