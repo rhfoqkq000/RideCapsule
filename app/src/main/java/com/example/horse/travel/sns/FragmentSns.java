@@ -80,25 +80,25 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         adapter.setHasStableIds(true);
         snsRe.setAdapter(adapter);
 
-//        getSnsList(init_page);
+        getSnsList(init_page);
 
-        List<SnsListItem> testList = new ArrayList<>();
-        SnsListItem item = new SnsListItem();
-        item.setEmail("1@1.com");
-        item.setId(9);
-        item.setImgs("1.jpg");
-        item.setLike_count(0);
-        item.setLike_id(9);
-        item.setLike_user("pmkjkr");
-        item.setNickname("pmkjkr1");
-        item.setPost("POST");
-        item.setUpdated_at("0000-00-00");
-        testList.add(item);
+//        List<SnsListItem> testList = new ArrayList<>();
+//        SnsListItem item = new SnsListItem();
+//        item.setEmail("1@1.com");
+//        item.setId(9);
+//        item.setImgs("1.jpg");
+//        item.setLike_count(0);
+//        item.setLike_id(9);
+//        item.setLike_user("pmkjkr");
+//        item.setNickname("pmkjkr1");
+//        item.setPost("POST");
+//        item.setUpdated_at("0000-00-00");
+//        testList.add(item);
 
-        allItems.addAll(testList);
-        int curSize = adapter.getItemCount();
-        adapter.addNew(allItems);
-        adapter.notifyItemRangeChanged(curSize,allItems.size()-1);
+//        allItems.addAll(testList);
+//        int curSize = adapter.getItemCount();
+//        adapter.addNew(allItems);
+//        adapter.notifyItemRangeChanged(curSize,allItems.size()-1);
 
         writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +111,7 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 Log.d("SCROLL","END! | "+page);
-//                getSnsList(page+1);
+                getSnsList(page+1);
             }
         };
         // endless scrolling

@@ -16,10 +16,12 @@ public class SnsImageSlideAdapter extends PagerAdapter{
     private Context context;
     private String[] imgArr;
     private LayoutInflater layoutInflater;
+    private String img_url;
 
-    SnsImageSlideAdapter(Context context, String[] imgArr) {
+    SnsImageSlideAdapter(Context context, String[] imgArr, String img_url) {
         this.context = context;
         this.imgArr = imgArr;
+        this.img_url = img_url;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -50,7 +52,7 @@ public class SnsImageSlideAdapter extends PagerAdapter{
 //        imageView.getLayoutParams().height = height;
 
         // url로부터 이미지 사이즈를 받아서 지정하면 networkOnMainThreadException 발생 스레드 계속 파면 이미지 하나당 만들어져서 에바일듯
-        Glide.with(context).load(imgArr[position]).into(imageView);
+        Glide.with(context).load(img_url+imgArr[position]).into(imageView);
         container.addView(itemView);
 
         return itemView;
