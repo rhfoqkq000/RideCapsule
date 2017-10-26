@@ -52,6 +52,25 @@ public class AreaData {
     String[] junNam = {"강진군","고흥군","곡성군","광양시","구례군","나주시","담양군","목포시","무안군","보성군","순천시","신안군","여수시","영광군","영암군","완도군","장성군","장흥군","진도군"};
     String[] jeJu = {"남제주군","북제주군","서귀포시","제주시"};
 
+    //시 코드, 구(군) 코드
+    String areaCode;
+    String sigunguCode;
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }
+
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setSigunguCode(String sigunguCode) {
+        this.sigunguCode = sigunguCode;
+    }
+    public String getSigunguCode() {
+        return sigunguCode;
+    }
+
     public String[] getCitys() {
         return citys;
     }
@@ -123,4 +142,6 @@ public class AreaData {
     public String[] getJeJu() {
         return jeJu;
     }
+
+
 }
