@@ -36,7 +36,7 @@ import retrofit2.Response;
 
 public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.ViewHolder> {
 
-    private final String IMG_URL = "http://192.168.0.6:5000/";
+    private final String IMG_URL = "http://192.168.0.3:5000/";
     private List<SnsListItem> items;
     private Context context;
     public void setContext(Context context) {
@@ -65,21 +65,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         setImage(holder, item);
 
 
-        String[] imgArr2 = {"https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
-                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
-                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
-                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
-                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
-                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
-                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
-                "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
-                "https://cloud.githubusercontent.com/assets/24774495/22066926/ae842142-ddc1-11e6-813b-caee856360ff.png",
-                "http://post.phinf.naver.net/MjAxNzEwMTFfMjIz/MDAxNTA3NzA5MDczOTEz.0fB_BKAw7rBnAJ-C4TQIoHRADtVpzXr0sH8rlR_m4-kg.NfcSSgumIvBGCIZcsI3p2ImwrnG4gTReLFukNzzykDkg.JPEG/AP_keynote_2017_wrap-up_iPhone8.jpg?type=w1200"};
 
-
-        SnsImageSlideAdapter testAdapter = new SnsImageSlideAdapter(context, imgArr2);
-        holder.viewPager.setAdapter(testAdapter);
-        holder.indicator.setViewPager(holder.viewPager);
 
 //        holder.like.setTag(viewpager_item.getLike_id());
 
@@ -94,11 +80,15 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
 //        options.fitCenter().override(Target.SIZE_ORIGINAL, holder.myImageView.getHeight());
 //        options.fitCenter();
         final String[] imgArr = item.getImgs().split(",");
-        Glide.with(holder.myImageView.getContext())
-                .load(IMG_URL+imgArr[0])
-//                .apply(options)
-//                .apply(bitmapTransform(new BlurTransformation(25)))
-                .into(holder.myImageView);
+
+        SnsImageSlideAdapter testAdapter = new SnsImageSlideAdapter(context, imgArr,IMG_URL);
+        holder.viewPager.setAdapter(testAdapter);
+        holder.indicator.setViewPager(holder.viewPager);
+//        Glide.with(holder.myImageView.getContext())
+//                .load(IMG_URL+imgArr[0])
+////                .apply(options)
+////                .apply(bitmapTransform(new BlurTransformation(25)))
+//                .into(holder.myImageView);
     }
 
     private void setLike(final ViewHolder holder, final SnsListItem item, int position) {
