@@ -17,9 +17,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.horse.travel.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,10 +40,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FragmentTourist extends Fragment {
 
-    @BindView(R.id.tour_title1)
-    TextView tour_title1;
-    @BindView(R.id.tour_title2)
-    TextView tour_title2;
+    @BindView(R.id.weather_sky)
+    TextView weather_sky;
+    @BindView(R.id.weather_tem)
+    TextView weather_tem;
 
     @BindView(R.id.city)
     Button cityBtn;
@@ -54,8 +58,18 @@ public class FragmentTourist extends Fragment {
         townDialog(region);
     }
 
+    @BindView(R.id.weather_img)
+    ImageView weatherImg;
+
+    @BindView(R.id.festival_title1)
+    TextView festival_title1;
+    @BindView(R.id.festival_title2)
+    TextView festival_title2;
+
     @BindView(R.id.pager)
     ViewPager mViewPager;
+
+
 
 
     AreaData areaData = new AreaData();
@@ -69,6 +83,8 @@ public class FragmentTourist extends Fragment {
         ButterKnife.bind(this, rootview);
         //날씨 불러옴
         setWeather(areaData.getLat(), areaData.getLon());
+        //축제 불러옴
+        festivalRetrofit();
         //프레그먼트 생성
         //fragment_create(areaData.citys);
         return rootview;
@@ -96,6 +112,7 @@ public class FragmentTourist extends Fragment {
                         // 각 리스트를 선택했을때
                         setLatAndLonOfCity(region[whichButton]);
                         cityBtn.setText(region[whichButton]);
+                        townBtn.setText("전체");
                     }
                 }).setPositiveButton("선택",
                 new DialogInterface.OnClickListener() {
@@ -148,10 +165,12 @@ public class FragmentTourist extends Fragment {
             public void onResponse(Call<WeatherRepo> call, Response<WeatherRepo> response) {
                 //현재온도
                 Log.i("MainActivity", response.body().getWeather().getHourly().get(0).getTemperature().getTc());
-                tour_title1.setText(response.body().getWeather().getHourly().get(0).getTemperature().getTc());
+                weather_sky.setText(response.body().getWeather().getHourly().get(0).getTemperature().getTc());
                 //현재 하늘 상태
                 Log.i("MainActivity", response.body().getWeather().getHourly().get(0).getSky().getName());
-                tour_title2.setText(response.body().getWeather().getHourly().get(0).getSky().getName());
+                weather_tem.setText(response.body().getWeather().getHourly().get(0).getSky().getName());
+                //하늘 상태에 따른 이미지
+                setWeatherImg(response.body().getWeather().getHourly().get(0).getSky().getName());
             }
 
             @Override
@@ -185,6 +204,54 @@ public class FragmentTourist extends Fragment {
         areaData.setLat(lat);
         areaData.setLon(lon);
         this.region = region;
+    }
+
+    private void setWeatherImg(String currentWeather){
+        /*Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy:MM:dd-hh:mm:ss");
+        String time = dateFormat.format(date).toString();
+        Log.e("날씨", time);*/
+        switch (currentWeather) {
+            case "맑음" : weatherImg.setImageResource(R.drawable.weather01); break;
+            case "구름조금" : weatherImg.setImageResource(R.drawable.weather02); break;
+            case "구름많음" : weatherImg.setImageResource(R.drawable.weather03); break;
+            case "구름많고 비" : weatherImg.setImageResource(R.drawable.weather12); break;
+            case "구름많고 눈" : weatherImg.setImageResource(R.drawable.weather13); break;
+            case "구름많고 비 또는 눈" : weatherImg.setImageResource(R.drawable.weather14); break;
+            case "흐림" : weatherImg.setImageResource(R.drawable.weather18); break;
+            case "흐리고 비" : weatherImg.setImageResource(R.drawable.weather21); break;
+            case "흐리고 눈" : weatherImg.setImageResource(R.drawable.weather32); break;
+            case "흐리고 비 또는 눈" : weatherImg.setImageResource(R.drawable.weather04); break;
+            case "흐리고 낙뢰" : weatherImg.setImageResource(R.drawable.weather29); break;
+            case "뇌우, 비" : weatherImg.setImageResource(R.drawable.weather26); break;
+            case "뇌우, 눈" : weatherImg.setImageResource(R.drawable.weather27); break;
+            case "뇌우, 비또는 눈" : weatherImg.setImageResource(R.drawable.weather28); break;
+            default:  weatherImg.setImageResource(R.drawable.weather38);
+        }
+    }
+    public void festivalRetrofit() {
+        Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        FestivalRepo.FestivalAppInterface festialService = client.create(FestivalRepo.FestivalAppInterface.class);
+        //요청 파라미터 입력
+        Call<FestivalRepo> call = festialService.get_festival_retrofit("mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "2", "1", "AND", "TourList", "A", "Y", "1", "1", "20171001", "json");
+
+        call.enqueue(new Callback<FestivalRepo>() {
+            @Override
+            public void onResponse(Call<FestivalRepo> call, Response<FestivalRepo> response) {
+                //파라미터 받아서 처리하기
+                Log.d("MainActivity", response.raw().request().url().toString()); // uri 출력
+                Log.d("MainActivity", response.body().getResponse().getHeader().getResultMsg());
+                festival_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
+                festival_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
+            }
+
+            @Override
+            public void onFailure(Call<FestivalRepo> call, Throwable t) {
+                t.printStackTrace();
+            }
+
+        });
     }
 
 /*    private void fragment_create(String[] city) {
