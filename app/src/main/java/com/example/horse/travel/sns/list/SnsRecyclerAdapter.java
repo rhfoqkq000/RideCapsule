@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
+import com.example.horse.travel.EndlessRecyclerViewScrollListener;
 import com.example.horse.travel.R;
 import com.example.horse.travel.sns.like.SnsItemLike;
 import com.example.horse.travel.sns.like.SnsItemLikeDTO;
@@ -72,9 +73,6 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         setLike(holder,item, position);
         setImage(holder, item);
 
-
-
-
 //        holder.like.setTag(viewpager_item.getLike_id());
 
 //        RequestOptions options = new RequestOptions();
@@ -89,7 +87,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
 //        options.fitCenter();
         final String[] imgArr = item.getImgs().split(",");
 
-        SnsImageSlideAdapter testAdapter = new SnsImageSlideAdapter(context, imgArr,IMG_URL,glide);
+        SnsImageSlideAdapter testAdapter = new SnsImageSlideAdapter(context, imgArr,IMG_URL, glide);
         holder.viewPager.setAdapter(testAdapter);
         holder.indicator.setViewPager(holder.viewPager);
 //        Glide.with(holder.myImageView.getContext())
@@ -101,10 +99,10 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
 
     private void setLike(final ViewHolder holder, final SnsListItem item, int position) {
         if (item.getLike_id()!=0){
-            Log.d("ID",item.getLike_id()+" | "+position+" | "+item.getLike_id());
+            Log.d("ID!=0",item.getLike_id()+" | "+position+" | "+item.getLike_id());
             holder.like.setImageResource(R.drawable.like);
         } else {
-            Log.d("ID",item.getLike_id()+" | "+position+" | "+item.getLike_id());
+            Log.d("ID=0",item.getLike_id()+" | "+position+" | "+item.getLike_id());
         }
 
         holder.sns_good.setText(String.valueOf(item.getLike_count()));
@@ -243,7 +241,6 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
     }
     public void removeAll(){
         this.items = null;
-        notifyDataSetChanged();
     }
 
     private Call<SnsItemLikeDTO> like(String content_id,String user_id){

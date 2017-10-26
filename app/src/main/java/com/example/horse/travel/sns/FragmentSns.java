@@ -141,12 +141,6 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
     public void onRefresh() {
         adapter.removeAll();
         allItems.clear();
-//        adapter = null;
-//        adapter = new SnsRecyclerAdapter();
-//        adapter.setContext(getContext());
-//        adapter.setHasStableIds(true);
-//        allItems = null;
-//        allItems = new ArrayList<>();
         endlessRecyclerViewScrollListener.resetState();
         isRe = true;
         getSnsList(1);

@@ -271,6 +271,9 @@ public class ActivityImageSelect extends AppCompatActivity {
         BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o);
         BitmapFactory.Options o2 = new BitmapFactory.Options();
         o2.inSampleSize = 2;
-        return BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o2);
+        Bitmap bitmap = BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o2);
+        // 1560, 3120
+        Log.e("FFFFFFF", String.valueOf(bitmap.getWidth()));
+        return bitmap;
     }
 }
