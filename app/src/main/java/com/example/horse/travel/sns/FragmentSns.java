@@ -172,5 +172,4 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         isRe = true;
         getSnsList(1);
     }
-
 }

@@ -78,9 +78,6 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         setLike(holder,item, position);
         setImage(holder, item);
 
-
-
-
 //        holder.like.setTag(viewpager_item.getLike_id());
 
 //        RequestOptions options = new RequestOptions();
@@ -255,7 +252,6 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
     public void removeAll(){
         this.items.clear();
         this.items = null;
-//        notifyDataSetChanged();
     }
 
     private Call<SnsItemLikeDTO> like(String content_id,String user_id){
