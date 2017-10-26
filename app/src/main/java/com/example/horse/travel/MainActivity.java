@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     Fragment active;
     Fragment fragmentSample = FragmentSample.newInstance(1);
-    Fragment fragmentSns = FragmentSns.newInstance(2);
+    Fragment fragmentSamplee = FragmentSample.newInstance(2);
+//    Fragment fragmentSns = FragmentSns.newInstance(2);
     Fragment fragmentCapsule = FragmentCapsule.newInstance(3);
     Fragment fragmentInn = FragmentInn.newInstance(4);
     Fragment fragmentMypage = FragmentMypage.newInstance(5);
@@ -113,8 +114,8 @@ public class MainActivity extends AppCompatActivity {
                     active = fragmentSample;
                         break;
                     case R.id.bottom_sns:
-                        hideShowFragment(active, fragmentSns);
-                        active = fragmentSns;
+                        hideShowFragment(active, fragmentSamplee);
+                        active = fragmentSamplee;
                         break;
                     case R.id.bottom_capsule:
                         hideShowFragment(active, fragmentCapsule);
@@ -148,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
     //Add all the fragments that need to be added and hidden. Also, add the one that is supposed to be the starting one, that one is not hidden.
     private void createFragments() {
         addHideFragment(fragmentSample);
-        addHideFragment(fragmentSns);
+        addHideFragment(fragmentSamplee);
         addHideFragment(fragmentCapsule);
         addHideFragment(fragmentInn);
         addHideFragment(fragmentMypage);
