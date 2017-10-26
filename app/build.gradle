@@ -75,4 +75,6 @@ dependencies {
     compile group: 'com.squareup.retrofit2', name: 'converter-scalars', version: '2.3.0'
 
     compile 'com.tbuonomo.andrui:viewpagerdotsindicator:1.0.1'
+    // search text view
+    compile 'com.github.arimorty:floatingsearchview:2.1.1'
 }
