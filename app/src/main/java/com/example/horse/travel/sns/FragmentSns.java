@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.horse.travel.ApiClient;
 import com.example.horse.travel.EndlessRecyclerViewScrollListener;
 import com.example.horse.travel.R;
@@ -49,6 +50,13 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         return fragment;
     }
 
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        Glide.get(getContext()).clearMemory();
+
+    }
+
     @BindView(R.id.writeBtn)
     Button writeBtn;
 
@@ -70,35 +78,19 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootview = inflater.inflate(R.layout.fragment_sns, container, false);
         ButterKnife.bind(this, rootview);
+
         swipeRefreshLayout.setOnRefreshListener(this);
         allItems = new ArrayList<>();
+
         // recyclerview init
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         snsRe.setLayoutManager(layoutManager);
-        adapter = new SnsRecyclerAdapter();
+        adapter = new SnsRecyclerAdapter(Glide.with(this));
         adapter.setContext(getContext());
         adapter.setHasStableIds(true);
         snsRe.setAdapter(adapter);
 
         getSnsList(init_page);
-
-//        List<SnsListItem> testList = new ArrayList<>();
-//        SnsListItem item = new SnsListItem();
-//        item.setEmail("1@1.com");
-//        item.setId(9);
-//        item.setImgs("1.jpg");
-//        item.setLike_count(0);
-//        item.setLike_id(9);
-//        item.setLike_user("pmkjkr");
-//        item.setNickname("pmkjkr1");
-//        item.setPost("POST");
-//        item.setUpdated_at("0000-00-00");
-//        testList.add(item);
-
-//        allItems.addAll(testList);
-//        int curSize = adapter.getItemCount();
-//        adapter.addNew(allItems);
-//        adapter.notifyItemRangeChanged(curSize,allItems.size()-1);
 
         writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override

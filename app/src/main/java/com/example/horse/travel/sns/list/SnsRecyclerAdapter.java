@@ -14,6 +14,8 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.RequestManager;
 import com.example.horse.travel.R;
 import com.example.horse.travel.sns.like.SnsItemLike;
 import com.example.horse.travel.sns.like.SnsItemLikeDTO;
@@ -39,6 +41,12 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
     private final String IMG_URL = "http://192.168.0.3:5000/";
     private List<SnsListItem> items;
     private Context context;
+    private RequestManager glide;
+
+    public SnsRecyclerAdapter(RequestManager glide) {
+        this.glide=glide;
+    }
+
     public void setContext(Context context) {
         this.context = context;
     }
@@ -81,7 +89,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
 //        options.fitCenter();
         final String[] imgArr = item.getImgs().split(",");
 
-        SnsImageSlideAdapter testAdapter = new SnsImageSlideAdapter(context, imgArr,IMG_URL);
+        SnsImageSlideAdapter testAdapter = new SnsImageSlideAdapter(context, imgArr,IMG_URL,glide);
         holder.viewPager.setAdapter(testAdapter);
         holder.indicator.setViewPager(holder.viewPager);
 //        Glide.with(holder.myImageView.getContext())

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.example.horse.travel.R;
 
 public class SnsImageSlideAdapter extends PagerAdapter{
@@ -17,11 +18,13 @@ public class SnsImageSlideAdapter extends PagerAdapter{
     private String[] imgArr;
     private LayoutInflater layoutInflater;
     private String img_url;
+    private RequestManager glide;
 
-    SnsImageSlideAdapter(Context context, String[] imgArr, String img_url) {
+    SnsImageSlideAdapter(Context context, String[] imgArr, String img_url, RequestManager glide) {
         this.context = context;
         this.imgArr = imgArr;
         this.img_url = img_url;
+        this.glide = glide;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -52,7 +55,7 @@ public class SnsImageSlideAdapter extends PagerAdapter{
 //        imageView.getLayoutParams().height = height;
 
         // url로부터 이미지 사이즈를 받아서 지정하면 networkOnMainThreadException 발생 스레드 계속 파면 이미지 하나당 만들어져서 에바일듯
-        Glide.with(context).load(img_url+imgArr[position]).into(imageView);
+        glide.load(img_url+imgArr[position]).into(imageView);
         container.addView(itemView);
 
         return itemView;
