@@ -86,8 +86,6 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
 
         ButterKnife.bind(this, rootview);
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-
         swipeRefreshLayout.setOnRefreshListener(this);
         allItems = new ArrayList<>();
 
