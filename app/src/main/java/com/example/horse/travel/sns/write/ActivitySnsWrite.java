@@ -3,6 +3,7 @@ package com.example.horse.travel.sns.write;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -87,7 +88,7 @@ public class ActivitySnsWrite extends AppCompatActivity {
             try {
                 File file = new File(getPath(path.get(i)));
                 //compressor = 이미지 용량 줄여줌 화질이나 사이즈 변화가 얼마나 있는지는 아직 확인안함
-                File compressedImageFile = new Compressor(this).compressToFile(file);
+                File compressedImageFile = new Compressor(this).setQuality(75).compressToFile(file);
 //                  Log.e("AFTER RESIZING SIZE OF FILE"+i, String.valueOf(compressedImageFile.length()/1024));
                 imgFileArr.add(compressedImageFile);
             } catch (Exception e) {
