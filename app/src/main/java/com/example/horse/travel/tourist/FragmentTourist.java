@@ -92,12 +92,6 @@ public class FragmentTourist extends Fragment {
     @BindView(R.id.arts_title4) TextView arts_title4;
     @BindView(R.id.arts_title5) TextView arts_title5;
 
-    @BindView(R.id.natual_title1) TextView natual_title1;
-    @BindView(R.id.natual_title2) TextView natual_title2;
-    @BindView(R.id.natual_title3) TextView natual_title3;
-    @BindView(R.id.natual_title4) TextView natual_title4;
-    @BindView(R.id.natual_title5) TextView natual_title5;
-
     @BindView(R.id.sports_title1) TextView sports_title1;
     @BindView(R.id.sports_title2) TextView sports_title2;
     @BindView(R.id.sports_title3) TextView sports_title3;
@@ -138,7 +132,6 @@ public class FragmentTourist extends Fragment {
         tourRetrofit(false, "C01"); //여행코스
         tourRetrofit(false, "A05"); //맛집
         tourRetrofit(false, "A02"); //예술, 문화, 역사
-        tourRetrofit(false, "A01"); //자연
         tourRetrofit(false, "A03"); //레포츠
         tourRetrofit(false, "A04"); //쇼핑
         return rootview;
@@ -177,7 +170,6 @@ public class FragmentTourist extends Fragment {
                         tourRetrofit(false, "C01"); //여행코스
                         tourRetrofit(false, "A05"); //맛집
                         tourRetrofit(false, "A02"); //예술, 문화, 역사
-                        tourRetrofit(false, "A01"); //자연
                         tourRetrofit(false, "A03"); //레포츠
                         tourRetrofit(false, "A04"); //쇼핑
                         festivalRetrofit(false);
@@ -337,7 +329,6 @@ public class FragmentTourist extends Fragment {
                 case "C01" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "25", areaData.getAreaCode(), cat, "json");break;
                 case "A05" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "39", areaData.getAreaCode(), cat, "json");break;
                 case "A02" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "12", areaData.getAreaCode(), cat, "json");break;
-                case "A01" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "12", areaData.getAreaCode(), cat, "json");break;
                 case "A03" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "28", areaData.getAreaCode(), cat, "json");break;
                 case "A04" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "38", areaData.getAreaCode(), cat, "json");break;
                 default: call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "12", areaData.getAreaCode(), cat, "json");break;
@@ -347,7 +338,6 @@ public class FragmentTourist extends Fragment {
                 case "C01": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "25", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
                 case "A05": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "39", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
                 case "A02": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "12", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
-                case "A01": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "12", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
                 case "A03": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "28", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
                 case "A04": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "38", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
                 default: call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "12", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
@@ -379,13 +369,6 @@ public class FragmentTourist extends Fragment {
                         arts_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
                         arts_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
                         arts_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
-                        break;
-                    case "A01" :
-                        natual_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
-                        natual_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
-                        natual_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
-                        natual_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
-                        natual_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
                         break;
                     case "A03" :
                         sports_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
