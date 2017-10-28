@@ -42,7 +42,7 @@ import retrofit2.Response;
 
 public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.ViewHolder> {
 
-    private final String IMG_URL = "http://192.168.0.3:5000/";
+    private final String IMG_URL = "http://220.84.195.101:5000/";
     private List<SnsListItem> items;
     private Context context;
     private RequestManager glide;
@@ -105,7 +105,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
     private void setLike(final ViewHolder holder, final SnsListItem item, int position) {
         if (item.getLike_id()!=0){
             Log.d("ID",item.getLike_id()+" | "+position+" | "+item.getPost());
-            glide.load(R.drawable.like).into(holder.like);
+            glide.load(R.drawable.go).into(holder.like);
 //            holder.like.setImageResource(R.drawable.like);
         } else {
             Log.d("ID",item.getLike_id()+" | "+position+" | "+item.getPost());
@@ -134,7 +134,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
                             if (response.body().getResult_code()==200){
                                 Log.d("Result","LIKE_SUCCESS!!");
 //                                holder.like.setImageResource(R.drawable.like);
-                                glide.load(R.drawable.like).into(holder.like);
+                                glide.load(R.drawable.go).into(holder.like);
                                 holder.sns_good.setText(String.valueOf(item.getLike_count()+1));
                                 item.setLike_id(response.body().getResult_body());
                                 item.setLike_count(item.getLike_count()+1);
