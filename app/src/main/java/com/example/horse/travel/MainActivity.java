@@ -12,6 +12,8 @@ import com.example.horse.travel.tourist.FragmentTourist;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        JodaTimeAndroid.init(this);
 
 
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {

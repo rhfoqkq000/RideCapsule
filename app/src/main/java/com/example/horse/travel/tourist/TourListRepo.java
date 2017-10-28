@@ -302,6 +302,7 @@ public class TourListRepo {
         Call<TourListRepo> get_tour_retrofit(@Query("numOfRows") String numOfRows, @Query("pageNo") String pageNo, @Query("MobileOS") String MobileOS, @Query("MobileApp") String MobileApp, @Query("ServiceKey") String ServiceKey,
                                              @Query("listYN") String listYN, @Query("arrange") String arrange, @Query("contentTypeId") String contentTypeId, @Query("areaCode") String areaCode,
                                              @Query("_type") String type);
+        @GET("/openapi/service/rest/KorService/areaBasedList")
         Call<TourListRepo> get_tour_retrofit(@Query("numOfRows") String numOfRows, @Query("pageNo") String pageNo, @Query("MobileOS") String MobileOS, @Query("MobileApp") String MobileApp, @Query("ServiceKey") String ServiceKey,
                                              @Query("listYN") String listYN, @Query("arrange") String arrange, @Query("contentTypeId") String contentTypeId, @Query("areaCode") String areaCode, @Query("sigunguCode") String sigunguCode,
                                              @Query("_type") String type);

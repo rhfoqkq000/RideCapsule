@@ -1,17 +1,10 @@
 package com.example.horse.travel.tourist;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +15,12 @@ import android.widget.TextView;
 
 import com.example.horse.travel.R;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +33,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by horse on 2017. 10. 9..
+ * -1028
+ * sigunguCode도 설정해서 get~으로 설정
+ * ㅇ 축제 데이터 받아올 때 startDate 뭘로 할 지 결정(ex.현재데이터 두달전), endDate 어떻게 할 지 결정 (ex.오늘보다 작은 수)
+ * 검색 버튼을 넣을 지, 아니면 다이얼로그 선택할 때마다 새로 가져올 지
+ * 날씨 고정해놓음 ( 트래픽 때문에)
+ * 옆으로 넘기는 거 찾아보기
  */
 
 public class FragmentTourist extends Fragment {
@@ -82,12 +85,17 @@ public class FragmentTourist extends Fragment {
     @BindView(R.id.tour_title5)
     TextView tour_title5;
 
+    @BindView(R.id.areaCodeTest)
+    TextView areaCodeTest;
+    @BindView(R.id.sigunguCodeTest)
+    TextView sigunguCodeTest;
+
     @BindView(R.id.pager)
     ViewPager mViewPager;
 
     AreaData areaData = new AreaData();
-
-
+    String minusTwoMonths;
+    String minusOneDay;
     public FragmentTourist() {
 //        Required empty public constructor
     }
@@ -95,12 +103,19 @@ public class FragmentTourist extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_tourist, container, false);
         ButterKnife.bind(this, rootview);
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyyMMdd");
+        minusTwoMonths = fmt.print(DateTime.now().minusMonths(2));
+        minusOneDay = fmt.print(DateTime.now().minusDays(1));
         //날씨 불러옴
-        weatherRetrofit(areaData.getLat(), areaData.getLon());
+        //weatherRetrofit(areaData.getLat(), areaData.getLon());
         //축제 불러옴
-        festivalRetrofit();
+        festivalRetrofit(false);
         //여행지 불러옴
-        tourRetrofit();
+        tourRetrofit(false);
+        //areaCode
+        areaCodeRetrofit();
+
+
         //프레그먼트 생성
         //fragment_create(areaData.citys);
         return rootview;
@@ -134,8 +149,10 @@ public class FragmentTourist extends Fragment {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         // 선택 버튼 클릭시 , 여기서 선택한 값을 메인 Activity 로 넘기면 된다.
-                        weatherRetrofit(areaData.getLat(), areaData.getLon());
-
+                        //weatherRetrofit(areaData.getLat(), areaData.getLon());
+                        areaCodeRetrofit();
+                        tourRetrofit(false);
+                        festivalRetrofit(false);
                     }
                 }).setNegativeButton("취소",
                 new DialogInterface.OnClickListener() {
@@ -159,8 +176,8 @@ public class FragmentTourist extends Fragment {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         // 선택 버튼 클릭시 , 여기서 선택한 값을 메인 Activity 로 넘기면 된다.
-                        weatherRetrofit(areaData.getLat(), areaData.getLon());
-
+                        tourRetrofit(true);
+                        festivalRetrofit(true);
                     }
                 }).setNegativeButton("취소",
                 new DialogInterface.OnClickListener() {
@@ -193,26 +210,6 @@ public class FragmentTourist extends Fragment {
             case "제주도" : setLatAndLonAndRegion("33.364805", "126.542671", areaData.getJeJu()); areaData.setAreaCode("39"); break;
 
         }
-        /*if (selectCity.equals("서울특별시")) {
-            setLatAndLonAndRegion("37.540705","126.956764", areaData.getSeoUl());
-            areaData.setAreaCode("1");
-        }
-        else if (selectCity.equals("경기도")) setLatAndLonAndRegion("37.567167","127.190292", areaData.getGyeongGi()); areaData.setAreaCode("31");
-        else if (selectCity.equals("강원도")) setLatAndLonAndRegion("37.555837", "128.209315", areaData.getGangWon()); areaData.setAreaCode("32");
-        else if (selectCity.equals("부산광역시")) setLatAndLonAndRegion("35.198362", "129.053922",areaData.getBuSan()); areaData.setAreaCode("6");
-        else if (selectCity.equals("인천광역시")) setLatAndLonAndRegion("37.469221", "126.573234",areaData.getInChen());areaData.setAreaCode("2");
-        else if (selectCity.equals("대구광역시")) setLatAndLonAndRegion("35.798838", "128.583052",areaData.getDaeGu()); areaData.setAreaCode("4");
-        else if (selectCity.equals("대전광역시")) setLatAndLonAndRegion("36.321655", "127.378953",areaData.getDaeJun()); areaData.setAreaCode("3");
-        else if (selectCity.equals("광주광역시")) setLatAndLonAndRegion("35.126033", "126.831302",areaData.getGwangJu()); areaData.setAreaCode("5");
-        else if (selectCity.equals("울산광역시")) setLatAndLonAndRegion("35.519301", "129.239078", areaData.getUlSan()); areaData.setAreaCode("7");
-        else if (selectCity.equals("세종특별자치시")) setLatAndLonAndRegion("36.483066", "127.289808",areaData.getSeJong()); areaData.setAreaCode("8");
-        else if (selectCity.equals("충청북도")) setLatAndLonAndRegion("36.628503", "127.929344",areaData.getChungBuk()); areaData.setAreaCode("33");
-        else if (selectCity.equals("충청남도")) setLatAndLonAndRegion("36.557229", "126.779757",areaData.getChungNam()); areaData.setAreaCode("34");
-        else if (selectCity.equals("경상북도")) setLatAndLonAndRegion("36.248647", "128.664734",areaData.getGyeongBuk());areaData.setAreaCode("35");
-        else if (selectCity.equals("경상남도")) setLatAndLonAndRegion("35.259787", "128.664734",areaData.getGyeongNam()); areaData.setAreaCode("36");
-        else if (selectCity.equals("전라북도")) setLatAndLonAndRegion("35.716705", "127.144185",areaData.getJunBuk()); areaData.setAreaCode("37");
-        else if (selectCity.equals("전라남도")) setLatAndLonAndRegion("34.819400", "126.893113",areaData.getJunNam()); areaData.setAreaCode("38");
-        else if (selectCity.equals("제주도")) setLatAndLonAndRegion("33.364805", "126.542671", areaData.getJeJu()); areaData.setAreaCode("39");*/
     }
     private void setLatAndLonAndRegion(String lat, String lon, String[] region) {
         areaData.setLat(lat);
@@ -269,13 +266,17 @@ public class FragmentTourist extends Fragment {
         });
     }
 
-    public void festivalRetrofit() {
+    public void festivalRetrofit(boolean siSelect) {
         Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         FestivalRepo.FestivalAppInterface festialService = client.create(FestivalRepo.FestivalAppInterface.class);
-        //요청 파라미터 입력
-        Call<FestivalRepo> call = festialService.get_festival_retrofit("mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "5", "1", "AND", "TourList", "A", "Y", "1", "20171001", "json");
-
+        //시가 선택됐을 때는 true, 시가 선택되지 않았을 때는 false
+        Call<FestivalRepo> call;
+        if(siSelect != true) {
+            call = festialService.get_festival_retrofit("mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "5", "1", "AND", "TourList", "B", "Y", areaData.getAreaCode(), minusTwoMonths,minusOneDay, "json");
+        } else {
+            call = festialService.get_festival_retrofit("mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "5", "1", "AND", "TourList", "B", "Y", areaData.getAreaCode(), "1",  minusTwoMonths,minusOneDay, "json");
+        }
         call.enqueue(new Callback<FestivalRepo>() {
             @Override
             public void onResponse(Call<FestivalRepo> call, Response<FestivalRepo> response) {
@@ -296,13 +297,17 @@ public class FragmentTourist extends Fragment {
 
         });
     }
-    public void tourRetrofit() {
+    public void tourRetrofit(boolean siSelect) {
         Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         TourListRepo.TourListAppInterface tourService = client.create(TourListRepo.TourListAppInterface.class);
-        //요청 파라미터 입력
-        Call<TourListRepo> call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "A", "12", "1", "json");
-
+        //시가 선택됐을 때는 true, 시가 선택되지 않았을 때는 false
+        Call<TourListRepo> call;
+        if(siSelect != true) {
+             call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "12", areaData.getAreaCode(), "json");
+        } else {
+             call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "12", areaData.getAreaCode(), "2", "json");
+        }
         call.enqueue(new Callback<TourListRepo>() {
             @Override
             public void onResponse(Call<TourListRepo> call, Response<TourListRepo> response) {
@@ -337,7 +342,8 @@ public class FragmentTourist extends Fragment {
                 //파라미터 받아서 처리하기
                 Log.d("MainActivity", response.raw().request().url().toString()); // uri 출력
                 Log.d("MainActivity", response.body().getResponse().getHeader().getResultMsg());
-
+                areaCodeTest.setText(areaData.getAreaCode());
+                sigunguCodeTest.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getName());
             }
 
             @Override

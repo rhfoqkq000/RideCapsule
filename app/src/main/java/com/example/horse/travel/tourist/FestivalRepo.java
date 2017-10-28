@@ -306,9 +306,11 @@ public class FestivalRepo {
                                                  @Query("arrange") String arrange, @Query("listYN") String listYN, @Query("areaCode") String areaCode,
                                                  @Query("eventStartDate") String eventStartDate, @Query("_type") String type);
         //시, 구로 조회
+        @GET("/openapi/service/rest/KorService/areaBasedList")
         Call<FestivalRepo> get_festival_retrofit(@Query("ServiceKey") String ServiceKey, @Query("numOfRows") String numOfRows, @Query("pageNo") String pageNo, @Query("MobileOS") String MobileOS, @Query("MobileApp") String MobileApp,
                                                  @Query("arrange") String arrange, @Query("listYN") String listYN, @Query("areaCode") String areaCode, @Query("sigunguCode") String sigunguCode,
                                                  @Query("eventStartDate") String eventStartDate, @Query("_type") String type);
+        @GET("/openapi/service/rest/KorService/areaBasedList")
         Call<FestivalRepo> get_festival_retrofit(@Query("ServiceKey") String ServiceKey, @Query("numOfRows") String numOfRows, @Query("pageNo") String pageNo, @Query("MobileOS") String MobileOS, @Query("MobileApp") String MobileApp,
                                                  @Query("arrange") String arrange, @Query("listYN") String listYN, @Query("areaCode") String areaCode, @Query("sigunguCode") String sigunguCode,
                                                  @Query("eventStartDate") String eventStartDate, @Query("eventEndDate") String eventEndDate, @Query("_type") String type);
