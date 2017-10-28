@@ -1,14 +1,11 @@
 package com.example.horse.travel.sns;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,8 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.example.horse.travel.ApiClient;
 import com.example.horse.travel.EndlessRecyclerViewScrollListener;
 import com.example.horse.travel.R;
@@ -60,7 +57,7 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
     public void onLowMemory() {
         super.onLowMemory();
         Glide.get(getContext()).clearMemory();
-
+        Log.d("MEM_FragmentSns","LOW!");
     }
 
     @BindView(R.id.writeBtn)
@@ -86,16 +83,19 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
 
         ButterKnife.bind(this, rootview);
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-
         swipeRefreshLayout.setOnRefreshListener(this);
         allItems = new ArrayList<>();
 
         // recyclerview init
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setInitialPrefetchItemCount(10);
+        layoutManager.setItemPrefetchEnabled(true);
         snsRe.setLayoutManager(layoutManager);
-        RequestOptions options = new RequestOptions().placeholder(R.drawable.image_loding);
+        snsRe.getRecycledViewPool().setMaxRecycledViews(0,10);
+
+        RequestOptions options = new RequestOptions().placeholder(R.drawable.image_loding).error(R.mipmap.ic_launcher);
         adapter = new SnsRecyclerAdapter(Glide.with(this),options);
+
         adapter.setContext(getContext());
         adapter.setHasStableIds(true);
         snsRe.setAdapter(adapter);
@@ -112,7 +112,7 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
 
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+            public void onLoadMore(final int page, int totalItemsCount, RecyclerView view) {
                 Log.d("SCROLL","END! | "+page);
                 getSnsList(page+1);
             }
@@ -133,6 +133,7 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
                     allItems.addAll(response.body().getResult_body());
                     int curSize = adapter.getItemCount();
                     adapter.addNew(allItems);
+                    snsRe.getRecycledViewPool().setMaxRecycledViews(0,allItems.size());
                     if (isRe){
                         adapter.notifyDataSetChanged();
                     } else {
@@ -160,17 +161,19 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
     @Override
     public void onResume() {
         super.onResume();
-        if (adapter != null && !allItems.isEmpty()){
             Log.d("ONRESUME","재실행");
             refresh();
-        }
+
     }
 
     private void refresh(){
+        if (adapter != null && !allItems.isEmpty()){
         endlessRecyclerViewScrollListener.resetState();
         adapter.removeAll();
         allItems.clear();
         isRe = true;
+            snsRe.getRecycledViewPool().setMaxRecycledViews(0,10);
         getSnsList(1);
+        }
     }
 }

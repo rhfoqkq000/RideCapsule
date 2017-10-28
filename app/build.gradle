@@ -2,10 +2,10 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.example.horse.travel"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -43,7 +43,6 @@ dependencies {
     compile 'id.zelory:compressor:2.1.0'
 //    image
     compile 'com.github.bumptech.glide:glide:4.2.0'
-
     compile 'jp.wasabeef:glide-transformations:3.0.1'
     // If you want to use the GPU Filters
     compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'

@@ -5,6 +5,7 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.example.horse.travel.capsule.FragmentCapsule;
@@ -34,12 +35,15 @@ public class MainActivity extends AppCompatActivity {
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
         Glide.get(this).trimMemory(level);
+        Log.d("MEM_Main","Trim!");
+
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
         Glide.get(this).clearMemory();
+        Log.d("MEM_Main","LOW!");
     }
 
     //    butterknife 각 layout에서 id연결

@@ -3,6 +3,7 @@ package com.example.horse.travel.sns.list;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,22 +13,23 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.horse.travel.R;
+import com.example.horse.travel.UrlSingleton;
+import com.squareup.picasso.Picasso;
 
 public class SnsImageSlideAdapter extends PagerAdapter{
-
+    private final String IMG_URL = UrlSingleton.getInstance().getSERVER_URL();
     private Context context;
     private String[] imgArr;
     private LayoutInflater layoutInflater;
-    private String img_url;
     private RequestManager glide;
     private RequestOptions options;
 
-    SnsImageSlideAdapter(Context context, String[] imgArr, String img_url, RequestManager glide, RequestOptions options) {
+    SnsImageSlideAdapter(Context context, String[] imgArr, RequestManager glide, RequestOptions options) {
         this.context = context;
         this.imgArr = imgArr;
-        this.img_url = img_url;
         this.glide = glide;
         this.options = options;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -45,9 +47,12 @@ public class SnsImageSlideAdapter extends PagerAdapter{
 
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
-        View itemView = layoutInflater.inflate(R.layout.viewpager_item, container, false);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.viewpager_item, container, false);
+        container.addView(layout);
+//        View itemView = layoutInflater.inflate(R.layout.viewpager_item, container, false);
 
-        ImageView imageView = itemView.findViewById(R.id.imageView);
+        ImageView imageView = layout.findViewById(R.id.imageView);
 //        URL url = null;
 //        int height = 0;
 //        try {
@@ -60,10 +65,11 @@ public class SnsImageSlideAdapter extends PagerAdapter{
 //        imageView.getLayoutParams().height = height;
 
         // url로부터 이미지 사이즈를 받아서 지정하면 networkOnMainThreadException 발생 스레드 계속 파면 이미지 하나당 만들어져서 에바일듯
-        glide.load(img_url+imgArr[position]).apply(options).into(imageView);
-        container.addView(itemView);
+        glide.load(IMG_URL +imgArr[position]).apply(options).into(imageView);
 
-        return itemView;
+//        container.addView(itemView);
+
+        return layout;
     }
 
     @Override
