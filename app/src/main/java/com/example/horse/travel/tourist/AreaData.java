@@ -55,7 +55,7 @@ public class AreaData {
     //시 코드, 구(군) 코드
     String areaCode = "1";
     String sigunguCode;
-    String sigunguName;
+    String sigunguName = "선택없음";
     String[][] sigunguCodes;
 
     public void setAreaCode(String areaCode) {

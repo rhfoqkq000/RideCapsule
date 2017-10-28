@@ -180,7 +180,7 @@ public class FragmentTourist extends Fragment {
                 }).setPositiveButton("선택",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        // 선택 버튼 클릭시 , 여기서 선택한 값을 메인 Activity 로 넘기면 된다.
+                        areaCodeRetrofit();
                         tourRetrofit(true);
                         festivalRetrofit(true);
                     }
