@@ -1,36 +1,36 @@
 package com.example.horse.travel.sns.list;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
-import android.media.ImageReader;
-import android.support.annotation.Dimension;
-import android.support.v4.view.ViewPager;
+import android.os.Handler;
+import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.horse.travel.R;
 import com.example.horse.travel.sns.like.SnsItemLike;
 import com.example.horse.travel.sns.like.SnsItemLikeDTO;
 import com.example.horse.travel.sns.like.SnsItemUnLike;
 import com.example.horse.travel.sns.like.SnsItemUnLikeDTO;
+import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
+import com.squareup.picasso.Picasso;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 import com.volokh.danylo.hashtaghelper.HashTagHelper;
 
-import java.util.Iterator;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -45,31 +45,44 @@ import retrofit2.Response;
 public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.ViewHolder> {
 
     private List<SnsListItem> items;
-    private Context context;
     private RequestManager glide;
-    private RequestOptions options;
-    private SnsImageSlideAdapter pagerAdapter;
+    private PagerAdapter pagerAdapter;
+    private int childP = 0;
+    private int iml =  0;
 
-    public SnsRecyclerAdapter(RequestManager glide, RequestOptions options) {
+    public SnsRecyclerAdapter(RequestManager glide) {
         this.glide=glide;
-        this.options=options;
+        if (!EventBus.getDefault().isRegistered(this)) { EventBus.getDefault().register(this); }
     }
 
-    public void setContext(Context context) {
-        this.context = context;
-    }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.listview_sns,viewGroup,false);
-
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-
         setUI(holder, position);
     }
+
+    @Subscribe
+    public void onEvent(PositionEvent event){
+        childP = event.getPosition();
+        Log.d("Child",""+childP);
+    }
+
+//    @Override
+//    public void onViewAttachedToWindow(ViewHolder holder) {
+//        super.onViewAttachedToWindow(holder);
+//        EventBus.getDefault().register(this);
+//    }
+//
+//    @Override
+//    public void onViewDetachedFromWindow(ViewHolder holder) {
+//        super.onViewDetachedFromWindow(holder);
+//        EventBus.getDefault().unregister(this);
+//    }
 
     private void setUI(final ViewHolder holder, int position) {
         Resources res = holder.itemView.getContext().getResources();
@@ -81,7 +94,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         setHashTagTextView(holder, res, item);
         setHeaderTextView(holder, item);
         setLike(holder,item, position);
-        setImage(holder, item);
+        setImage(holder, item, res);
 
 //        holder.like.setTag(viewpager_item.getLike_id());
 
@@ -91,15 +104,41 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
 
     }
 
-    private void setImage(final ViewHolder holder, SnsListItem item) {
+    private void setImage(final ViewHolder holder, SnsListItem item, Resources res) {
 //        RequestOptions options = new RequestOptions();
 //        options.fitCenter().override(Target.SIZE_ORIGINAL, holder.myImageView.getHeight());
 //        options.fitCenter();
         final String[] imgArr = item.getImgs().split(",");
+        iml = imgArr.length;
+        LinearLayoutManager layoutManager = new LinearLayoutManager(holder.imgRe.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        holder.imgRe.setFocusable(false);
+        holder.imgRe.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext(),
+                LinearLayoutManager.HORIZONTAL, false));
+        holder.imgRe.setAdapter(new SnsImageRecyclerAdapter(imgArr,res));
+        holder.imgRe.getRecycledViewPool().setMaxRecycledViews(0,imgArr.length);
 
-        pagerAdapter = new SnsImageSlideAdapter(holder.viewPager.getContext(), imgArr,glide,options);
-        holder.viewPager.setAdapter(pagerAdapter);
-        holder.indicator.setViewPager(holder.viewPager);
+
+//        PagerSnapHelper snapHelper = new PagerSnapHelper();
+////        snapHelper.attachToRecyclerView(holder.imgRe);
+//        holder.imgRe.setOnFlingListener(null);
+//        snapHelper.attachToRecyclerView(holder.imgRe);
+//
+//
+//        holder.imgRe.setOnFlingListener(new RecyclerView.OnFlingListener() {
+//            @Override
+//            public boolean onFling(int velocityX, int velocityY) {
+//                Log.d("ONFLING",velocityX+" | "+velocityY);
+//                return false;
+//            }
+//        });
+        if (imgArr.length>1){
+            holder.imgs_count.setText(res.getString(R.string.imgs_count_text,childP,imgArr.length));
+            holder.imgs_count.setVisibility(View.VISIBLE);
+        }
+
+//        pagerAdapter = new SnsImageSlideAdapter(holder.viewPager.getContext(), imgArr);
+//        holder.viewPager.setAdapter(pagerAdapter);
+//        holder.indicator.setViewPager(holder.viewPager);
 //        Glide.with(holder.main_img.getContext())
 //                .load("http://220.84.195.101:5000/"+imgArr[0])
 ////                .apply(options)
@@ -109,13 +148,8 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
 
     private void setLike(final ViewHolder holder, final SnsListItem item, int position) {
         if (item.getLike_id()!=0){
-            Log.d("ID",item.getLike_id()+" | "+position+" | "+item.getPost());
             glide.load(R.drawable.like).into(holder.like);
-//            holder.like.setImageResource(R.drawable.like);
-        } else {
-            Log.d("ID",item.getLike_id()+" | "+position+" | "+item.getPost());
         }
-
         holder.sns_good.setText(String.valueOf(item.getLike_count()));
 
         if (item.getLike_user().equals("none")){
@@ -225,15 +259,19 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
 //        return size;
         return items == null ? 0 : items.size();
     }
+
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView contentTextView;
         TextView userIdTextView;
         ImageView like;
         TextView sns_good;
         TextView like_users;
+        RecyclerViewPager imgRe;
+        TextView imgs_count;
 //        ImageView main_img;
-        CustomPager viewPager;
-        DotsIndicator indicator;
+//        CustomPager viewPager;
+//        DotsIndicator indicator;
         TextView locationTextView;
 //        ViewPager sns_viewPager;
 //        LinearLayout sliderDotsPanel;
@@ -244,9 +282,11 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
             like = itemView.findViewById(R.id.love);
             sns_good = itemView.findViewById(R.id.sns_good);
             like_users = itemView.findViewById(R.id.like_users);
+            imgRe = itemView.findViewById(R.id.img_re);
+            imgs_count = itemView.findViewById(R.id.imgs_count);
 //            main_img = itemView.findViewById(R.id.imageView);
-            viewPager = itemView.findViewById(R.id.viewPager);
-            indicator = itemView.findViewById(R.id.dots_indicator);
+//            viewPager = itemView.findViewById(R.id.viewPager);
+//            indicator = itemView.findViewById(R.id.dots_indicator);
             locationTextView = itemView.findViewById(R.id.sns_location);
         }
     }

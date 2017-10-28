@@ -23,16 +23,11 @@ public class SnsImageSlideAdapter extends PagerAdapter{
     private final String IMG_URL = UrlSingleton.getInstance().getSERVER_URL();
     private Context context;
     private String[] imgArr;
-    private LayoutInflater layoutInflater;
-    private RequestManager glide;
-    private RequestOptions options;
 
-    SnsImageSlideAdapter(Context context, String[] imgArr, RequestManager glide, RequestOptions options) {
+
+    SnsImageSlideAdapter(Context context, String[] imgArr) {
         this.context = context;
         this.imgArr = imgArr;
-        this.glide = glide;
-        this.options = options;
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -42,7 +37,7 @@ public class SnsImageSlideAdapter extends PagerAdapter{
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == object;
+        return view == ((LinearLayout) object);
     }
 
     @Override
@@ -53,6 +48,12 @@ public class SnsImageSlideAdapter extends PagerAdapter{
 //        View itemView = layoutInflater.inflate(R.layout.viewpager_item, container, false);
 
         ImageView imageView = layout.findViewById(R.id.imageView);
+
+        imageView.layout(0, 0, 0, 0);
+        Picasso.with(imageView.getContext())
+                .load(IMG_URL +imgArr[position])
+                .into(imageView);
+
 //        URL url = null;
 //        int height = 0;
 //        try {
@@ -65,7 +66,7 @@ public class SnsImageSlideAdapter extends PagerAdapter{
 //        imageView.getLayoutParams().height = height;
 
         // url로부터 이미지 사이즈를 받아서 지정하면 networkOnMainThreadException 발생 스레드 계속 파면 이미지 하나당 만들어져서 에바일듯
-        glide.load(IMG_URL +imgArr[position]).apply(options).into(imageView);
+//        glide.load(IMG_URL +imgArr[position]).apply(options).into(imageView);
 
 //        container.addView(itemView);
 
