@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.media.ImageReader;
 import android.support.annotation.Dimension;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -18,6 +19,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.horse.travel.R;
@@ -42,11 +44,11 @@ import retrofit2.Response;
 
 public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.ViewHolder> {
 
-    private final String IMG_URL = "http://220.84.195.101:5000/";
     private List<SnsListItem> items;
     private Context context;
     private RequestManager glide;
     private RequestOptions options;
+    private SnsImageSlideAdapter pagerAdapter;
 
     public SnsRecyclerAdapter(RequestManager glide, RequestOptions options) {
         this.glide=glide;
@@ -59,17 +61,20 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.listview_sns,viewGroup,false);
+
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+
         setUI(holder, position);
     }
 
     private void setUI(final ViewHolder holder, int position) {
         Resources res = holder.itemView.getContext().getResources();
         final SnsListItem item = items.get(position);
+
 
 //        SpannableString content = new SpannableString(viewpager_item.getNickname());
 //        content.setSpan(new UnderlineSpan(), 0, viewpager_item.getNickname().length(), 0);
@@ -92,14 +97,14 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
 //        options.fitCenter();
         final String[] imgArr = item.getImgs().split(",");
 
-        SnsImageSlideAdapter testAdapter = new SnsImageSlideAdapter(context, imgArr,IMG_URL,glide,options);
-        holder.viewPager.setAdapter(testAdapter);
+        pagerAdapter = new SnsImageSlideAdapter(holder.viewPager.getContext(), imgArr,glide,options);
+        holder.viewPager.setAdapter(pagerAdapter);
         holder.indicator.setViewPager(holder.viewPager);
-//        Glide.with(holder.myImageView.getContext())
-//                .load(IMG_URL+imgArr[0])
+//        Glide.with(holder.main_img.getContext())
+//                .load("http://220.84.195.101:5000/"+imgArr[0])
 ////                .apply(options)
 ////                .apply(bitmapTransform(new BlurTransformation(25)))
-//                .into(holder.myImageView);
+//                .into(holder.main_img);
     }
 
     private void setLike(final ViewHolder holder, final SnsListItem item, int position) {
@@ -220,13 +225,13 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
 //        return size;
         return items == null ? 0 : items.size();
     }
-
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView contentTextView;
         TextView userIdTextView;
         ImageView like;
         TextView sns_good;
         TextView like_users;
+//        ImageView main_img;
         CustomPager viewPager;
         DotsIndicator indicator;
         TextView locationTextView;
@@ -239,11 +244,13 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
             like = itemView.findViewById(R.id.love);
             sns_good = itemView.findViewById(R.id.sns_good);
             like_users = itemView.findViewById(R.id.like_users);
+//            main_img = itemView.findViewById(R.id.imageView);
             viewPager = itemView.findViewById(R.id.viewPager);
             indicator = itemView.findViewById(R.id.dots_indicator);
             locationTextView = itemView.findViewById(R.id.sns_location);
         }
     }
+
     public void addNew(List<SnsListItem> items)
     {
         this.items = items;
