@@ -96,6 +96,8 @@ public class FragmentTourist extends Fragment {
     AreaData areaData = new AreaData();
     String minusTwoMonths;
     String minusOneDay;
+
+
     public FragmentTourist() {
 //        Required empty public constructor
     }
@@ -106,14 +108,16 @@ public class FragmentTourist extends Fragment {
         DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyyMMdd");
         minusTwoMonths = fmt.print(DateTime.now().minusMonths(2));
         minusOneDay = fmt.print(DateTime.now().minusDays(1));
+
         //날씨 불러옴
         //weatherRetrofit(areaData.getLat(), areaData.getLon());
+        //areaCode
+        areaCodeRetrofit();
         //축제 불러옴
         festivalRetrofit(false);
         //여행지 불러옴
         tourRetrofit(false);
-        //areaCode
-        areaCodeRetrofit();
+
 
 
         //프레그먼트 생성
@@ -171,6 +175,7 @@ public class FragmentTourist extends Fragment {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         // 각 리스트를 선택했을때
                         townBtn.setText(region[whichButton]);
+                        areaData.setSigunguName( region[whichButton]);
                     }
                 }).setPositiveButton("선택",
                 new DialogInterface.OnClickListener() {
@@ -240,6 +245,14 @@ public class FragmentTourist extends Fragment {
             default:  weatherImg.setImageResource(R.drawable.weather38);
         }
     }
+/*    private void sigunguCodeInit(){
+        mRealm = Realm.getInstance(this.getContext());
+        RealmResults<sigunguCodeVO> sigunguCodeList = getsigunguCodeList();
+        Log.i("시군구 코드", sigunguCodeList.size()+"");
+    }
+    private RealmResults<sigunguCodeVO>  getsigunguCodeList(){
+        return mRealm.where(sigunguCodeVO.class).findAll();
+    }*/
     // ********************************************************* Retrofit들 *****************************************************************
     private void weatherRetrofit(String lat, String lon) {
         Retrofit client = new Retrofit.Builder().baseUrl("http://apis.skplanetx.com/").addConverterFactory(GsonConverterFactory.create()).build();
@@ -342,8 +355,20 @@ public class FragmentTourist extends Fragment {
                 //파라미터 받아서 처리하기
                 Log.d("MainActivity", response.raw().request().url().toString()); // uri 출력
                 Log.d("MainActivity", response.body().getResponse().getHeader().getResultMsg());
+
+                //areaData.setSigunguCodes();
                 areaCodeTest.setText(areaData.getAreaCode());
                 sigunguCodeTest.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getName());
+                Log.d("soTest", areaData.getSigunguName());
+                for (int index = 0; index < response.body().getResponse().getBody().getItems().getItem().size(); index++) {
+                    if (response.body().getResponse().getBody().getItems().getItem().get(index).getName().equals(areaData.getSigunguName())){
+                        Log.d("selectSi", response.body().getResponse().getBody().getItems().getItem().get(index).getName());
+                        //시군구 코드를 setsiCode
+                        return;
+                    }
+                    //[areaData.getAreaCode()][index] =
+                    //Log.d("시들", response.body().getResponse().getBody().getItems().getItem().get(index).getCode());
+                }
             }
 
             @Override

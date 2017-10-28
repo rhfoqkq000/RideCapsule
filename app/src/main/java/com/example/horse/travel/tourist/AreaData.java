@@ -53,8 +53,10 @@ public class AreaData {
     String[] jeJu = {"남제주군","북제주군","서귀포시","제주시"};
 
     //시 코드, 구(군) 코드
-    String areaCode;
+    String areaCode = "1";
     String sigunguCode;
+    String sigunguName;
+    String[][] sigunguCodes;
 
     public void setAreaCode(String areaCode) {
         this.areaCode = areaCode;
@@ -69,6 +71,17 @@ public class AreaData {
     }
     public String getSigunguCode() {
         return sigunguCode;
+    }
+
+    public String getSigunguName() { return sigunguName;}
+    public void setSigunguName(String sigunguName) {this.sigunguName = sigunguName;}
+
+    public String[][] getSigunguCodes() {
+        return sigunguCodes;
+    }
+
+    public void setSigunguCodes(String[][] sigunguCodes) {
+        this.sigunguCodes = sigunguCodes;
     }
 
     public String[] getCitys() {
