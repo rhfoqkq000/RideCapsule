@@ -74,16 +74,41 @@ public class FragmentTourist extends Fragment {
     @BindView(R.id.festival_title5)
     TextView festival_title5;
 
-    @BindView(R.id.tour_title1)
-    TextView tour_title1;
-    @BindView(R.id.tour_title2)
-    TextView tour_title2;
-    @BindView(R.id.tour_title3)
-    TextView tour_title3;
-    @BindView(R.id.tour_title4)
-    TextView tour_title4;
-    @BindView(R.id.tour_title5)
-    TextView tour_title5;
+    @BindView(R.id.tour_title1) TextView tour_title1;
+    @BindView(R.id.tour_title2) TextView tour_title2;
+    @BindView(R.id.tour_title3) TextView tour_title3;
+    @BindView(R.id.tour_title4) TextView tour_title4;
+    @BindView(R.id.tour_title5) TextView tour_title5;
+
+    @BindView(R.id.food_title1) TextView food_title1;
+    @BindView(R.id.food_title2) TextView food_title2;
+    @BindView(R.id.food_title3) TextView food_title3;
+    @BindView(R.id.food_title4) TextView food_title4;
+    @BindView(R.id.food_title5) TextView food_title5;
+
+    @BindView(R.id.arts_title1) TextView arts_title1;
+    @BindView(R.id.arts_title2) TextView arts_title2;
+    @BindView(R.id.arts_title3) TextView arts_title3;
+    @BindView(R.id.arts_title4) TextView arts_title4;
+    @BindView(R.id.arts_title5) TextView arts_title5;
+
+    @BindView(R.id.natual_title1) TextView natual_title1;
+    @BindView(R.id.natual_title2) TextView natual_title2;
+    @BindView(R.id.natual_title3) TextView natual_title3;
+    @BindView(R.id.natual_title4) TextView natual_title4;
+    @BindView(R.id.natual_title5) TextView natual_title5;
+
+    @BindView(R.id.sports_title1) TextView sports_title1;
+    @BindView(R.id.sports_title2) TextView sports_title2;
+    @BindView(R.id.sports_title3) TextView sports_title3;
+    @BindView(R.id.sports_title4) TextView sports_title4;
+    @BindView(R.id.sports_title5) TextView sports_title5;
+
+    @BindView(R.id.shoping_title1) TextView shoping_title1;
+    @BindView(R.id.shoping_title2) TextView shoping_title2;
+    @BindView(R.id.shoping_title3) TextView shoping_title3;
+    @BindView(R.id.shoping_title4) TextView shoping_title4;
+    @BindView(R.id.shoping_title5) TextView shoping_title5;
 
     @BindView(R.id.pager)
     ViewPager mViewPager;
@@ -91,7 +116,6 @@ public class FragmentTourist extends Fragment {
     AreaData areaData = new AreaData();
     String minusTwoMonths;
     String minusOneDay;
-
 
     public FragmentTourist() {
 //        Required empty public constructor
@@ -111,7 +135,12 @@ public class FragmentTourist extends Fragment {
         //축제 불러옴
         festivalRetrofit(false);
         //여행지 불러옴
-        tourRetrofit(false);
+        tourRetrofit(false, "C01"); //여행코스
+        tourRetrofit(false, "A05"); //맛집
+        tourRetrofit(false, "A02"); //예술, 문화, 역사
+        tourRetrofit(false, "A01"); //자연
+        tourRetrofit(false, "A03"); //레포츠
+        tourRetrofit(false, "A04"); //쇼핑
         return rootview;
     }
 
@@ -145,7 +174,12 @@ public class FragmentTourist extends Fragment {
                         // 선택 버튼 클릭시 , 여기서 선택한 값을 메인 Activity 로 넘기면 된다.
                         //weatherRetrofit(areaData.getLat(), areaData.getLon());
                         areaCodeRetrofit();
-                        tourRetrofit(false);
+                        tourRetrofit(false, "C01"); //여행코스
+                        tourRetrofit(false, "A05"); //맛집
+                        tourRetrofit(false, "A02"); //예술, 문화, 역사
+                        tourRetrofit(false, "A01"); //자연
+                        tourRetrofit(false, "A03"); //레포츠
+                        tourRetrofit(false, "A04"); //쇼핑
                         festivalRetrofit(false);
                     }
                 }).setNegativeButton("취소",
@@ -171,7 +205,12 @@ public class FragmentTourist extends Fragment {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         areaCodeRetrofit();
-                        tourRetrofit(true);
+                        tourRetrofit(true, "C01"); //여행코스
+                        tourRetrofit(true, "A05"); //맛집
+                        tourRetrofit(true, "A02"); //예술, 문화, 역사
+                        tourRetrofit(true, "A01"); //자연
+                        tourRetrofit(true, "A03"); //레포츠
+                        tourRetrofit(true, "A04"); //쇼핑
                         festivalRetrofit(true);
                     }
                 }).setNegativeButton("취소",
@@ -273,7 +312,6 @@ public class FragmentTourist extends Fragment {
         call.enqueue(new Callback<FestivalRepo>() {
             @Override
             public void onResponse(Call<FestivalRepo> call, Response<FestivalRepo> response) {
-                //파라미터 받아서 처리하기
                 Log.d("MainActivity", response.raw().request().url().toString()); // uri 출력
                 Log.d("MainActivity", response.body().getResponse().getHeader().getResultMsg());
                 festival_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
@@ -288,28 +326,82 @@ public class FragmentTourist extends Fragment {
             }
         });
     }
-    public void tourRetrofit(boolean siSelect) {
+    public void tourRetrofit(boolean siSelect, final String cat) {
         Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         TourListRepo.TourListAppInterface tourService = client.create(TourListRepo.TourListAppInterface.class);
         //시가 선택됐을 때는 true, 시가 선택되지 않았을 때는 false
         Call<TourListRepo> call;
         if(siSelect != true) {
-             call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "12", areaData.getAreaCode(), "json");
+            switch (cat) {
+                case "C01" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "25", areaData.getAreaCode(), cat, "json");break;
+                case "A05" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "39", areaData.getAreaCode(), cat, "json");break;
+                case "A02" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "12", areaData.getAreaCode(), cat, "json");break;
+                case "A01" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "12", areaData.getAreaCode(), cat, "json");break;
+                case "A03" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "28", areaData.getAreaCode(), cat, "json");break;
+                case "A04" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "38", areaData.getAreaCode(), cat, "json");break;
+                default: call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "12", areaData.getAreaCode(), cat, "json");break;
+            }
         } else {
-             call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "12", areaData.getAreaCode(), areaData.getSigunguCode(), "json");
+            switch (cat) {
+                case "C01": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "25", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
+                case "A05": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "39", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
+                case "A02": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "12", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
+                case "A01": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "12", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
+                case "A03": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "28", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
+                case "A04": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "38", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
+                default: call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "12", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
+            }
         }
         call.enqueue(new Callback<TourListRepo>() {
             @Override
             public void onResponse(Call<TourListRepo> call, Response<TourListRepo> response) {
-                //파라미터 받아서 처리하기
                 Log.d("MainActivity", response.raw().request().url().toString()); // uri 출력
                 Log.d("MainActivity", response.body().getResponse().getHeader().getResultMsg());
-                tour_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
-                tour_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
-                tour_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
-                tour_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
-                tour_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
+                switch (cat) {
+                    case "C01" :
+                        tour_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
+                        tour_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
+                        tour_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
+                        tour_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
+                        tour_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
+                        break;
+                    case "A05" :
+                        food_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
+                        food_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
+                        food_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
+                        food_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
+                        food_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
+                        break;
+                    case "A02" :
+                        food_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
+                        arts_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
+                        arts_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
+                        arts_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
+                        arts_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
+                        break;
+                    case "A01" :
+                        natual_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
+                        natual_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
+                        natual_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
+                        natual_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
+                        natual_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
+                        break;
+                    case "A03" :
+                        sports_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
+                        sports_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
+                        sports_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
+                        sports_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
+                        sports_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
+                        break;
+                    case "A04" :
+                        shoping_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
+                        shoping_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
+                        shoping_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
+                        shoping_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
+                        shoping_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
+                        break;
+                }
             }
             @Override
             public void onFailure(Call<TourListRepo> call, Throwable t) {
