@@ -16,6 +16,7 @@ import com.example.horse.travel.sns.write.ImageSingleton;
 import com.example.horse.travel.tourist.FragmentTourist;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
