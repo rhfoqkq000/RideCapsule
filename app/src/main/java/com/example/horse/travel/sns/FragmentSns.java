@@ -150,7 +150,8 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
             }
             @Override
             public void onFailure(@NonNull Call<SnsListDTO> call, @NonNull Throwable t) {
-                Log.d("RETROFIT",t.getMessage());
+                t.getStackTrace();
+//                Log.e("RETROFIT", t.getStackTrace().toString());
                 Toast.makeText(getContext(),"글을 불러오는데 실패했습니다. 잠시후 다시 시도해 주세요.",Toast.LENGTH_LONG).show();
             }
         });
@@ -165,13 +166,11 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         super.onResume();
             Log.d("ONRESUME","재실행");
             refresh();
-//        if (!EventBus.getDefault().isRegistered(this)) { EventBus.getDefault().register(this); }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this)) { EventBus.getDefault().unregister(this); }
 
     }
 

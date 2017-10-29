@@ -100,10 +100,10 @@
         android:id="@+id/ims_layout"
         android:orientation="horizontal"
         android:gravity="center_horizontal">
-        <ImageView
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:src="@drawable/tab_indicator_selected" />
+        <!--<ImageView-->
+            <!--android:layout_width="10dp"-->
+            <!--android:layout_height="10dp"-->
+            <!--android:src="@drawable/tab_indicator_selected" />-->
 
     </LinearLayout>
     <!--<com.example.horse.travel.sns.list.CustomPager-->
@@ -194,6 +194,21 @@
             android:id="@+id/sns_con"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
+            />
+        <TextView
+            android:id="@+id/comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            />
+        <TextView
+            android:id="@+id/sns_updated_at"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="3dp"
             android:layout_marginBottom="10dp"
             />
     </LinearLayout>

@@ -9,4 +9,7 @@
     <string name="sns_like_title">가볼래</string>
 
     <string name="imgs_count_text">%1$d / %2$d</string>
+    <string name="comment_count_text">댓글 %1$d 모두 보기</string>
+
+    <string name="comment_write">쓰기</string>
 </resources>
