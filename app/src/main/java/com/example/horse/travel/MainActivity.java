@@ -18,6 +18,8 @@ import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 import com.squareup.picasso.Picasso;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        JodaTimeAndroid.init(this);
 
         fragmentManager = getSupportFragmentManager();
 //
