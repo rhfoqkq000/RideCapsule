@@ -6,11 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.example.horse.travel.R;
+import com.example.horse.travel.sns.FragmentSns;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -20,9 +19,20 @@ import butterknife.OnClick;
 
 public class FragmentCapsule extends Fragment {
 
+    public static FragmentCapsule newInstance(int arg) {
+        FragmentCapsule fragment = new FragmentCapsule();
+
+        // Set the arguments.
+        Bundle args = new Bundle();
+
+        args.putInt("ARG", arg);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @OnClick(R.id.capsule_button)
     void capsuleClick(){
-        Intent intent = new Intent(getActivity(), ActivityCapsule.class);
+        Intent intent = new Intent(getActivity(), ActivityCapsuleContent.class);
         startActivity(intent);
     }
 

@@ -2,6 +2,7 @@ package com.example.horse.travel;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
  * Created by qazz92 on 2017. 10. 11..
@@ -9,7 +10,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    private static String BASE_URL = "http://168.115.8.33:5000";
+//    private static String BASE_URL = "http://192.168.0.3:5000";
+      private static String BASE_URL = UrlSingleton.getInstance().getSERVER_URL();
+
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient() {
@@ -17,6 +20,16 @@ public class ApiClient {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit;
+    }
+
+    public static Retrofit getScalarClient() {
+        if (retrofit==null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(ScalarsConverterFactory.create())
                     .build();
         }
         return retrofit;

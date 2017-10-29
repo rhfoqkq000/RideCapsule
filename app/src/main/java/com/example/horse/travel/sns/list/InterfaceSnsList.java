@@ -2,6 +2,7 @@ package com.example.horse.travel.sns.list;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -9,6 +10,6 @@ import retrofit2.http.Query;
  */
 
 public interface InterfaceSnsList {
-    @GET("/sns/list")
-    Call<SnsListDTO> listSns(@Query("page") String page);
+    @GET("/sns/list/{page}")
+    Call<SnsListDTO> listSns(@Path("page") int page);
 }

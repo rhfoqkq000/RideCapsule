@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_home"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="닫기"/>
+                <TextView
+                    android:id="@+id/image_select_nextBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="다음"/>
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.CoordinatorLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/select_imgs_btn"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/select_photo_img1"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+            <ImageView
+                android:layout_weight="1"
+                android:id="@+id/select_photo_img2"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+            <ImageView
+                android:layout_weight="1"
+                android:id="@+id/select_photo_img3"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+            <ImageView
+                android:layout_weight="1"
+                android:id="@+id/select_photo_img4"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+            <ImageView
+                android:layout_weight="1"
+                android:id="@+id/select_photo_img5"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_weight="1"
+                android:id="@+id/select_photo_img6"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+            <ImageView
+                android:layout_weight="1"
+                android:id="@+id/select_photo_img7"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+            <ImageView
+                android:layout_weight="1"
+                android:id="@+id/select_photo_img8"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+            <ImageView
+                android:layout_weight="1"
+                android:id="@+id/select_photo_img9"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+            <ImageView
+                android:layout_weight="1"
+                android:id="@+id/select_photo_img10"
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
+

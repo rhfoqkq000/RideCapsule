@@ -9,21 +9,18 @@ import java.util.List;
 public class SnsListDTO {
     private int result_code;
     private List<SnsListItem> result_body;
+    private int items_count;
+
+    public int getItems_count() {
+        return items_count;
+    }
 
     public int getResult_code() {
         return result_code;
     }
 
-    public void setResult_code(int result_code) {
-        this.result_code = result_code;
-    }
-
     public List<SnsListItem> getResult_body() {
         return result_body;
-    }
-
-    public void setResult_body(List<SnsListItem> result_body) {
-        this.result_body = result_body;
     }
 
 //    public class Result_body {

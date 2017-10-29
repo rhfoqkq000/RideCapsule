@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.horse.travel.R;
+import com.example.horse.travel.capsule.FragmentCapsule;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +29,17 @@ public class FragmentInn extends Fragment {
     TextView innTitleItem1;
     @BindView(R.id.innTitleItem2)
     TextView innTitleItem2;
+  
+    public static FragmentInn newInstance(int arg) {
+        FragmentInn fragment = new FragmentInn();
+
+        // Set the arguments.
+        Bundle args = new Bundle();
+
+        args.putInt("ARG", arg);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootview = inflater.inflate(R.layout.fragment_inn, container, false);
