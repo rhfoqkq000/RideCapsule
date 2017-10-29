@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.horse.travel.R;
+import com.example.horse.travel.capsule.FragmentCapsule;
 
 
 import org.joda.time.DateTime;
@@ -113,6 +114,17 @@ public class FragmentTourist extends Fragment {
 
     public FragmentTourist() {
 //        Required empty public constructor
+    }
+
+    public static FragmentTourist newInstance(int arg) {
+        FragmentTourist fragment = new FragmentTourist();
+
+        // Set the arguments.
+        Bundle args = new Bundle();
+
+        args.putInt("ARG", arg);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager;
     Fragment active;
-    Fragment fragmentSample = FragmentSample.newInstance(1);
+    Fragment fragmentTourist = FragmentTourist.newInstance(1);
 //    Fragment fragmentSamplee = FragmentSample.newInstance(2);
     Fragment fragmentSns = FragmentSns.newInstance(2);
     Fragment fragmentCapsule = FragmentCapsule.newInstance(3);
@@ -128,11 +128,11 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(@IdRes int tabId) {
                 switch (tabId) {
                     case R.id.bottom_tourist:
-                    if (active != fragmentSample)
-                        hideShowFragment(active,fragmentSample);
+                    if (active != fragmentTourist)
+                        hideShowFragment(active,fragmentTourist);
 //                    else
 //                        fm.beginTransaction().show(fragmentSample).commit();
-                    active = fragmentSample;
+                    active = fragmentTourist;
                         break;
                     case R.id.bottom_sns:
                         hideShowFragment(active, fragmentSns);
@@ -169,13 +169,13 @@ public class MainActivity extends AppCompatActivity {
 //
     //Add all the fragments that need to be added and hidden. Also, add the one that is supposed to be the starting one, that one is not hidden.
     private void createFragments() {
-        addHideFragment(fragmentSample);
+        addHideFragment(fragmentTourist);
         addHideFragment(fragmentSns);
         addHideFragment(fragmentCapsule);
         addHideFragment(fragmentInn);
         addHideFragment(fragmentMypage);
-        fragmentManager.beginTransaction().show(fragmentSample).commit();
-        active = fragmentSample;
+        fragmentManager.beginTransaction().show(fragmentTourist).commit();
+        active = fragmentTourist;
     }
 }
 
