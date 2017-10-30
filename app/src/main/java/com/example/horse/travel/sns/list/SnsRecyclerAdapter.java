@@ -20,6 +20,8 @@ import com.example.horse.travel.R;
 import com.example.horse.travel.TimeCal;
 import com.example.horse.travel.sns.comment.SnsCommentActivity;
 import com.example.horse.travel.sns.comment.SnsCommentSingleton;
+import com.example.horse.travel.sns.hashtag.HashTagSingleton;
+import com.example.horse.travel.sns.hashtag.SnsHashTagActivity;
 import com.example.horse.travel.sns.like.SnsItemLike;
 import com.example.horse.travel.sns.like.SnsItemLikeDTO;
 import com.example.horse.travel.sns.like.SnsItemUnLike;
@@ -143,6 +145,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(holder.itemView.getContext(),SnsCommentActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 SnsCommentSingleton singleton = SnsCommentSingleton.getInstance();
                 singleton.setItem(item);
                 holder.itemView.getContext().startActivity(intent);
@@ -248,11 +251,15 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         holder.locationTextView.setText(content);
     }
 
-    private void setHashTagTextView(ViewHolder holder, Resources res, SnsListItem item) {
+    private void setHashTagTextView(final ViewHolder holder, Resources res, SnsListItem item) {
         HashTagHelper mTextHashTagHelper = HashTagHelper.Creator.create(res.getColor(R.color.blue), new HashTagHelper.OnHashTagClickListener() {
             @Override
             public void onHashTagClicked(String hashTag) {
                 Log.d("TAG",hashTag);
+                Intent intent = new Intent(holder.itemView.getContext(), SnsHashTagActivity.class);
+                HashTagSingleton.getInstance().setHash(hashTag);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                holder.itemView.getContext().startActivity(intent);
             }
         });
 

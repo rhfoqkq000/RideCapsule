@@ -1,23 +1,19 @@
-package com.example.horse.travel.sns;
+package com.example.horse.travel.sns.hashtag;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -29,8 +25,9 @@ import com.example.horse.travel.sns.list.InterfaceSnsList;
 import com.example.horse.travel.sns.list.SnsListDTO;
 import com.example.horse.travel.sns.list.SnsListItem;
 import com.example.horse.travel.sns.list.SnsRecyclerAdapter;
+import com.example.horse.travel.sns.search.InterfaceSnsSearch;
+import com.example.horse.travel.sns.search.SnsKeyWordDTO;
 import com.example.horse.travel.sns.write.ActivityImageSelect;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,29 +39,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by horse on 2017. 10. 9..
+ * Created by JRokH on 2017-10-30.
  */
 
-public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
-
-    public static FragmentSns newInstance(int arg) {
-        FragmentSns fragment = new FragmentSns();
-
-        // Set the arguments.
-        Bundle args = new Bundle();
-
-        args.putInt("ARG", arg);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        Glide.get(getContext()).clearMemory();
-        Log.d("MEM_FragmentSns","LOW!");
-    }
-
+public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, SearchViewCustom.OnQueryTextListener, SearchViewCustom.SearchViewListener{
     @BindView(R.id.writeBtn)
     FloatingActionButton writeBtn;
 
@@ -79,37 +57,36 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
     @BindView(R.id.search_view)
     SearchViewCustom searchView;
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
     List<SnsListItem> allItems;
 
     EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
+
     int init_page= 1;
 
     boolean isRe = false;
 
+    String hashtag;
+
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        BusProvider.getInstance().register(this);
-    }
+        setContentView(R.layout.activity_hashtag_result);
+        ButterKnife.bind(this);
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        final View rootview = inflater.inflate(R.layout.fragment_sns, container, false);
+        hashtag = HashTagSingleton.getInstance().getHash();
+//        searchView.setSuggestions(getResources().getStringArray(R.array.query_suggestions));
 
-        ButterKnife.bind(this, rootview);
-
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-
-        setHasOptionsMenu(true);
+        searchView.setOnQueryTextListener(this);
+        searchView.setOnSearchViewListener(this);
 
         swipeRefreshLayout.setOnRefreshListener(this);
         allItems = new ArrayList<>();
 
         // recyclerview init
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         layoutManager.setInitialPrefetchItemCount(10);
         layoutManager.setItemPrefetchEnabled(true);
         snsRe.setLayoutManager(layoutManager);
@@ -121,12 +98,12 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         adapter.setHasStableIds(true);
         snsRe.setAdapter(adapter);
 
-        getSnsList(init_page);
+        getSnsList(hashtag,init_page);
 
         writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),ActivityImageSelect.class);
+                Intent intent = new Intent(getApplication(),ActivityImageSelect.class);
                 startActivity(intent);
             }
         });
@@ -135,17 +112,17 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
             @Override
             public void onLoadMore(final int page, int totalItemsCount, RecyclerView view) {
                 Log.d("SCROLL","END! | "+page);
-                getSnsList(page+1);
+                getSnsList(hashtag,page+1);
             }
         };
 
         // endless scrolling
         snsRe.addOnScrollListener(endlessRecyclerViewScrollListener);
-        return rootview;
     }
-    void getSnsList(int page){
+
+    void getSnsList(String hashtag,int page){
         InterfaceSnsList list = ApiClient.getClient().create(InterfaceSnsList.class);
-        Call<SnsListDTO> call = list.listSns(page);
+        Call<SnsListDTO> call = list.listSnsForHashTag(hashtag,page);
         call.enqueue(new Callback<SnsListDTO>() {
             @Override
             public void onResponse(@NonNull Call<SnsListDTO> call, @NonNull Response<SnsListDTO> response) {
@@ -171,46 +148,107 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
             public void onFailure(@NonNull Call<SnsListDTO> call, @NonNull Throwable t) {
                 t.getStackTrace();
                 Log.e("RETROFIT", t.getMessage());
-                Toast.makeText(getContext(),"글을 불러오는데 실패했습니다. 잠시후 다시 시도해 주세요.",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"글을 불러오는데 실패했습니다. 잠시후 다시 시도해 주세요.",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+    @Override
+    public void onRefresh() {
+        refresh();
+    }
+    private void refresh(){
+        if (adapter != null && !allItems.isEmpty()){
+            endlessRecyclerViewScrollListener.resetState();
+            adapter.removeAll();
+            allItems.clear();
+            isRe = true;
+            snsRe.getRecycledViewPool().setMaxRecycledViews(0,10);
+            getSnsList(hashtag,1);
+        }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        Log.d("onQueryTextSubmit",query);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        if (newText.length()>0){
+            Log.d("KEYWORD","|"+newText);
+            getSnskeyword(newText);
+        }
+        return false;
+    }
+
+    private void getSnskeyword(String newText) {
+        InterfaceSnsSearch snsHashSearch = ApiClient.getClient().create(InterfaceSnsSearch.class);
+        Call<SnsKeyWordDTO> dtoCall =   snsHashSearch.getKeyword(newText);
+        dtoCall.enqueue(new Callback<SnsKeyWordDTO>() {
+            @Override
+            public void onResponse(Call<SnsKeyWordDTO> call, Response<SnsKeyWordDTO> response) {
+                if (response.body().getItems_count()>0){
+                    Log.d("KEYWORD",response.body().getResult_body()[0]);
+                    searchView.setSuggestions(getResources().getStringArray(R.array.query_suggestions));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SnsKeyWordDTO> call, Throwable t) {
+
             }
         });
     }
 
     @Override
-    public void onRefresh() {
-        refresh();
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-            Log.d("ONRESUME","재실행");
-//            refresh();
+    public void onSearchViewShown() {
+        Log.d("onSearchViewShown","shown");
+
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-//        BusProvider.getInstance().unregister(this);
-    }
-
-    private void refresh(){
-        if (adapter != null && !allItems.isEmpty()){
-        endlessRecyclerViewScrollListener.resetState();
-        adapter.removeAll();
-        allItems.clear();
-        isRe = true;
-            snsRe.getRecycledViewPool().setMaxRecycledViews(0,10);
-        getSnsList(1);
-        }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_main, menu);
-        MenuItem item = menu.findItem(R.id.action_search);
-        searchView.setMenuItem(item);
+    public void onSearchViewClosed() {
+        Log.d("onSearchViewClosed","close");
 
     }
 
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        switch (keyCode) {
+//            case KeyEvent.KEYCODE_BACK: {
+//                Toast.makeText(getApplicationContext(),"뒤로가기",Toast.LENGTH_LONG).show();
+////                if (searchView.isSearchOpen()) {
+////                    searchView.closeSearch();
+////                }
+//            }
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
+
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        Log.d("doback","close");
+//        Toast.makeText(getApplicationContext(),"뒤로가기",Toast.LENGTH_LONG).show();
+//    }
+    //    @Override
+//    public void onBackPressed() {
+//        Log.d("doback","close");
+//
+//        if (searchView.isSearchOpen()) {
+//            searchView.closeSearch();
+//        } else {
+//            super.onBackPressed();
+//        }
+//    }
 }

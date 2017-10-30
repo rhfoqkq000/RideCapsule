@@ -12,4 +12,12 @@
     <string name="comment_count_text">댓글 %1$d 모두 보기</string>
 
     <string name="comment_write">쓰기</string>
+
+    <string-array name="query_suggestions">
+        <item>Android</item>
+        <item>iOS</item>
+        <item>SCALA</item>
+        <item>Ruby</item>
+        <item>JavaScript</item>
+    </string-array>
 </resources>

@@ -164,4 +164,14 @@ public class SnsCommentActivity extends AppCompatActivity{
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        BusProvider.getInstance().post(1);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 }
