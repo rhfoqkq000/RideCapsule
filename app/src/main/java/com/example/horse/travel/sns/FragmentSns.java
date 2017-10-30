@@ -27,6 +27,8 @@ import com.example.horse.travel.sns.list.SnsRecyclerAdapter;
 import com.example.horse.travel.sns.write.ActivityImageSelect;
 
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,12 +93,12 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         layoutManager.setInitialPrefetchItemCount(10);
         layoutManager.setItemPrefetchEnabled(true);
         snsRe.setLayoutManager(layoutManager);
+        snsRe.setFocusable(false);
+//        snsRe.setNestedScrollingEnabled(false);
         snsRe.getRecycledViewPool().setMaxRecycledViews(0,10);
 
         RequestOptions options = new RequestOptions().placeholder(R.drawable.image_loding).error(R.mipmap.ic_launcher);
-        adapter = new SnsRecyclerAdapter(Glide.with(this),options);
-
-        adapter.setContext(getContext());
+        adapter = new SnsRecyclerAdapter(Glide.with(this));
         adapter.setHasStableIds(true);
         snsRe.setAdapter(adapter);
 
@@ -148,7 +150,8 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
             }
             @Override
             public void onFailure(@NonNull Call<SnsListDTO> call, @NonNull Throwable t) {
-                Log.d("RETROFIT",t.getMessage());
+                t.getStackTrace();
+//                Log.e("RETROFIT", t.getStackTrace().toString());
                 Toast.makeText(getContext(),"글을 불러오는데 실패했습니다. 잠시후 다시 시도해 주세요.",Toast.LENGTH_LONG).show();
             }
         });
@@ -163,6 +166,11 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         super.onResume();
             Log.d("ONRESUME","재실행");
             refresh();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 
     }
 

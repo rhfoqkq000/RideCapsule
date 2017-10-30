@@ -33,6 +33,7 @@
             android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".sns.write.ActivityImageSelect"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".sns.comment.SnsCommentActivity"/>
         <activity android:name=".sns.write.ActivityImageFilter" />
     </application>
 </manifest>

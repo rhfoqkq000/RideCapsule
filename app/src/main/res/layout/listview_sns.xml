@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
+    android:descendantFocusability="blocksDescendants">
 
 
     <LinearLayout
@@ -51,27 +54,79 @@
 
     </LinearLayout>
 
-    <com.example.horse.travel.sns.list.CustomPager
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:id="@+id/viewPager" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
-
-        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-            android:id="@+id/dots_indicator"
+        android:layout_height="wrap_content">
+        <com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
+            android:id="@+id/img_re"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:rvp_triggerOffset="0.1"
+            app:rvp_singlePageFling="true"
+            android:focusableInTouchMode="true"
+            android:descendantFocusability="blocksDescendants"
+            android:clipToPadding="false"/>
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/img_re"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:focusableInTouchMode="true"-->
+            <!--android:descendantFocusability="blocksDescendants"-->
+            <!--app:layoutManager="android.support.v7.widget.LinearLayoutManager" />-->
+        <TextView
+            android:id="@+id/imgs_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:dotsColor="#000000"
-            app:dotsSize="8dp"
-            app:dotsWidthFactor="2" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/rounded_corner"
+            android:gravity="center"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:textSize="13sp"
+            android:textColor="#fff"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ims_layout"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+        <!--<ImageView-->
+            <!--android:layout_width="10dp"-->
+            <!--android:layout_height="10dp"-->
+            <!--android:src="@drawable/tab_indicator_selected" />-->
 
     </LinearLayout>
+    <!--<com.example.horse.travel.sns.list.CustomPager-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="5dp"-->
+        <!--android:layout_marginBottom="5dp"-->
+        <!--android:id="@+id/viewPager" />-->
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal">-->
+
+        <!--<com.tbuonomo.viewpagerdotsindicator.DotsIndicator-->
+            <!--android:id="@+id/dots_indicator"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:dotsColor="#000000"-->
+            <!--app:dotsSize="8dp"-->
+            <!--app:dotsWidthFactor="2" />-->
+
+    <!--</LinearLayout>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -139,6 +194,21 @@
             android:id="@+id/sns_con"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
+            />
+        <TextView
+            android:id="@+id/comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            />
+        <TextView
+            android:id="@+id/sns_updated_at"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="3dp"
             android:layout_marginBottom="10dp"
             />
     </LinearLayout>
