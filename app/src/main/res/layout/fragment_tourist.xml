@@ -86,365 +86,372 @@
                 android:src="@drawable/weather38" />
         </LinearLayout>
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            app:cardBackgroundColor="#fff"
-            app:cardElevation="8dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="#fff">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text="발자국 best 10!"
-                    android:textColor="#000"
-                    android:textStyle="bold" />
-                <com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
-                    android:id="@+id/tour_re"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:rvp_triggerOffset="0.1"
-                    app:rvp_singlePageFling="true"
-                    android:clipToPadding="false"/>
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tour_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            app:cardBackgroundColor="#fff"
-            app:cardElevation="8dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#fff"
-                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="축제 갈 사람 여기여기 모여라~"
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"/>
+        <!--<android.support.v7.widget.CardView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--app:cardBackgroundColor="#fff"-->
+            <!--app:cardElevation="8dp">-->
 
-                <TextView
-                    android:id="@+id/festival_title1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="vertical"-->
+                <!--android:background="#fff">-->
 
-                <TextView
-                    android:id="@+id/festival_title2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
+                <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:text="발자국 best 10!"-->
+                    <!--android:textColor="#000"-->
+                    <!--android:textStyle="bold" />-->
+                <!--<com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager-->
+                    <!--android:id="@+id/tour_re"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--app:rvp_triggerOffset="0.1"-->
+                    <!--app:rvp_singlePageFling="true"-->
+                    <!--android:clipToPadding="false"/>-->
+            <!--</LinearLayout>-->
 
-                <TextView
-                    android:id="@+id/festival_title3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
-
-                <TextView
-                    android:id="@+id/festival_title4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
-
-                <TextView
-                    android:id="@+id/festival_title5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            app:cardBackgroundColor="#fff"
-            app:cardElevation="8dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#fff"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="발자취가 추천하는 테마 코스 여행 ! "
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="10dp"/>
-
-                <TextView
-                    android:id="@+id/tour_title1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
-
-                <TextView
-                    android:id="@+id/tour_title2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
-
-                <TextView
-                    android:id="@+id/tour_title3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
-
-                <TextView
-                    android:id="@+id/tour_title4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
-
-                <TextView
-                    android:id="@+id/tour_title5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+        <!--</android.support.v7.widget.CardView>-->
 
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            app:cardBackgroundColor="#fff"
-            app:cardElevation="8dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#fff"
-                android:orientation="vertical">
+        <!--<android.support.v7.widget.CardView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--app:cardBackgroundColor="#fff"-->
+            <!--app:cardElevation="8dp">-->
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="200dp"-->
+                <!--android:background="#fff"-->
+                <!--android:orientation="vertical">-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="금강산도 식후경, 한 뚝배기 하실래예?~"
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"/>
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="축제 갈 사람 여기여기 모여라~"-->
+                    <!--android:textColor="#000"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginTop="10dp"/>-->
 
-                <TextView
-                    android:id="@+id/food_title1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
+                <!--<TextView-->
+                    <!--android:id="@+id/festival_title1"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
 
-                <TextView
-                    android:id="@+id/food_title2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
+                <!--<TextView-->
+                    <!--android:id="@+id/festival_title2"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
 
-                <TextView
-                    android:id="@+id/food_title3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
+                <!--<TextView-->
+                    <!--android:id="@+id/festival_title3"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
 
-                <TextView
-                    android:id="@+id/food_title4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
+                <!--<TextView-->
+                    <!--android:id="@+id/festival_title4"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
 
-                <TextView
-                    android:id="@+id/food_title5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+                <!--<TextView-->
+                    <!--android:id="@+id/festival_title5"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
+            <!--</LinearLayout>-->
+        <!--</android.support.v7.widget.CardView>-->
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            app:cardBackgroundColor="#fff"
-            app:cardElevation="8dp">
+        <!--<android.support.v7.widget.CardView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--app:cardBackgroundColor="#fff"-->
+            <!--app:cardElevation="8dp">-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#fff"
-                android:orientation="vertical">
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="200dp"-->
+                <!--android:background="#fff"-->
+                <!--android:orientation="vertical">-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="예술·문화·역사가 어우러진 고품격 여행"
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"/>
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="발자취가 추천하는 테마 코스 여행 ! "-->
+                    <!--android:textColor="#000"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:layout_marginStart="10dp"/>-->
 
-                <TextView
-                    android:id="@+id/arts_title1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
+                <!--<TextView-->
+                    <!--android:id="@+id/tour_title1"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
 
-                <TextView
-                    android:id="@+id/arts_title2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
+                <!--<TextView-->
+                    <!--android:id="@+id/tour_title2"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
 
-                <TextView
-                    android:id="@+id/arts_title3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
+                <!--<TextView-->
+                    <!--android:id="@+id/tour_title3"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
 
-                <TextView
-                    android:id="@+id/arts_title4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
+                <!--<TextView-->
+                    <!--android:id="@+id/tour_title4"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
 
-                <TextView
-                    android:id="@+id/arts_title5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+                <!--<TextView-->
+                    <!--android:id="@+id/tour_title5"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
+            <!--</LinearLayout>-->
+        <!--</android.support.v7.widget.CardView>-->
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            app:cardBackgroundColor="#fff"
-            app:cardElevation="8dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#fff"
-                android:orientation="vertical">
+        <!--<android.support.v7.widget.CardView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--app:cardBackgroundColor="#fff"-->
+            <!--app:cardElevation="8dp">-->
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="200dp"-->
+                <!--android:background="#fff"-->
+                <!--android:orientation="vertical">-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="활기찬 여행, 레포츠를 즐기자!!"
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp" />
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="금강산도 식후경, 한 뚝배기 하실래예?~"-->
+                    <!--android:textColor="#000"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginTop="10dp"/>-->
 
-                <TextView
-                    android:id="@+id/sports_title1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
+                <!--<TextView-->
+                    <!--android:id="@+id/food_title1"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
 
-                <TextView
-                    android:id="@+id/sports_title2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
+                <!--<TextView-->
+                    <!--android:id="@+id/food_title2"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
 
-                <TextView
-                    android:id="@+id/sports_title3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
+                <!--<TextView-->
+                    <!--android:id="@+id/food_title3"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
 
-                <TextView
-                    android:id="@+id/sports_title4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
+                <!--<TextView-->
+                    <!--android:id="@+id/food_title4"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
 
-                <TextView
-                    android:id="@+id/sports_title5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+                <!--<TextView-->
+                    <!--android:id="@+id/food_title5"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
+            <!--</LinearLayout>-->
+        <!--</android.support.v7.widget.CardView>-->
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            app:cardBackgroundColor="#fff"
-            app:cardElevation="8dp">
+        <!--<android.support.v7.widget.CardView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--app:cardBackgroundColor="#fff"-->
+            <!--app:cardElevation="8dp">-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#fff"
-                android:orientation="vertical">
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="200dp"-->
+                <!--android:background="#fff"-->
+                <!--android:orientation="vertical">-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="여행의 묘미는 money money해도 쇼핑!"
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp" />
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="예술·문화·역사가 어우러진 고품격 여행"-->
+                    <!--android:textColor="#000"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginTop="10dp"/>-->
 
-                <TextView
-                    android:id="@+id/shoping_title1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
+                <!--<TextView-->
+                    <!--android:id="@+id/arts_title1"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
 
-                <TextView
-                    android:id="@+id/shoping_title2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
+                <!--<TextView-->
+                    <!--android:id="@+id/arts_title2"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
 
-                <TextView
-                    android:id="@+id/shoping_title3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
+                <!--<TextView-->
+                    <!--android:id="@+id/arts_title3"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
 
-                <TextView
-                    android:id="@+id/shoping_title4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
+                <!--<TextView-->
+                    <!--android:id="@+id/arts_title4"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
 
-                <TextView
-                    android:id="@+id/shoping_title5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000" />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+                <!--<TextView-->
+                    <!--android:id="@+id/arts_title5"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
+            <!--</LinearLayout>-->
+        <!--</android.support.v7.widget.CardView>-->
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <!--<android.support.v7.widget.CardView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--app:cardBackgroundColor="#fff"-->
+            <!--app:cardElevation="8dp">-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="200dp"-->
+                <!--android:background="#fff"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="활기찬 여행, 레포츠를 즐기자!!"-->
+                    <!--android:textColor="#000"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginTop="10dp" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/sports_title1"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/sports_title2"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/sports_title3"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/sports_title4"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/sports_title5"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
+            <!--</LinearLayout>-->
+        <!--</android.support.v7.widget.CardView>-->
+
+        <!--<android.support.v7.widget.CardView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--app:cardBackgroundColor="#fff"-->
+            <!--app:cardElevation="8dp">-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="200dp"-->
+                <!--android:background="#fff"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="여행의 묘미는 money money해도 쇼핑!"-->
+                    <!--android:textColor="#000"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginTop="10dp" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/shoping_title1"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/shoping_title2"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/shoping_title3"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/shoping_title4"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/shoping_title5"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#000" />-->
+            <!--</LinearLayout>-->
+        <!--</android.support.v7.widget.CardView>-->
+
+        <!--<android.support.v4.view.ViewPager-->
+            <!--android:id="@+id/pager"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
     </LinearLayout>
 </ScrollView>

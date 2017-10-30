@@ -8,7 +8,7 @@ import android.graphics.drawable.Drawable;
 
 class TourListItem {
     private String tour_title;
-    private Drawable tour_image;
+    private String tour_image;
 
     public String getTour_title() {
         return tour_title;
@@ -18,11 +18,11 @@ class TourListItem {
         this.tour_title = tour_title;
     }
 
-    public Drawable getTour_image() {
+    public String getTour_image() {
         return tour_image;
     }
 
-    public void setTour_image(Drawable tour_image) {
+    public void setTour_image(String tour_image) {
         this.tour_image = tour_image;
     }
 }
