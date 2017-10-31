@@ -67,8 +67,8 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         call.enqueue(new Callback<TourListRepo>() {
             @Override
             public void onResponse(Call<TourListRepo> call, Response<TourListRepo> response) {
-                Log.d("Family Course", response.raw().request().url().toString()); // uri 출력
-                Log.d("Family Course", response.body().getResponse().getHeader().getResultMsg());
+                Log.d("FamilyCourse", response.raw().request().url().toString()); // uri 출력
+                Log.d("FamilyCourse", response.body().getResponse().getHeader().getResultMsg());
                 ArrayList<TourListRepo.Item> itemList = response.body().getResponse().getBody().getItems().getItem();
 //                for (int i = 0; i < response.body().getResponse().getBody().getItems().getItem().size(); i++) {
 ////                    itemList.Items.Item.class.items.setTitle(response.body().getResponse().getBody().getItems().getItem().get(i).getTitle());

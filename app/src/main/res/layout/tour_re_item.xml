@@ -20,13 +20,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/family_title"
-                android:text="옥상목욕"/>
+                android:text="제목"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/family_content"
                 android:background="@drawable/full_border"
-                android:text="SNS에서 핫하게 뜨고 있는뷰힐링 카페에요"/>
+                android:text="구, 코스1-코스2-코스3"/>
         </LinearLayout>
         <LinearLayout
             android:layout_weight="6"
