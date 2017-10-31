@@ -12,11 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.horse.travel.R;
 import com.example.horse.travel.capsule.FragmentCapsule;
+import com.squareup.picasso.Picasso;
 
 
 import org.joda.time.DateTime;
@@ -47,7 +49,52 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class FragmentTourist extends Fragment {
-    @BindView(R.id.tour_recyclerview) RecyclerView tour_recyclerview;
+    @BindView(R.id.family_course)
+    ImageView family_course;
+    @BindView(R.id.walking_course)
+    ImageView walking_course;
+    @BindView(R.id.alone_course)
+    ImageView alone_course;
+    @BindView(R.id.camping_course)
+    ImageView camping_course;
+    @BindView(R.id.healing_course)
+    ImageView healing_course;
+    @BindView(R.id.taste_course)
+    ImageView taste_course;
+
+    public FragmentTourist() {
+//        Required empty public constructor
+    }
+
+    public static FragmentTourist newInstance(int arg) {
+        FragmentTourist fragment = new FragmentTourist();
+
+        // Set the arguments.
+        Bundle args = new Bundle();
+
+        args.putInt("ARG", arg);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootview = inflater.inflate(R.layout.fragment_tour_course, container, false);
+        Log.e("fragmenttourist", "ddddddd1");
+        ButterKnife.bind(this, rootview);
+        Log.e("fragmenttourist", "ddddddd2");
+        Picasso.with(getContext()).load(R.drawable.family_course).into(family_course);
+        Picasso.with(getContext()).load(R.drawable.walking_course).into(walking_course);
+        Picasso.with(getContext()).load(R.drawable.alone_course).into(alone_course);
+        Picasso.with(getContext()).load(R.drawable.camping_course).into(camping_course);
+        Picasso.with(getContext()).load(R.drawable.healing_course).into(healing_course);
+        Picasso.with(getContext()).load(R.drawable.taste_course).into(taste_course);
+
+        return rootview;
+    }
+
+
+
+    /*@BindView(R.id.tour_recyclerview) RecyclerView tour_recyclerview;
 
     @BindView(R.id.weather_sky)
     TextView weather_sky;
@@ -68,52 +115,6 @@ public class FragmentTourist extends Fragment {
     void clickTown(){
         townDialog(region);
     }
-
-
-//
-//    @BindView(R.id.festival_title1)
-//    TextView festival_title1;
-//    @BindView(R.id.festival_title2)
-//    TextView festival_title2;
-//    @BindView(R.id.festival_title3)
-//    TextView festival_title3;
-//    @BindView(R.id.festival_title4)
-//    TextView festival_title4;
-//    @BindView(R.id.festival_title5)
-//    TextView festival_title5;
-//
-//    @BindView(R.id.tour_title1) TextView tour_title1;
-//    @BindView(R.id.tour_title2) TextView tour_title2;
-//    @BindView(R.id.tour_title3) TextView tour_title3;
-//    @BindView(R.id.tour_title4) TextView tour_title4;
-//    @BindView(R.id.tour_title5) TextView tour_title5;
-//
-//    @BindView(R.id.food_title1) TextView food_title1;
-//    @BindView(R.id.food_title2) TextView food_title2;
-//    @BindView(R.id.food_title3) TextView food_title3;
-//    @BindView(R.id.food_title4) TextView food_title4;
-//    @BindView(R.id.food_title5) TextView food_title5;
-//
-//    @BindView(R.id.arts_title1) TextView arts_title1;
-//    @BindView(R.id.arts_title2) TextView arts_title2;
-//    @BindView(R.id.arts_title3) TextView arts_title3;
-//    @BindView(R.id.arts_title4) TextView arts_title4;
-//    @BindView(R.id.arts_title5) TextView arts_title5;
-//
-//    @BindView(R.id.sports_title1) TextView sports_title1;
-//    @BindView(R.id.sports_title2) TextView sports_title2;
-//    @BindView(R.id.sports_title3) TextView sports_title3;
-//    @BindView(R.id.sports_title4) TextView sports_title4;
-//    @BindView(R.id.sports_title5) TextView sports_title5;
-//
-//    @BindView(R.id.shoping_title1) TextView shoping_title1;
-//    @BindView(R.id.shoping_title2) TextView shoping_title2;
-//    @BindView(R.id.shoping_title3) TextView shoping_title3;
-//    @BindView(R.id.shoping_title4) TextView shoping_title4;
-//    @BindView(R.id.shoping_title5) TextView shoping_title5;
-//
-//    @BindView(R.id.pager)
-//    ViewPager mViewPager;
 
     AreaData areaData = new AreaData();
     String[] region = areaData.getSeoUl(); //초기값 서울
@@ -159,11 +160,6 @@ public class FragmentTourist extends Fragment {
         tourRetrofit(false, "A04"); //쇼핑
         return rootview;
     }
-
-
-    //***********************************************
-
-    //AppSectionsPagerAdapter mAppSectionsPagerAdapter;
 
 
 
@@ -267,10 +263,10 @@ public class FragmentTourist extends Fragment {
     }
 
     private void setWeatherImg(String currentWeather){
-        /*Date date = new Date();
+        *//*Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy:MM:dd-hh:mm:ss");
         String time = dateFormat.format(date).toString();
-        Log.e("날씨", time);*/
+        Log.e("날씨", time);*//*
         switch (currentWeather) {
             case "맑음" : weatherImg.setImageResource(R.drawable.weather01); break;
             case "구름조금" : weatherImg.setImageResource(R.drawable.weather02); break;
@@ -321,9 +317,9 @@ public class FragmentTourist extends Fragment {
         //시가 선택됐을 때는 true, 시가 선택되지 않았을 때는 false
         Call<FestivalRepo> call;
         if(siSelect != true) {
-            call = festialService.get_festival_retrofit("mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "5", "1", "AND", "TourList", "B", "Y", areaData.getAreaCode(), minusTwoMonths,minusOneDay, "json");
+            call = festialService.get_festival_retrofit("mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "5", "1", "AND", "TourList", "P", "Y", areaData.getAreaCode(), minusTwoMonths,minusOneDay, "json");
         } else {
-            call = festialService.get_festival_retrofit("mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "5", "1", "AND", "TourList", "B", "Y", areaData.getAreaCode(), areaData.getSigunguCode(),  minusTwoMonths,minusOneDay, "json");
+            call = festialService.get_festival_retrofit("mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "5", "1", "AND", "TourList", "P", "Y", areaData.getAreaCode(), areaData.getSigunguCode(),  minusTwoMonths,minusOneDay, "json");
         }
         call.enqueue(new Callback<FestivalRepo>() {
             @Override
@@ -350,21 +346,21 @@ public class FragmentTourist extends Fragment {
         Call<TourListRepo> call;
         if(siSelect != true) {
             switch (cat) {
-                case "C01" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "25", areaData.getAreaCode(), cat, "json");break;
-                case "A05" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "39", areaData.getAreaCode(), cat, "json");break;
-                case "A02" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "12", areaData.getAreaCode(), cat, "json");break;
-                case "A03" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "28", areaData.getAreaCode(), cat, "json");break;
-                case "A04" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "38", areaData.getAreaCode(), cat, "json");break;
-                default: call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "12", areaData.getAreaCode(), cat, "json");break;
+                case "C01" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "P", "25", areaData.getAreaCode(), cat, "json");break;
+                case "A05" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "P", "39", areaData.getAreaCode(), cat, "json");break;
+                case "A02" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "P", "12", areaData.getAreaCode(), cat, "json");break;
+                case "A03" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "P", "28", areaData.getAreaCode(), cat, "json");break;
+                case "A04" : call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "P", "38", areaData.getAreaCode(), cat, "json");break;
+                default: call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "P", "12", areaData.getAreaCode(), cat, "json");break;
             }
         } else {
             switch (cat) {
-                case "C01": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "25", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
-                case "A05": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "39", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
-                case "A02": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "12", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
-                case "A03": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "28", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
-                case "A04": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "38", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
-                default: call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "B", "12", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
+                case "C01": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "P", "25", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
+                case "A05": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "P", "39", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
+                case "A02": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "P", "12", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
+                case "A03": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "P", "28", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
+                case "A04": call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "P", "38", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
+                default: call = tourService.get_tour_retrofit("5", "1", "AND", "TourList", "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "Y", "P", "12", areaData.getAreaCode(), areaData.getSigunguCode(), cat, "json");break;
             }
         }
         call.enqueue(new Callback<TourListRepo>() {
@@ -397,40 +393,6 @@ public class FragmentTourist extends Fragment {
                 arrTitle.add("쇼핑");
                 adapter.addNew(itemList, arrTitle);
                 tour_recyclerview.setAdapter(adapter);
-//                        tour_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
-//                        tour_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
-//                        tour_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
-//                        tour_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
-//                        tour_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
-//                        break;
-//                    case "A05" :
-//                        food_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
-//                        food_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
-//                        food_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
-//                        food_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
-//                        food_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
-//                        break;
-//                    case "A02" :
-//                        food_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
-//                        arts_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
-//                        arts_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
-//                        arts_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
-//                        arts_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
-//                        break;
-//                    case "A03" :
-//                        sports_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
-//                        sports_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
-//                        sports_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
-//                        sports_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
-//                        sports_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
-//                        break;
-//                    case "A04" :
-//                        shoping_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
-//                        shoping_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
-//                        shoping_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
-//                        shoping_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
-//                        shoping_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
-//                        break;
 //                }
             }
             @Override
@@ -469,5 +431,5 @@ public class FragmentTourist extends Fragment {
                 t.printStackTrace();
             }
         });
-    }
+    }*/
 }

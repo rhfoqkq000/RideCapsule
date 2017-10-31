@@ -67,6 +67,12 @@
             android:background="@drawable/full_border"
             android:text="전체" />
     </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/inn_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+<!--
     <TextView
         android:id="@+id/innTitleItem1"
         android:layout_width="wrap_content"
@@ -86,6 +92,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+-->
 
 </LinearLayout>
     </ScrollView>

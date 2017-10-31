@@ -256,10 +256,10 @@ public class InnRepo {
         @GET("/openapi/service/rest/KorService/searchStay")
         Call<InnRepo> get_inn_retrofit(@Query("ServiceKey") String ServiceKey, @Query("numOfRows") String numOfRows, @Query("pageNo") String pageNo, @Query("MobileOS") String MobileOS, @Query("MobileApp") String MobileApp,
                                        @Query("arrange") String arrange, @Query("listYN") String listYN, @Query("areaCode") String areaCode, @Query("contentTypeId") String contentTypeId,
-                                       @Query("_type") String type);
+                                       @Query("goodStay") String goodStay, @Query("_type") String type);
         @GET("/openapi/service/rest/KorService/searchStay")
         Call<InnRepo> get_inn_retrofit(@Query("ServiceKey") String ServiceKey, @Query("numOfRows") String numOfRows, @Query("pageNo") String pageNo, @Query("MobileOS") String MobileOS, @Query("MobileApp") String MobileApp,
                                        @Query("arrange") String arrange, @Query("listYN") String listYN, @Query("areaCode") String areaCode, @Query("sigunguCode") String sigunguCode, @Query("contentTypeId") String contentTypeId,
-                                       @Query("_type") String type);
+                                       @Query("goodStay") String goodStay, @Query("_type") String type);
     }
 }

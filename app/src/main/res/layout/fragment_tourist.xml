@@ -85,6 +85,11 @@
                 android:layout_height="45dp"
                 android:src="@drawable/weather38" />
         </LinearLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tour_search"
+        android:text="Search..."/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/tour_recyclerview"

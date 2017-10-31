@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,9 @@ import com.example.horse.travel.R;
 import com.example.horse.travel.capsule.FragmentCapsule;
 import com.example.horse.travel.tourist.AreaData;
 import com.example.horse.travel.tourist.AreaRepo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +36,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FragmentInn extends Fragment {
 
+    @BindView(R.id.inn_recyclerview)
+    RecyclerView inn_recyclerview;
+
     @BindView(R.id.city)
     Button cityBtn;
     @OnClick(R.id.city)
@@ -46,11 +54,12 @@ public class FragmentInn extends Fragment {
 
     AreaData areaData = new AreaData();
     String[] region = areaData.getSeoUl(); //초기값 서울
+    TourItemVerticalAdapter adapter;
 
-    @BindView(R.id.innTitleItem1)
+/*    @BindView(R.id.innTitleItem1)
     TextView innTitleItem1;
     @BindView(R.id.innTitleItem2)
-    TextView innTitleItem2;
+    TextView innTitleItem2;*/
   
     public static FragmentInn newInstance(int arg) {
         FragmentInn fragment = new FragmentInn();
@@ -66,7 +75,8 @@ public class FragmentInn extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootview = inflater.inflate(R.layout.fragment_inn, container, false);
         ButterKnife.bind(this, rootview);
-        innRetrofit(false);
+        innRetrofit(false,"0");
+        innRetrofit(false,"1");
         return rootview;
     }
 
@@ -88,7 +98,8 @@ public class FragmentInn extends Fragment {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         // 선택 버튼 클릭시 , 여기서 선택한 값을 메인 Activity 로 넘기면 된다.
                         areaCodeRetrofit();
-                        innRetrofit(false);
+                        innRetrofit(false,"0");
+                        innRetrofit(false,"1");
 
 
                     }
@@ -115,7 +126,8 @@ public class FragmentInn extends Fragment {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         areaCodeRetrofit();
-                        innRetrofit(true);
+                        innRetrofit(false,"0");
+                        innRetrofit(false,"1");
                     }
                 }).setNegativeButton("취소",
                 new DialogInterface.OnClickListener() {
@@ -151,25 +163,46 @@ public class FragmentInn extends Fragment {
 
 
     //*****************************************RETROFIT**********************************************
-    public void innRetrofit(boolean selectSi) {
+    public void innRetrofit(boolean selectSi, String goodStay) {
         Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         InnRepo.InnAppInterface tourService = client.create(InnRepo.InnAppInterface.class);
-        //요청 파라미터 입력
+        //시가 선택되있으면 true, goodStay가 0이면 굿스테이 아님(1이면 굿스테이)
         Call<InnRepo> call ;
         if (selectSi != true) {
-            call = tourService.get_inn_retrofit("mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "2", "1", "AND", "TourList", "B", "Y", areaData.getAreaCode(), "15", "json");
+            call = tourService.get_inn_retrofit("mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "2", "1", "AND", "TourList", "P", "Y", areaData.getAreaCode(), "32",goodStay, "json");
         } else {
-            call = tourService.get_inn_retrofit("mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "2", "1", "AND", "TourList", "B", "Y", areaData.getAreaCode(), areaData.getSigunguCode(), "15", "json");
+            call = tourService.get_inn_retrofit("mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==", "2", "1", "AND", "TourList", "P", "Y", areaData.getAreaCode(), areaData.getSigunguCode(), "32",goodStay, "json");
         }
+
         call.enqueue(new Callback<InnRepo>() {
             @Override
             public void onResponse(Call<InnRepo> call, Response<InnRepo> response) {
                 //파라미터 받아서 처리하기
                 Log.d("MainActivity", response.raw().request().url().toString()); // uri 출력
                 Log.d("MainActivity", response.body().getResponse().getHeader().getResultMsg());
-                innTitleItem1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
-                innTitleItem2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
+                Log.d("MainActivity", response.body().getResponse().getBody().getItems().getItem().size()+"");
+                //innTitleItem1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
+                //innTitleItem2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
+                List<TourListItem> itemList = new ArrayList<>();
+                for (int i = 0; i < response.body().getResponse().getBody().getItems().getItem().size(); i++) {
+                    TourListItem item = new TourListItem();
+                    item.setTour_title(response.body().getResponse().getBody().getItems().getItem().get(i).getTitle());
+                    item.setTour_image(response.body().getResponse().getBody().getItems().getItem().get(i).getFirstimage());
+                    itemList.add(item);
+                }
+
+                Log.d("FragmentTourists", itemList.toString());
+
+                final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+                layoutManager.setItemPrefetchEnabled(true);
+                inn_recyclerview.setLayoutManager(layoutManager);
+                adapter = new TourItemVerticalAdapter(getContext(), getActivity());
+                ArrayList<String> arrTitle = new ArrayList<>();
+                arrTitle.add("한국관광공사 인증 우수 숙박 업체 ");
+                arrTitle.add("일반 숙박 업체");
+                adapter.addNew(itemList, arrTitle);
+                inn_recyclerview.setAdapter(adapter);
             }
 
             @Override
