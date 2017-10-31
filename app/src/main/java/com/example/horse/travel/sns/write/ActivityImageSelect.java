@@ -27,6 +27,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.horse.travel.MainActivity;
 import com.example.horse.travel.R;
+import com.example.horse.travel.UrlSingleton;
 import com.example.horse.travel.sns.list.SnsImageRecyclerAdapter;
 import com.sangcomz.fishbun.FishBun;
 import com.sangcomz.fishbun.define.Define;
@@ -64,7 +65,7 @@ public class ActivityImageSelect extends AppCompatActivity {
     @BindView(R.id.select_imgs_recyclerview)
     RecyclerView select_imgs_recyclerview;
 
-    SnsImageRecyclerAdapter adapter;
+    SnsImageSlideAdapter adapter;
 
     @OnClick(R.id.image_select_nextBtn)
     public void imageSelectNextBtn(){
@@ -119,9 +120,11 @@ public class ActivityImageSelect extends AppCompatActivity {
                     final ArrayList<Uri> path = data.getParcelableArrayListExtra(Define.INTENT_PATH);
                     ImageSingleton.getInstance().setImgUri(path);
 
+                    String IMG_URL = UrlSingleton.getInstance().getSERVER_URL();
+
                     RequestOptions options = new RequestOptions().placeholder(R.drawable.image_loding);
-                    adapter = new SnsImageRecyclerAdapter(Glide.with(this), ActivityImageSelect.this, getContentResolver());
-                    adapter.addNew(path);
+//                    adapter = new SnsImageSlideAdapter(ActivityImageSelect.this, path, IMG_URL);
+                    adapter = new SnsImageSlideAdapter(ActivityImageSelect.this, path);
                     select_imgs_recyclerview.setAdapter(adapter);
                 }
         }

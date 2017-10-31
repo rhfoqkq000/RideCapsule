@@ -115,10 +115,7 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
 
         ButterKnife.bind(this, rootview);
 
-        InterfaceSnsHashtag hashtag = new Retrofit.Builder()
-                .baseUrl("http://168.115.225.120:5000/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build().create(InterfaceSnsHashtag.class);
+        InterfaceSnsHashtag hashtag = ApiClient.getClient().create(InterfaceSnsHashtag.class);
         Call<SnsHashtagDTO> call = hashtag.getHashtag();
         call.enqueue(new Callback<SnsHashtagDTO>(){
             @Override

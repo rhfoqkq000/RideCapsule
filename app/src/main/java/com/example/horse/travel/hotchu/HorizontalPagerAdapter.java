@@ -7,10 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.horse.travel.R;
-import com.gigamole.infinitecycleviewpager.VerticalInfiniteCycleViewPager;
 
-import static android.support.v4.view.PagerAdapter.POSITION_NONE;
+import java.util.ArrayList;
+
 import static com.example.horse.travel.hotchu.Utils.setupItem;
+import static com.example.horse.travel.hotchu.Utils.setupList;
 
 /**
  * Created by qazz92 on 2017. 11. 1..
@@ -18,39 +19,24 @@ import static com.example.horse.travel.hotchu.Utils.setupItem;
 
 public class HorizontalPagerAdapter extends PagerAdapter {
 
-    private final Utils.LibraryObject[] LIBRARIES = new Utils.LibraryObject[]{
-            new Utils.LibraryObject(
-                    R.drawable.active_dot,
-                    "Strategy"
-            ),
-            new Utils.LibraryObject(
-                    R.drawable.chat,
-                    "Design"
-            ),
-            new Utils.LibraryObject(
-                    R.drawable.go,
-                    "Development"
-            ),
-            new Utils.LibraryObject(
-                    R.drawable.ic_launcher_background,
-                    "Quality Assurance"
-            )
-    };
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
 
     private boolean mIsTwoWay;
 
-    public HorizontalPagerAdapter(final Context context, final boolean isTwoWay) {
+    private ArrayList<HotchuItem> items;
+
+    public HorizontalPagerAdapter(final Context context, final boolean isTwoWay, ArrayList<HotchuItem> items) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
         mIsTwoWay = isTwoWay;
+        this.items = items;
     }
 
     @Override
     public int getCount() {
-        return mIsTwoWay ? 6 : LIBRARIES.length;
+        return mIsTwoWay ? 6 : items.size()+1;
     }
 
     @Override
@@ -61,8 +47,15 @@ public class HorizontalPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(final ViewGroup container, final int position) {
         final View view;
-        view = mLayoutInflater.inflate(R.layout.hot_item, container, false);
-        setupItem(view, LIBRARIES[position]);
+
+        if(position==0){
+            view = mLayoutInflater.inflate(R.layout.hot_item_index, container, false);
+            setupList(view, items);
+        }else{
+            view = mLayoutInflater.inflate(R.layout.hot_item, container, false);
+            setupItem(view, items.get(position-1),position);
+        }
+
 
         container.addView(view);
         return view;

@@ -173,7 +173,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         holder.imgRe.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
         RequestOptions options = new RequestOptions().placeholder(R.drawable.image_loding);
-        holder.imgRe.setAdapter(new SnsImageRecyclerAdapter(glide, context, contentResolver));
+        holder.imgRe.setAdapter(new SnsImageRecyclerAdapter(glide, context, contentResolver, imgArr));
         holder.imgRe.getRecycledViewPool().setMaxRecycledViews(0,img_length);
 
         if (imgArr.length>1){
