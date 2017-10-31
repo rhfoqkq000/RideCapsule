@@ -16,7 +16,7 @@ import retrofit2.http.Part;
 public interface InterfaceSnsWrite {
     @Multipart
     @POST("sns/write")
-    Call<SnsWriteDTO> writeSns(@Part("post") RequestBody post, @Part("hash") List<String> hash,
+    Call<SnsWriteDTO> writeSns(@Part("post") RequestBody post, @Part("hash") List<RequestBody> hash,
                                @Part MultipartBody.Part[] imagefile, @Part("user_id") int user_id,
                                @Part("location") RequestBody location, @Part("location_alias") RequestBody location_alias);
 }

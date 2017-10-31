@@ -258,7 +258,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
             public void onClick(View view) {
                 Log.d("UserID", String.valueOf(item.getUser_id()));
                 Intent intent = new Intent(holder.itemView.getContext(), SnsHashTagActivity.class);
-                HashTagSingleton.getInstance().setHash("@"+item.getUser_id());
+                HashTagSingleton.getInstance().setHash("@"+item.getNickname());
 //                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 holder.itemView.getContext().startActivity(intent);
             }
@@ -267,7 +267,6 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         holder.sns_location_full.setText(item.getLocation());
         holder.locationTextView.setOnClickListener(new View.OnClickListener() {
             @Override
-
             public void onClick(View view) {
                 String location = holder.locationTextView.getText().toString();
                 Log.d("location",location);
