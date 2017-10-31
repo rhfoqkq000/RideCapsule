@@ -47,7 +47,7 @@ public class TourImageRecyclerAdapter extends RecyclerView.Adapter<TourImageRecy
 //        Log.d("TEXT",item.getTitle());
 //        holder.title.setText(item.getTitle());
 //        holder.content.setText(item.getContent());
-
+      
         holder.tour_item_txt.setText(tourListItems.get(position).getTour_title());
 //        holder.tour_item_img.setBackground(holder.itemView.getResources().getDrawable(R.drawable.weather01));
         Glide.with(context).load(tourListItems.get(position).getTour_image()).into(holder.tour_item_img);
