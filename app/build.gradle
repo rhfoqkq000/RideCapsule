@@ -82,4 +82,7 @@ dependencies {
     compile 'com.tbuonomo.andrui:viewpagerdotsindicator:1.0.1'
     // search text view
     compile 'com.github.arimorty:floatingsearchview:2.1.1'
+    // get location data from gps or network
+    compile 'io.nlopez.smartlocation:library:3.3.3'
+
 }

@@ -7,10 +7,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
-import com.miguelcatalan.materialsearchview.SearchAdapter;
 
 /**
  * Created by JRokH on 2017-10-30.
@@ -55,6 +53,7 @@ public class SearchViewCustom extends MaterialSearchView {
 
         return super.dispatchKeyEventPreIme(event);
     }
+
 
     //    @Override
 //    public boolean onKeyPreIme(int keyCode, KeyEvent event) {

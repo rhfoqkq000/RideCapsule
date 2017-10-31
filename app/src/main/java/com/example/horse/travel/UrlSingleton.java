@@ -15,7 +15,7 @@ public class UrlSingleton {
         return Singleton.instance;
     }
 
-    public String getSERVER_URL() {
+    public String getSERVER_URL(){
         return "http://dongaboomin.xyz:20090/";
     }
 }

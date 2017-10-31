@@ -297,14 +297,14 @@ public class FragmentTourist extends Fragment {
         call.enqueue(new Callback<WeatherRepo>() {
             @Override
             public void onResponse(Call<WeatherRepo> call, Response<WeatherRepo> response) {
-                //현재온도
-                Log.i("MainActivity", response.body().getWeather().getHourly().get(0).getTemperature().getTc());
-                weather_sky.setText(response.body().getWeather().getHourly().get(0).getTemperature().getTc());
-                //현재 하늘 상태
-                Log.i("MainActivity", response.body().getWeather().getHourly().get(0).getSky().getName());
-                weather_tem.setText(response.body().getWeather().getHourly().get(0).getSky().getName());
-                //하늘 상태에 따른 이미지
-                setWeatherImg(response.body().getWeather().getHourly().get(0).getSky().getName());
+//                //현재온도
+//                Log.i("MainActivity", response.body().getWeather().getHourly().get(0).getTemperature().getTc());
+//                weather_sky.setText(response.body().getWeather().getHourly().get(0).getTemperature().getTc());
+//                //현재 하늘 상태
+//                Log.i("MainActivity", response.body().getWeather().getHourly().get(0).getSky().getName());
+//                weather_tem.setText(response.body().getWeather().getHourly().get(0).getSky().getName());
+//                //하늘 상태에 따른 이미지
+//                setWeatherImg(response.body().getWeather().getHourly().get(0).getSky().getName());
             }
             @Override
             public void onFailure(Call<WeatherRepo> call, Throwable t) {

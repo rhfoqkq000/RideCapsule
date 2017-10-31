@@ -1,5 +1,7 @@
 package com.example.horse.travel.sns.list;
 
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.horse.travel.R;
 import com.example.horse.travel.TimeCal;
 import com.example.horse.travel.sns.comment.SnsCommentActivity;
@@ -45,17 +48,22 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
     private List<SnsListItem> items;
     private RequestManager glide;
     private Resources res;
+    private Context context;
+    private ContentResolver contentResolver;
 
-    public SnsRecyclerAdapter(RequestManager glide) {
+    public SnsRecyclerAdapter(RequestManager glide, ContentResolver contentResolver) {
         this.glide=glide;
+        this.contentResolver = contentResolver;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.listview_sns,viewGroup,false);
         final ViewHolder viewHolder = new ViewHolder(view);
-
-
 
         viewHolder.imgRe.addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
             @Override
@@ -164,7 +172,8 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         holder.imgRe.setFocusable(false);
         holder.imgRe.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
-        holder.imgRe.setAdapter(new SnsImageRecyclerAdapter(imgArr,res));
+        RequestOptions options = new RequestOptions().placeholder(R.drawable.image_loding);
+        holder.imgRe.setAdapter(new SnsImageRecyclerAdapter(glide, context, contentResolver));
         holder.imgRe.getRecycledViewPool().setMaxRecycledViews(0,img_length);
 
         if (imgArr.length>1){

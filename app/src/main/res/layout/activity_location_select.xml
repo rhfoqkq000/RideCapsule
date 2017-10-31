@@ -24,12 +24,12 @@
                     android:layout_marginRight="16dp"
                     android:orientation="horizontal">
                     <TextView
-                        android:id="@+id/image_select_closeBtn"
+                        android:id="@+id/location_select_closeBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="닫기"/>
                     <TextView
-                        android:id="@+id/image_select_nextBtn"
+                        android:id="@+id/location_select_nextBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -40,15 +40,42 @@
         </android.support.design.widget.AppBarLayout>
     </android.support.design.widget.CoordinatorLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/select_imgs_recyclerview"
+    <EditText
+        android:id="@+id/location_et"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="wrap_content"
+        android:hint="지역명" />
+    <EditText
+        android:id="@+id/location_alias_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="상세주소" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/select_imgs_btn"/>
+        android:id="@+id/select_loc_btn"
+        android:text="지역추가"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/get_loc_btn"
+        android:text="현재위치가져오기"/>
+
+    <EditText
+        android:id="@+id/location_search_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="검색어" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_loc_btn"
+        android:text="검색"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/locRe"/>
 
 </LinearLayout>
 

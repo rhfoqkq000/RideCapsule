@@ -104,7 +104,7 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
 //        snsRe.setNestedScrollingEnabled(false);
         snsRe.getRecycledViewPool().setMaxRecycledViews(0,10);
 
-        adapter = new SnsRecyclerAdapter(Glide.with(this));
+        adapter = new SnsRecyclerAdapter(Glide.with(this), getContentResolver());
         adapter.setHasStableIds(true);
         snsRe.setAdapter(adapter);
 
