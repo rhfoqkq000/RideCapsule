@@ -70,7 +70,7 @@ public class SnsCommentActivity extends AppCompatActivity{
 
     int content_id = 0;
 
-    int user_id = 9;
+    int user_id = 1;
 
     String postArticle;
 

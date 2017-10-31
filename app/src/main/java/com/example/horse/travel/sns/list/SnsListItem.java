@@ -1,7 +1,5 @@
 package com.example.horse.travel.sns.list;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -19,6 +17,33 @@ public class SnsListItem {
     private Date updated_at;
     private String imgs;
     private int comment_count;
+    private int user_id;
+    private String location;
+    private String location_alias;
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getLocation_alias() {
+        return location_alias;
+    }
+
+    public void setLocation_alias(String location_alias) {
+        this.location_alias = location_alias;
+    }
 
     public int getComment_count() {
         return comment_count;
