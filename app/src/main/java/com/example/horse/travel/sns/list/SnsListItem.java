@@ -1,6 +1,6 @@
 package com.example.horse.travel.sns.list;
 
-import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by qazz92 on 2017. 10. 11..
@@ -13,6 +13,61 @@ public class SnsListItem {
     private int like_count;
     private int like_id;
     private String like_user;
+    private String post;
+    private Date updated_at;
+    private String imgs;
+    private int comment_count;
+    private int user_id;
+    private String location;
+    private String location_alias;
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getLocation_alias() {
+        return location_alias;
+    }
+
+    public void setLocation_alias(String location_alias) {
+        this.location_alias = location_alias;
+    }
+
+    public int getComment_count() {
+        return comment_count;
+    }
+
+    public void setComment_count(int comment_count) {
+        this.comment_count = comment_count;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNickname() {
         return nickname;
@@ -46,34 +101,6 @@ public class SnsListItem {
         this.like_user = like_user;
     }
 
-    private String post;
-    private String updated_at;
-    private String imgs;
-
-    public String getImgs() {
-        return imgs;
-    }
-
-    public void setImgs(String imgs) {
-        this.imgs = imgs;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getPost() {
         return post;
     }
@@ -82,11 +109,19 @@ public class SnsListItem {
         this.post = post;
     }
 
-    public String getUpdated_at() {
+    public Date getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(String updated_at) {
+    public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public String getImgs() {
+        return imgs;
+    }
+
+    public void setImgs(String imgs) {
+        this.imgs = imgs;
     }
 }

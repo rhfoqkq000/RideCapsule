@@ -9,5 +9,5 @@
         android:scaleType="fitStart"
         android:adjustViewBounds="true"
         android:src="@drawable/image_loding"
-        android:id="@+id/imageView"/>
+        android:id="@+id/image_select_imageView"/>
 </LinearLayout>

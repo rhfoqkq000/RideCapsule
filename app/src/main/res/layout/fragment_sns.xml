@@ -5,9 +5,12 @@
     android:layout_height="wrap_content"
 >
 
+
+
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
@@ -25,6 +28,16 @@
                 android:scrollbars="vertical"
                 />
         </android.support.v4.widget.SwipeRefreshLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.Holo.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:indeterminate="true"
+            app:layout_anchor="@id/swipe_refresh"
+            app:layout_anchorGravity="bottom|center_horizontal" />
 
 
         <!--<ListView-->
@@ -48,4 +61,20 @@
             app:pressedTranslationZ="12dp" />
 
     </android.support.design.widget.CoordinatorLayout>
+    <FrameLayout
+        android:id="@+id/toolbar_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary" />
+
+        <com.example.horse.travel.SearchViewCustom
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
 </RelativeLayout>

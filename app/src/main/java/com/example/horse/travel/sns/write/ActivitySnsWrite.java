@@ -2,6 +2,7 @@ package com.example.horse.travel.sns.write;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -13,10 +14,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.horse.travel.ApiClient;
+import com.example.horse.travel.MainActivity;
 import com.example.horse.travel.R;
 import com.volokh.danylo.hashtaghelper.HashTagHelper;
 
 import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +33,8 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by qazz92 on 2017. 10. 10..
@@ -38,6 +43,7 @@ import retrofit2.Response;
 public class ActivitySnsWrite extends AppCompatActivity {
 
     private HashTagHelper mTextHashTagHelper;
+    String location, location_alias;
 
     @BindView(R.id.snsWriteText)
     EditText snsWriteText;
@@ -45,16 +51,25 @@ public class ActivitySnsWrite extends AppCompatActivity {
     @OnClick(R.id.testBtn)
     void snsWrite(){
         List<String> allHashTags = mTextHashTagHelper.getAllHashTags();
-        InterfaceSnsWrite write = ApiClient.getScalarClient().create(InterfaceSnsWrite.class);
-        RequestBody requestBodyOrderID = RequestBody.create(MediaType.parse("text/plain"), snsWriteText.getText().toString());
-        Call<SnsWriteDTO> call = write.writeSns(requestBodyOrderID, allHashTags,
-                uriArrToImagesParts(ImageSingleton.getInstance().getImgUri()), 9);
+        Log.e("allHashTags", allHashTags.toString());
+        InterfaceSnsWrite write = new Retrofit.Builder()
+                .baseUrl("http://168.115.225.120:5000/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build().create(InterfaceSnsWrite.class);
+        RequestBody requestBodyPost = RequestBody.create(MediaType.parse("text/plain"), snsWriteText.getText().toString());
+        RequestBody requestBodyLocation = RequestBody.create(MediaType.parse("text/plain"), location);
+        RequestBody requestBodyLocation_alias = RequestBody.create(MediaType.parse("text/plain"), location_alias);
+        Call<SnsWriteDTO> call = write.writeSns(requestBodyPost, hashtagToRequestBodyArray(allHashTags),
+                uriArrToImagesParts(ImageSingleton.getInstance().getImgUri()), 1, requestBodyLocation, requestBodyLocation_alias);
         call.enqueue(new Callback<SnsWriteDTO>() {
             @Override
             public void onResponse(Call<SnsWriteDTO> call, Response<SnsWriteDTO> response) {
                 deleteCache(getApplicationContext());
                 Toast.makeText(getApplicationContext(),response.body().getResult_body(),Toast.LENGTH_SHORT).show();
-                finish();
+                Log.e("ActivitySnsWrite", response.body().getResult_body());
+                Intent i = new Intent(ActivitySnsWrite.this, MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(i);
             }
 
             @Override
@@ -72,6 +87,10 @@ public class ActivitySnsWrite extends AppCompatActivity {
         setContentView(R.layout.activity_sns_write);
         ButterKnife.bind(this);
 
+        Intent intent = getIntent();
+        location = intent.getStringExtra("location");
+        location_alias = intent.getStringExtra("location_alias");
+
         mTextHashTagHelper = HashTagHelper.Creator.create(getResources().getColor(R.color.blue), new HashTagHelper.OnHashTagClickListener() {
             @Override
             public void onHashTagClicked(String hashTag) {
@@ -86,8 +105,9 @@ public class ActivitySnsWrite extends AppCompatActivity {
         ArrayList<File> imgFileArr = new ArrayList<>();
         for(int i = 0; i < path.size(); i++){
             try {
+                Log.e("ActivitySnsWrite", path.get(i).toString());
+//                File file = new File(URI.create(path.get(i).toString()));
                 File file = new File(getPath(path.get(i)));
-                //compressor = 이미지 용량 줄여줌 화질이나 사이즈 변화가 얼마나 있는지는 아직 확인안함
                 File compressedImageFile = new Compressor(this).setQuality(75).compressToFile(file);
 //                  Log.e("AFTER RESIZING SIZE OF FILE"+i, String.valueOf(compressedImageFile.length()/1024));
                 imgFileArr.add(compressedImageFile);
@@ -102,6 +122,14 @@ public class ActivitySnsWrite extends AppCompatActivity {
             imagesParts[i] = MultipartBody.Part.createFormData("imagefile", file.getName(), requestBody);
         }
         return imagesParts;
+    }
+
+    public List<RequestBody> hashtagToRequestBodyArray(List<String> list){
+        List<RequestBody> hashArr = new ArrayList<>();
+        for(int i = 0; i < list.size(); i++){
+            hashArr.add(RequestBody.create(MediaType.parse("text/plain"), list.get(i)));
+        }
+        return hashArr;
     }
 
     public String getPath(Uri uri) {

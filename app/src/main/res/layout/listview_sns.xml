@@ -43,16 +43,55 @@
             android:layout_marginEnd="5dp"
             />
 
-        <TextView
-            android:id="@+id/sns_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="end"
-            android:textSize="15sp"
-            android:layout_marginEnd="15dp"/>
+        <!--<TextView-->
+            <!--android:id="@+id/sns_location"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:gravity="end"-->
+            <!--android:textSize="15sp"-->
+            <!--android:layout_marginEnd="15dp"/>-->
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/location"
+            android:layout_gravity="center_vertical"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="5dp">
+            <TextView
+                android:id="@+id/sns_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="15sp"
+                />
+            <TextView
+                android:id="@+id/sns_location_full"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                android:textColor="@color/light_gray"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -100,10 +139,10 @@
         android:id="@+id/ims_layout"
         android:orientation="horizontal"
         android:gravity="center_horizontal">
-        <ImageView
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:src="@drawable/tab_indicator_selected" />
+        <!--<ImageView-->
+            <!--android:layout_width="10dp"-->
+            <!--android:layout_height="10dp"-->
+            <!--android:src="@drawable/tab_indicator_selected" />-->
 
     </LinearLayout>
     <!--<com.example.horse.travel.sns.list.CustomPager-->
@@ -193,7 +232,23 @@
             android:layout_height="wrap_content"
             android:id="@+id/sns_con"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            />
+        <TextView
+            android:id="@+id/comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
+            />
+        <TextView
+            android:id="@+id/sns_updated_at"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="3dp"
             android:layout_marginBottom="10dp"
             />
     </LinearLayout>

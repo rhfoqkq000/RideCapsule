@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.horse.travel.R;
-import com.example.horse.travel.inn.FragmentInn;
 
 import butterknife.ButterKnife;
 
