@@ -267,7 +267,6 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         holder.sns_location_full.setText(item.getLocation());
         holder.locationTextView.setOnClickListener(new View.OnClickListener() {
             @Override
-
             public void onClick(View view) {
                 String location = holder.locationTextView.getText().toString();
                 Log.d("location",location);

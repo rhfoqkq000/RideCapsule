@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.horse.travel.ApiClient;
+import com.example.horse.travel.MainActivity;
 import com.example.horse.travel.R;
 import com.volokh.danylo.hashtaghelper.HashTagHelper;
 
@@ -58,7 +59,7 @@ public class ActivitySnsWrite extends AppCompatActivity {
         RequestBody requestBodyPost = RequestBody.create(MediaType.parse("text/plain"), snsWriteText.getText().toString());
         RequestBody requestBodyLocation = RequestBody.create(MediaType.parse("text/plain"), location);
         RequestBody requestBodyLocation_alias = RequestBody.create(MediaType.parse("text/plain"), location_alias);
-        Call<SnsWriteDTO> call = write.writeSns(requestBodyPost, allHashTags,
+        Call<SnsWriteDTO> call = write.writeSns(requestBodyPost, hashtagToRequestBodyArray(allHashTags),
                 uriArrToImagesParts(ImageSingleton.getInstance().getImgUri()), 1, requestBodyLocation, requestBodyLocation_alias);
         call.enqueue(new Callback<SnsWriteDTO>() {
             @Override
@@ -66,7 +67,9 @@ public class ActivitySnsWrite extends AppCompatActivity {
                 deleteCache(getApplicationContext());
                 Toast.makeText(getApplicationContext(),response.body().getResult_body(),Toast.LENGTH_SHORT).show();
                 Log.e("ActivitySnsWrite", response.body().getResult_body());
-                finish();
+                Intent i = new Intent(ActivitySnsWrite.this, MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(i);
             }
 
             @Override
@@ -119,6 +122,14 @@ public class ActivitySnsWrite extends AppCompatActivity {
             imagesParts[i] = MultipartBody.Part.createFormData("imagefile", file.getName(), requestBody);
         }
         return imagesParts;
+    }
+
+    public List<RequestBody> hashtagToRequestBodyArray(List<String> list){
+        List<RequestBody> hashArr = new ArrayList<>();
+        for(int i = 0; i < list.size(); i++){
+            hashArr.add(RequestBody.create(MediaType.parse("text/plain"), list.get(i)));
+        }
+        return hashArr;
     }
 
     public String getPath(Uri uri) {

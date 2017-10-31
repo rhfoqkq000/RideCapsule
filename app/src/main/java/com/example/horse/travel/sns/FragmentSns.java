@@ -29,7 +29,9 @@ import com.example.horse.travel.ApiClient;
 import com.example.horse.travel.SearchViewCustom;
 import com.example.horse.travel.EndlessRecyclerViewScrollListener;
 import com.example.horse.travel.R;
+import com.example.horse.travel.sns.hashtag.HashTagSingleton;
 import com.example.horse.travel.sns.hashtag.InterfaceSnsHashtag;
+import com.example.horse.travel.sns.hashtag.SnsHashTagActivity;
 import com.example.horse.travel.sns.hashtag.SnsHashtagDTO;
 import com.example.horse.travel.sns.list.InterfaceSnsList;
 import com.example.horse.travel.sns.list.SnsListDTO;
@@ -131,6 +133,10 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                             String query = (String) adapterView.getItemAtPosition(i);
                             Log.d("RE",query);
+                            Intent intent = new Intent(getContext(), SnsHashTagActivity.class);
+                            HashTagSingleton.getInstance().setHash(query);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            getContext().startActivity(intent);
                         }
                     });
                 }

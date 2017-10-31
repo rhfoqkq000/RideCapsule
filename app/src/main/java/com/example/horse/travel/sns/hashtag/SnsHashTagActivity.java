@@ -86,7 +86,6 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
 
         hashtag = HashTagSingleton.getInstance().getHash();
 
-
 //        searchView.setSuggestions(getResources().getStringArray(R.array.query_suggestions));
 
         searchView.setOnQueryTextListener(this);
@@ -104,25 +103,26 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
 //        snsRe.setNestedScrollingEnabled(false);
         snsRe.getRecycledViewPool().setMaxRecycledViews(0,10);
 
+        Log.e("SnsHashTagActivity", "hashtag::::"+hashtag.substring(1, hashtag.length()));
+
         adapter = new SnsRecyclerAdapter(Glide.with(this), getContentResolver());
         adapter.setHasStableIds(true);
+        adapter.setContext(getApplicationContext());
         snsRe.setAdapter(adapter);
-
-
 
         if (hashtag.charAt(0) == '#'){
             category = HASHTAG;
-            hashtag = hashtag.substring(1);
+            hashtag = hashtag.substring(1, hashtag.length());
             getSnsList(hashtag, category, init_page);
         } else if (hashtag.charAt(0) == '@'){
             category = PROFILE;
-            hashtag = hashtag.substring(1);
+            hashtag = hashtag.substring(1, hashtag.length());
 
             Log.d("SUBSTRING",hashtag.substring(1));
             getSnsList(hashtag, category, init_page);
         } else {
             category = LOCATION;
-            hashtag = hashtag.substring(1);
+            hashtag = hashtag.substring(1, hashtag.length());
 
             getSnsList(hashtag, category, init_page);
         }
