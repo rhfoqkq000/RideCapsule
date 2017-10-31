@@ -5,22 +5,13 @@ package com.example.horse.travel.sns.hashtag;
  */
 
 public class SnsHashtagInfo {
-    private int id;
-    private String tag, created_at, updated_at;
+    private String result;
 
-    public int getId() {
-        return id;
+    public String getResult() {
+        return result;
     }
 
-    public String getTag() {
-        return tag;
-    }
-
-    public String getCreated_at() {
-        return created_at;
-    }
-
-    public String getUpdated_at() {
-        return updated_at;
+    public void setResult(String result) {
+        this.result = result;
     }
 }

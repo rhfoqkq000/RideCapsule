@@ -1,7 +1,9 @@
 package com.example.horse.travel.sns.write;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,76 +13,46 @@ import android.widget.LinearLayout;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.horse.travel.R;
+import com.example.horse.travel.sns.list.SnsRecyclerAdapter;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 /**
  * Created by pmkjkr on 2017. 10. 31..
  */
 
-public class SnsImageSlideAdapter extends PagerAdapter {
-
+public class SnsImageSlideAdapter extends RecyclerView.Adapter<SnsImageSlideAdapter.ViewHolder> {
+    private ArrayList<Uri> imgArr;
     private Context context;
-    private String[] imgArr;
-    private LayoutInflater layoutInflater;
-    private String img_url;
-    private RequestManager glide;
-    private RequestOptions options;
 
-    SnsImageSlideAdapter(Context context, String[] imgArr, String img_url, RequestManager glide, RequestOptions options) {
-        this.context = context;
+    public SnsImageSlideAdapter(Context context, ArrayList<Uri> imgArr) {
         this.imgArr = imgArr;
-        this.img_url = img_url;
-        this.glide = glide;
-        this.options = options;
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.context = context;
     }
 
     @Override
-    public int getCount() {
-        return imgArr.length;
+    public SnsImageSlideAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.viewpager_item,viewGroup,false);
+        final ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
-        return view == object;
+    public void onBindViewHolder(SnsImageSlideAdapter.ViewHolder holder, int position) {
+        Picasso.with(context).load(imgArr.get(position)).into(holder.imageView);
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, final int position) {
-        View itemView = layoutInflater.inflate(R.layout.viewpager_item, container, false);
-
-        ImageView imageView = itemView.findViewById(R.id.imageView);
-//        URL url = null;
-//        int height = 0;
-//        try {
-//            url = new URL(imgArr[position]);
-//            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-//            height = bmp.getHeight();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        imageView.getLayoutParams().height = height;
-
-        // url로부터 이미지 사이즈를 받아서 지정하면 networkOnMainThreadException 발생 스레드 계속 파면 이미지 하나당 만들어져서 에바일듯
-        glide.load(img_url+imgArr[position]).apply(options).into(imageView);
-        container.addView(itemView);
-
-        return itemView;
+    public int getItemCount() {
+        return imgArr == null ? 0 : imgArr.size();
     }
 
-    @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object) {
-        super.setPrimaryItem(container, position, object);
-//        if (position != mCurrentPosition) {
-//            Fragment fragment = (Fragment) object;
-//            CustomPager pager = (CustomPager) container;
-//            if (fragment != null && fragment.getView() != null) {
-//                mCurrentPosition = position;
-//                pager.measureCurrentView(fragment.getView());
-//            }
-    }
-
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((LinearLayout) object);
+    static class ViewHolder extends RecyclerView.ViewHolder{
+        ImageView imageView;
+        public ViewHolder(View itemView) {
+            super(itemView);
+            imageView = itemView.findViewById(R.id.image_select_imageView);
+        }
     }
 }

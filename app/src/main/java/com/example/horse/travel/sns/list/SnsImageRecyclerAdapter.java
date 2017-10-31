@@ -27,7 +27,9 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.example.horse.travel.R;
+import com.example.horse.travel.UrlSingleton;
 import com.example.horse.travel.sns.write.ImageSingleton;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -52,30 +54,36 @@ import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 public class SnsImageRecyclerAdapter extends RecyclerView.Adapter<SnsImageRecyclerAdapter.ViewHolder> {
 
-    private LayoutInflater layoutInflater;
-    private ArrayList<Uri> imgArr;
+//    private LayoutInflater layoutInflater;
+    private String[] imgArr;
     private RequestManager glide;
     private PopupWindow mPopupWindow ;
     private ContentResolver contentResolver;
     private Context context;
+    private final String IMG_URL = UrlSingleton.getInstance().getSERVER_URL();
 
-    public SnsImageRecyclerAdapter(RequestManager glide, Context context, ContentResolver contentResolver) {
+    public SnsImageRecyclerAdapter(RequestManager glide, Context context, ContentResolver contentResolver, String[] imgArr) {
         this.glide = glide;
         this.context = context;
+        this.imgArr = imgArr;
         this.contentResolver = contentResolver;
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public SnsImageRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_image_select,viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.sns_image_recycler,viewGroup,false);
         return new SnsImageRecyclerAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final SnsImageRecyclerAdapter.ViewHolder holder, int position) {
-        Log.e("SnsImageRecyclerAdapter", imgArr.get(position).toString());
-        glide.load(imgArr.get(position)).into(holder.imageView);
+//        Log.e("SnsImageRecyclerAdapter", imgArr.get(position).toString());
+//        glide.load(IMG_URL+imgArr.get(position)).into(holder.imageView);
+        holder.itemView.layout(0, 0, 0, 0);
+        Picasso.with(holder.itemView.getContext())
+                .load(IMG_URL+imgArr[position])
+                .into(holder.imageView);
 
 //        glide.load(imgArr.get(position)).listener(new RequestListener<Drawable>() {
 //            @Override
@@ -94,43 +102,43 @@ public class SnsImageRecyclerAdapter extends RecyclerView.Adapter<SnsImageRecycl
 //            }
 //        }).into(holder.imageView);
 
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                View popupView = layoutInflater.inflate(R.layout.dialog_filterselect, null);
-                mPopupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                mPopupWindow.setFocusable(true);
-                mPopupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
-
-                Log.e("SnsImageSelectAdapter", "position:"+holder.getAdapterPosition());
-
-                ImageView filterImg1 = popupView.findViewById(R.id.filter1);
-                ImageView filterImg2 = popupView.findViewById(R.id.filter2);
-                ImageView filterImg3 = popupView.findViewById(R.id.filter3);
-                ImageView filterImg4 = popupView.findViewById(R.id.filter4);
-                ImageView filterImg5 = popupView.findViewById(R.id.filter5);
-                ImageView filterImg6 = popupView.findViewById(R.id.filter6);
-                ImageView filterImg7 = popupView.findViewById(R.id.filter7);
-                ImageView filterImg8 = popupView.findViewById(R.id.filter8);
-                ImageView filterImg9 = popupView.findViewById(R.id.filter9);
-
-                settingImages(filterImg1, imgArr, holder.getAdapterPosition(), bitmapTransform(new ToonFilterTransformation()), getFileName(imgArr.get(holder.getAdapterPosition())), holder);
-                settingImages(filterImg2, imgArr, holder.getAdapterPosition(), bitmapTransform(new SepiaFilterTransformation()), getFileName(imgArr.get(holder.getAdapterPosition())), holder);
-                settingImages(filterImg3, imgArr, holder.getAdapterPosition(), bitmapTransform(new SketchFilterTransformation()), getFileName(imgArr.get(holder.getAdapterPosition())), holder);
-                settingImages(filterImg4, imgArr, holder.getAdapterPosition(), bitmapTransform(new BlurTransformation(3)), getFileName(imgArr.get(holder.getAdapterPosition())), holder);
-                settingImages(filterImg5, imgArr, holder.getAdapterPosition(), bitmapTransform(new PixelationFilterTransformation()), getFileName(imgArr.get(holder.getAdapterPosition())), holder);
-                settingImages(filterImg6, imgArr, holder.getAdapterPosition(), bitmapTransform(new KuwaharaFilterTransformation()), getFileName(imgArr.get(holder.getAdapterPosition())), holder);
-                settingImages(filterImg7, imgArr, holder.getAdapterPosition(), bitmapTransform(new SwirlFilterTransformation()), getFileName(imgArr.get(holder.getAdapterPosition())), holder);
-                settingImages(filterImg8, imgArr, holder.getAdapterPosition(), bitmapTransform(new VignetteFilterTransformation()), getFileName(imgArr.get(holder.getAdapterPosition())), holder);
-                settingImages(filterImg9, imgArr, holder.getAdapterPosition(), bitmapTransform(new InvertFilterTransformation()), getFileName(imgArr.get(holder.getAdapterPosition())), holder);
-            }
-        });
+//        holder.imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                View popupView = layoutInflater.inflate(R.layout.dialog_filterselect, null);
+//                mPopupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//                mPopupWindow.setFocusable(true);
+//                mPopupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+//
+//                Log.e("SnsImageSelectAdapter", "position:"+holder.getAdapterPosition());
+//
+//                ImageView filterImg1 = popupView.findViewById(R.id.filter1);
+//                ImageView filterImg2 = popupView.findViewById(R.id.filter2);
+//                ImageView filterImg3 = popupView.findViewById(R.id.filter3);
+//                ImageView filterImg4 = popupView.findViewById(R.id.filter4);
+//                ImageView filterImg5 = popupView.findViewById(R.id.filter5);
+//                ImageView filterImg6 = popupView.findViewById(R.id.filter6);
+//                ImageView filterImg7 = popupView.findViewById(R.id.filter7);
+//                ImageView filterImg8 = popupView.findViewById(R.id.filter8);
+//                ImageView filterImg9 = popupView.findViewById(R.id.filter9);
+//
+//                settingImages(filterImg1, imgArr, holder.getAdapterPosition(), bitmapTransform(new ToonFilterTransformation()), getFileName(imgArr[holder.getAdapterPosition()]), holder);
+//                settingImages(filterImg2, imgArr, holder.getAdapterPosition(), bitmapTransform(new SepiaFilterTransformation()), getFileName(imgArr.get(holder.getAdapterPosition())), holder);
+//                settingImages(filterImg3, imgArr, holder.getAdapterPosition(), bitmapTransform(new SketchFilterTransformation()), getFileName(imgArr.get(holder.getAdapterPosition())), holder);
+//                settingImages(filterImg4, imgArr, holder.getAdapterPosition(), bitmapTransform(new BlurTransformation(3)), getFileName(imgArr.get(holder.getAdapterPosition())), holder);
+//                settingImages(filterImg5, imgArr, holder.getAdapterPosition(), bitmapTransform(new PixelationFilterTransformation()), getFileName(imgArr.get(holder.getAdapterPosition())), holder);
+//                settingImages(filterImg6, imgArr, holder.getAdapterPosition(), bitmapTransform(new KuwaharaFilterTransformation()), getFileName(imgArr.get(holder.getAdapterPosition())), holder);
+//                settingImages(filterImg7, imgArr, holder.getAdapterPosition(), bitmapTransform(new SwirlFilterTransformation()), getFileName(imgArr.get(holder.getAdapterPosition())), holder);
+//                settingImages(filterImg8, imgArr, holder.getAdapterPosition(), bitmapTransform(new VignetteFilterTransformation()), getFileName(imgArr.get(holder.getAdapterPosition())), holder);
+//                settingImages(filterImg9, imgArr, holder.getAdapterPosition(), bitmapTransform(new InvertFilterTransformation()), getFileName(imgArr.get(holder.getAdapterPosition())), holder);
+//            }
+//        });
     }
 
     @Override
     public int getItemCount() {
         if(imgArr != null){
-            return imgArr.size();
+            return imgArr.length;
         }else{
             return 0;
         }
@@ -140,7 +148,7 @@ public class SnsImageRecyclerAdapter extends RecyclerView.Adapter<SnsImageRecycl
         ImageView imageView;
         ViewHolder(View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.img_item_select);
+            imageView = itemView.findViewById(R.id.sns_image);
 //            imageView.setDrawingCacheEnabled(true);
 //            imageView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
 //                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
@@ -148,11 +156,11 @@ public class SnsImageRecyclerAdapter extends RecyclerView.Adapter<SnsImageRecycl
         }
     }
 
-    public void addNew(ArrayList<Uri> imgArr)
-    {
-        this.imgArr = imgArr;
-        notifyDataSetChanged();
-    }
+//    public void addNew(ArrayList<Uri> imgArr)
+//    {
+//        this.imgArr = imgArr;
+//        notifyDataSetChanged();
+//    }
 
     private void settingImages(final ImageView filterImgView, final ArrayList<Uri> path, final int i, final RequestOptions option, final String fileName, final SnsImageRecyclerAdapter.ViewHolder holder){
         filterImgView.setDrawingCacheEnabled(true);
