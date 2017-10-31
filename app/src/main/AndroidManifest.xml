@@ -34,14 +34,11 @@
             android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".sns.write.ActivityImageSelect"
             android:theme="@style/AppTheme.NoActionBar"/>
-<<<<<<< HEAD
         <activity android:name=".tourist.ActivityFamilyCourse"
             android:theme="@style/AppTheme.NoActionBar"/>
-=======
         <activity android:name=".sns.write.ActivityLocationSelect"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".sns.comment.SnsCommentActivity"/>
->>>>>>> 2b80cdd1417991ad31d6f6de8225bc2e0117507f
         <activity android:name=".sns.write.ActivityImageFilter" />
         <activity android:name=".sns.hashtag.SnsHashTagActivity"
             android:theme="@style/AppTheme.NoActionBar"
