@@ -42,7 +42,7 @@ public class TourImageRecyclerAdapter extends RecyclerView.Adapter<TourImageRecy
 //        Log.d("TEXT",item.getTitle());
 //        holder.title.setText(item.getTitle());
 //        holder.content.setText(item.getContent());
-        holder.tour_item_img.setBackground(holder.itemView.getResources().getDrawable(R.drawable.a));
+//        holder.tour_item_img.setBackground(holder.itemView.getResources().getDrawable(R.drawable.a));
     }
 
     @Override
