@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardView"
+    android:orientation="vertical"
     app:cardUseCompatPadding="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tour_item_img"
-        android:src="@drawable/image_loding"/>
     <TextView
+        android:id="@+id/tour_horizontal_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tour_item_text"
-        android:text="관광지정보에 대한 텍스트"
-        android:textColor="#fff"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"/>
-</RelativeLayout>
+        android:layout_marginTop="30dp"
+        android:textSize="20dp"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tour_horizontal_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/tour_item_img"-->
+        <!--android:src="@drawable/image_loding"/>-->
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/tour_item_text"-->
+        <!--android:text="관광지정보에 대한 텍스트"-->
+        <!--android:textColor="#fff"-->
+        <!--android:textSize="15dp"-->
+        <!--android:textStyle="bold"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginBottom="10dp"/>-->
+</LinearLayout>

@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +23,9 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +47,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class FragmentTourist extends Fragment {
+    @BindView(R.id.tour_recyclerview) RecyclerView tour_recyclerview;
 
     @BindView(R.id.weather_sky)
     TextView weather_sky;
@@ -64,53 +69,57 @@ public class FragmentTourist extends Fragment {
         townDialog(region);
     }
 
-    @BindView(R.id.festival_title1)
-    TextView festival_title1;
-    @BindView(R.id.festival_title2)
-    TextView festival_title2;
-    @BindView(R.id.festival_title3)
-    TextView festival_title3;
-    @BindView(R.id.festival_title4)
-    TextView festival_title4;
-    @BindView(R.id.festival_title5)
-    TextView festival_title5;
 
-    @BindView(R.id.tour_title1) TextView tour_title1;
-    @BindView(R.id.tour_title2) TextView tour_title2;
-    @BindView(R.id.tour_title3) TextView tour_title3;
-    @BindView(R.id.tour_title4) TextView tour_title4;
-    @BindView(R.id.tour_title5) TextView tour_title5;
-
-    @BindView(R.id.food_title1) TextView food_title1;
-    @BindView(R.id.food_title2) TextView food_title2;
-    @BindView(R.id.food_title3) TextView food_title3;
-    @BindView(R.id.food_title4) TextView food_title4;
-    @BindView(R.id.food_title5) TextView food_title5;
-
-    @BindView(R.id.arts_title1) TextView arts_title1;
-    @BindView(R.id.arts_title2) TextView arts_title2;
-    @BindView(R.id.arts_title3) TextView arts_title3;
-    @BindView(R.id.arts_title4) TextView arts_title4;
-    @BindView(R.id.arts_title5) TextView arts_title5;
-
-    @BindView(R.id.sports_title1) TextView sports_title1;
-    @BindView(R.id.sports_title2) TextView sports_title2;
-    @BindView(R.id.sports_title3) TextView sports_title3;
-    @BindView(R.id.sports_title4) TextView sports_title4;
-    @BindView(R.id.sports_title5) TextView sports_title5;
-
-    @BindView(R.id.shoping_title1) TextView shoping_title1;
-    @BindView(R.id.shoping_title2) TextView shoping_title2;
-    @BindView(R.id.shoping_title3) TextView shoping_title3;
-    @BindView(R.id.shoping_title4) TextView shoping_title4;
-    @BindView(R.id.shoping_title5) TextView shoping_title5;
-
-    @BindView(R.id.pager)
-    ViewPager mViewPager;
+//
+//    @BindView(R.id.festival_title1)
+//    TextView festival_title1;
+//    @BindView(R.id.festival_title2)
+//    TextView festival_title2;
+//    @BindView(R.id.festival_title3)
+//    TextView festival_title3;
+//    @BindView(R.id.festival_title4)
+//    TextView festival_title4;
+//    @BindView(R.id.festival_title5)
+//    TextView festival_title5;
+//
+//    @BindView(R.id.tour_title1) TextView tour_title1;
+//    @BindView(R.id.tour_title2) TextView tour_title2;
+//    @BindView(R.id.tour_title3) TextView tour_title3;
+//    @BindView(R.id.tour_title4) TextView tour_title4;
+//    @BindView(R.id.tour_title5) TextView tour_title5;
+//
+//    @BindView(R.id.food_title1) TextView food_title1;
+//    @BindView(R.id.food_title2) TextView food_title2;
+//    @BindView(R.id.food_title3) TextView food_title3;
+//    @BindView(R.id.food_title4) TextView food_title4;
+//    @BindView(R.id.food_title5) TextView food_title5;
+//
+//    @BindView(R.id.arts_title1) TextView arts_title1;
+//    @BindView(R.id.arts_title2) TextView arts_title2;
+//    @BindView(R.id.arts_title3) TextView arts_title3;
+//    @BindView(R.id.arts_title4) TextView arts_title4;
+//    @BindView(R.id.arts_title5) TextView arts_title5;
+//
+//    @BindView(R.id.sports_title1) TextView sports_title1;
+//    @BindView(R.id.sports_title2) TextView sports_title2;
+//    @BindView(R.id.sports_title3) TextView sports_title3;
+//    @BindView(R.id.sports_title4) TextView sports_title4;
+//    @BindView(R.id.sports_title5) TextView sports_title5;
+//
+//    @BindView(R.id.shoping_title1) TextView shoping_title1;
+//    @BindView(R.id.shoping_title2) TextView shoping_title2;
+//    @BindView(R.id.shoping_title3) TextView shoping_title3;
+//    @BindView(R.id.shoping_title4) TextView shoping_title4;
+//    @BindView(R.id.shoping_title5) TextView shoping_title5;
+//
+//    @BindView(R.id.pager)
+//    ViewPager mViewPager;
 
     AreaData areaData = new AreaData();
+    String[] region = areaData.getSeoUl(); //초기값 서울
     String minusTwoMonths;
     String minusOneDay;
+    TourItemVerticalAdapter adapter;
 
     public FragmentTourist() {
 //        Required empty public constructor
@@ -134,8 +143,10 @@ public class FragmentTourist extends Fragment {
         minusTwoMonths = fmt.print(DateTime.now().minusMonths(2));
         minusOneDay = fmt.print(DateTime.now().minusDays(1));
 
+
+
         //날씨 불러옴
-        //weatherRetrofit(areaData.getLat(), areaData.getLon());
+        weatherRetrofit(areaData.getLat(), areaData.getLon());
         //areaCode
         areaCodeRetrofit();
         //축제 불러옴
@@ -154,7 +165,7 @@ public class FragmentTourist extends Fragment {
 
     //AppSectionsPagerAdapter mAppSectionsPagerAdapter;
 
-    String[] region = areaData.getSeoUl(); //초기값 서울
+
 
     @Override
     public void onResume() {
@@ -177,7 +188,7 @@ public class FragmentTourist extends Fragment {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         // 선택 버튼 클릭시 , 여기서 선택한 값을 메인 Activity 로 넘기면 된다.
-                        //weatherRetrofit(areaData.getLat(), areaData.getLon());
+                        weatherRetrofit(areaData.getLat(), areaData.getLon());
                         areaCodeRetrofit();
                         tourRetrofit(false, "C01"); //여행코스
                         tourRetrofit(false, "A05"); //맛집
@@ -185,6 +196,7 @@ public class FragmentTourist extends Fragment {
                         tourRetrofit(false, "A03"); //레포츠
                         tourRetrofit(false, "A04"); //쇼핑
                         festivalRetrofit(false);
+                        weatherRetrofit(areaData.getLat(), areaData.getLon());
                     }
                 }).setNegativeButton("취소",
                 new DialogInterface.OnClickListener() {
@@ -318,11 +330,11 @@ public class FragmentTourist extends Fragment {
             public void onResponse(Call<FestivalRepo> call, Response<FestivalRepo> response) {
                 Log.d("MainActivity", response.raw().request().url().toString()); // uri 출력
                 Log.d("MainActivity", response.body().getResponse().getHeader().getResultMsg());
-                festival_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
-                festival_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
-                festival_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
-                festival_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
-                festival_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
+//                festival_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
+//                festival_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
+//                festival_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
+//                festival_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
+//                festival_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
             }
             @Override
             public void onFailure(Call<FestivalRepo> call, Throwable t) {
@@ -360,43 +372,66 @@ public class FragmentTourist extends Fragment {
             public void onResponse(Call<TourListRepo> call, Response<TourListRepo> response) {
                 Log.d("MainActivity", response.raw().request().url().toString()); // uri 출력
                 Log.d("MainActivity", response.body().getResponse().getHeader().getResultMsg());
-                switch (cat) {
-                    case "C01" :
-                        tour_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
-                        tour_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
-                        tour_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
-                        tour_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
-                        tour_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
-                        break;
-                    case "A05" :
-                        food_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
-                        food_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
-                        food_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
-                        food_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
-                        food_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
-                        break;
-                    case "A02" :
-                        food_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
-                        arts_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
-                        arts_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
-                        arts_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
-                        arts_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
-                        break;
-                    case "A03" :
-                        sports_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
-                        sports_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
-                        sports_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
-                        sports_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
-                        sports_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
-                        break;
-                    case "A04" :
-                        shoping_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
-                        shoping_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
-                        shoping_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
-                        shoping_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
-                        shoping_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
-                        break;
+//                switch (cat) {
+//                    case "C01" :
+                List<TourListItem> itemList = new ArrayList<>();
+                for (int i = 0; i < response.body().getResponse().getBody().getItems().getItem().size(); i++) {
+                    TourListItem item = new TourListItem();
+                    item.setTour_title(response.body().getResponse().getBody().getItems().getItem().get(i).getTitle());
+                    item.setTour_image(response.body().getResponse().getBody().getItems().getItem().get(i).getFirstimage());//이미지가 없으면 안불러오려면 어케해야되징..?
+                    itemList.add(item);
                 }
+
+                Log.d("FragmentTourists", itemList.toString());
+
+                final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+                layoutManager.setItemPrefetchEnabled(true);
+                tour_recyclerview.setLayoutManager(layoutManager);
+                adapter = new TourItemVerticalAdapter(getContext(), getActivity());
+                ArrayList<String> arrTitle = new ArrayList<>();
+                arrTitle.add("축제");
+                arrTitle.add("여행코스");
+                arrTitle.add("맛집");
+                arrTitle.add("예술 문화 역사");
+                arrTitle.add("레포츠");
+                arrTitle.add("쇼핑");
+                adapter.addNew(itemList, arrTitle);
+                tour_recyclerview.setAdapter(adapter);
+//                        tour_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
+//                        tour_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
+//                        tour_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
+//                        tour_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
+//                        tour_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
+//                        break;
+//                    case "A05" :
+//                        food_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
+//                        food_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
+//                        food_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
+//                        food_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
+//                        food_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
+//                        break;
+//                    case "A02" :
+//                        food_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
+//                        arts_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
+//                        arts_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
+//                        arts_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
+//                        arts_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
+//                        break;
+//                    case "A03" :
+//                        sports_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
+//                        sports_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
+//                        sports_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
+//                        sports_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
+//                        sports_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
+//                        break;
+//                    case "A04" :
+//                        shoping_title1.setText(response.body().getResponse().getBody().getItems().getItem().get(0).getTitle());
+//                        shoping_title2.setText(response.body().getResponse().getBody().getItems().getItem().get(1).getTitle());
+//                        shoping_title3.setText(response.body().getResponse().getBody().getItems().getItem().get(2).getTitle());
+//                        shoping_title4.setText(response.body().getResponse().getBody().getItems().getItem().get(3).getTitle());
+//                        shoping_title5.setText(response.body().getResponse().getBody().getItems().getItem().get(4).getTitle());
+//                        break;
+//                }
             }
             @Override
             public void onFailure(Call<TourListRepo> call, Throwable t) {
