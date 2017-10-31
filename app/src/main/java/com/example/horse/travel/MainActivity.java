@@ -9,14 +9,11 @@ import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.example.horse.travel.capsule.FragmentCapsule;
-import com.example.horse.travel.inn.FragmentInn;
+import com.example.horse.travel.hotchu.FragmentHot;
 import com.example.horse.travel.mypage.FragmentMypage;
 import com.example.horse.travel.sns.FragmentSns;
-import com.example.horse.travel.sns.write.ImageSingleton;
-import com.example.horse.travel.tourist.FragmentTourist;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
-import com.squareup.picasso.Picasso;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -27,11 +24,11 @@ public class MainActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager;
     Fragment active;
-    Fragment fragmentTourist = FragmentTourist.newInstance(1);
-//    Fragment fragmentSamplee = FragmentSample.newInstance(2);
+//    Fragment fragmentTourist = FragmentTourist.newInstance(1);
+    Fragment fragmentSamplee = FragmentSample.newInstance(1);
     Fragment fragmentSns = FragmentSns.newInstance(2);
     Fragment fragmentCapsule = FragmentCapsule.newInstance(3);
-    Fragment fragmentInn = FragmentInn.newInstance(4);
+    Fragment fragmentInn = FragmentHot.newInstance(4);
     Fragment fragmentMypage = FragmentMypage.newInstance(5);
 
     @Override
@@ -128,11 +125,11 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(@IdRes int tabId) {
                 switch (tabId) {
                     case R.id.bottom_tourist:
-                    if (active != fragmentTourist)
-                        hideShowFragment(active,fragmentTourist);
+                    if (active != fragmentSamplee)
+                        hideShowFragment(active,fragmentSamplee);
 //                    else
 //                        fm.beginTransaction().show(fragmentSample).commit();
-                    active = fragmentTourist;
+                    active = fragmentSamplee;
                         break;
                     case R.id.bottom_sns:
                         hideShowFragment(active, fragmentSns);
@@ -169,13 +166,13 @@ public class MainActivity extends AppCompatActivity {
 //
     //Add all the fragments that need to be added and hidden. Also, add the one that is supposed to be the starting one, that one is not hidden.
     private void createFragments() {
-        addHideFragment(fragmentTourist);
+        addHideFragment(fragmentSamplee);
         addHideFragment(fragmentSns);
         addHideFragment(fragmentCapsule);
         addHideFragment(fragmentInn);
         addHideFragment(fragmentMypage);
-        fragmentManager.beginTransaction().show(fragmentTourist).commit();
-        active = fragmentTourist;
+        fragmentManager.beginTransaction().show(fragmentSamplee).commit();
+        active = fragmentSamplee;
     }
 }
 
