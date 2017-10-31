@@ -62,6 +62,9 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+
+        // FragmentSns에서 사용함. 전체 SNS를 출력하는 adapter.
+
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.listview_sns,viewGroup,false);
         final ViewHolder viewHolder = new ViewHolder(view);
 
@@ -165,6 +168,8 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
 //        RequestOptions options = new RequestOptions();
 //        options.fitCenter().override(Target.SIZE_ORIGINAL, holder.myImageView.getHeight());
 //        options.fitCenter();
+
+        // 각 글마다 스크롤 가능한 이미지 세팅
         final String[] imgArr = item.getImgs().split(",");
 
         int img_length = imgArr.length;
@@ -249,6 +254,9 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
     }
 
     private void setHeaderTextView(final ViewHolder holder, final SnsListItem item) {
+
+        // 기본정보
+
         String location = item.getNickname()+" | location";
         SpannableString content = new SpannableString(location);
         content.setSpan(new UnderlineSpan(), 0, location.length(), 0);
