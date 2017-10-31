@@ -2,6 +2,7 @@ package com.example.horse.travel.tourist;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -40,27 +41,40 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by horse on 2017. 10. 9..
- * -1028
- * sigunguCode도 설정해서 get~으로 설정
- * ㅇ 축제 데이터 받아올 때 startDate 뭘로 할 지 결정(ex.현재데이터 두달전), endDate 어떻게 할 지 결정 (ex.오늘보다 작은 수)
- * 검색 버튼을 넣을 지, 아니면 다이얼로그 선택할 때마다 새로 가져올 지
- * 날씨 고정해놓음 ( 트래픽 때문에)
- * 옆으로 넘기는 거 찾아보기
  */
 
 public class FragmentTourist extends Fragment {
     @BindView(R.id.family_course)
     ImageView family_course;
+/*    @OnClick(R.id.family_course)
+    void clickFamaily() {
+        Intent Familyintent = new Intent(getActivity(), ActivityFamilyCourse.class);
+    }*/
+
     @BindView(R.id.walking_course)
     ImageView walking_course;
+    @OnClick(R.id.family_course)
+    void clickWalking() {}
+
     @BindView(R.id.alone_course)
     ImageView alone_course;
+    @OnClick(R.id.family_course)
+    void clickAlone() {}
+
     @BindView(R.id.camping_course)
     ImageView camping_course;
+    @OnClick(R.id.family_course)
+    void clickCamping() {}
+
     @BindView(R.id.healing_course)
     ImageView healing_course;
+    @OnClick(R.id.family_course)
+    void clickHealing() {}
+
     @BindView(R.id.taste_course)
     ImageView taste_course;
+    @OnClick(R.id.family_course)
+    void clickTaste() {}
 
     public FragmentTourist() {
 //        Required empty public constructor
@@ -88,6 +102,16 @@ public class FragmentTourist extends Fragment {
         Picasso.with(getContext()).load(R.drawable.camping_course).into(camping_course);
         Picasso.with(getContext()).load(R.drawable.healing_course).into(healing_course);
         Picasso.with(getContext()).load(R.drawable.taste_course).into(taste_course);
+
+        family_course.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("imageView", "버튼");
+                Intent familyintent = new Intent(getActivity(), ActivityFamilyCourse.class);
+                startActivity(familyintent);
+            }
+        });
+
 
         return rootview;
     }
