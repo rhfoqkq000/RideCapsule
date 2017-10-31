@@ -173,7 +173,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         holder.imgRe.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
         RequestOptions options = new RequestOptions().placeholder(R.drawable.image_loding);
-        holder.imgRe.setAdapter(new SnsImageRecyclerAdapter(glide, context, contentResolver));
+        holder.imgRe.setAdapter(new SnsImageRecyclerAdapter(glide, context, contentResolver, imgArr));
         holder.imgRe.getRecycledViewPool().setMaxRecycledViews(0,img_length);
 
         if (imgArr.length>1){
@@ -258,7 +258,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
             public void onClick(View view) {
                 Log.d("UserID", String.valueOf(item.getUser_id()));
                 Intent intent = new Intent(holder.itemView.getContext(), SnsHashTagActivity.class);
-                HashTagSingleton.getInstance().setHash("@"+item.getUser_id());
+                HashTagSingleton.getInstance().setHash("@"+item.getNickname());
 //                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 holder.itemView.getContext().startActivity(intent);
             }
