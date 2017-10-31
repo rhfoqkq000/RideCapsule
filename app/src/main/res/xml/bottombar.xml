@@ -9,28 +9,28 @@
 
     <tab
         id="@+id/bottom_sns"
-        icon="@drawable/ic_dashboard_black_24dp"
+        icon="@drawable/sns"
         activeColor = "@color/colorPrimary"
 
         title="@string/title_sns" />
 
     <tab
         id="@+id/bottom_capsule"
-        icon="@drawable/ic_notifications_black_24dp"
+        icon="@drawable/capsule"
         activeColor = "@color/colorPrimary"
 
         title="@string/title_capsule" />
 
     <tab
         id="@+id/bottom_house"
-        icon="@drawable/ic_notifications_black_24dp"
+        icon="@drawable/inn"
         activeColor = "@color/colorPrimary"
 
         title="@string/title_house" />
 
     <tab
         id="@+id/bottom_mypage"
-        icon="@drawable/ic_notifications_black_24dp"
+        icon="@drawable/mypage"
         activeColor = "@color/colorPrimary"
 
         title="@string/title_mypage" />

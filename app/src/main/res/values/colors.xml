@@ -3,6 +3,7 @@
     <color name="colorPrimary">#6FA3DA</color>
     <color name="colorPrimaryDark">#618EBF</color>
     <color name="colorAccent">#6FA3DA</color>
+    <color name="backgroundColor">#F9F8F3</color>
     <color name="red">#F00</color>
     <color name="blue">#00f</color>
     <color name="blur_black">#4D000000</color>

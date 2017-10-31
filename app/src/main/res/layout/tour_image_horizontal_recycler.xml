@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardUseCompatPadding="true"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <ImageView
+    android:layout_width="500dp"
+    android:layout_height="300dp"
+    android:id="@+id/tour_item_img"
+    android:src="@drawable/image_loding"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"/>
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/tour_item_text"
+    android:textColor="#FFFF"
+    android:text="관광지정보에 대한 텍스트"
+    android:textSize="20dp"
+    android:textStyle="bold"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginBottom="20dp"/>
+</RelativeLayout>
