@@ -203,7 +203,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
             public void onClick(View view) {
                 if (item.getLike_id()==0){
                     Log.d("LIKE","CLICK");
-                    Call<SnsItemLikeDTO> call = like(holder.contentTextView.getTag().toString(),"9");
+                    Call<SnsItemLikeDTO> call = like(holder.contentTextView.getTag().toString(),"1");
                     call.enqueue(new Callback<SnsItemLikeDTO>() {
                         @Override
                         public void onResponse(Call<SnsItemLikeDTO> call, Response<SnsItemLikeDTO> response) {
@@ -224,7 +224,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
                     });
                 } else {
                     Log.d("UNLIKE","CLICK");
-                    Call<SnsItemUnLikeDTO> call = unlike(holder.contentTextView.getTag().toString(),"9");
+                    Call<SnsItemUnLikeDTO> call = unlike(holder.contentTextView.getTag().toString(),"1");
                     call.enqueue(new Callback<SnsItemUnLikeDTO>() {
                         @Override
                         public void onResponse(Call<SnsItemUnLikeDTO> call, Response<SnsItemUnLikeDTO> response) {
@@ -248,7 +248,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         });
     }
 
-    private void setHeaderTextView(final ViewHolder holder, SnsListItem item) {
+    private void setHeaderTextView(final ViewHolder holder, final SnsListItem item) {
         String location = item.getNickname()+" | location";
         SpannableString content = new SpannableString(location);
         content.setSpan(new UnderlineSpan(), 0, location.length(), 0);
@@ -256,10 +256,27 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         holder.userIdTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("UserID",holder.userIdTextView.getText().toString());
+                Log.d("UserID", String.valueOf(item.getUser_id()));
+                Intent intent = new Intent(holder.itemView.getContext(), SnsHashTagActivity.class);
+                HashTagSingleton.getInstance().setHash("@"+item.getUser_id());
+//                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                holder.itemView.getContext().startActivity(intent);
             }
         });
-        holder.locationTextView.setText(content);
+        holder.locationTextView.setText(item.getLocation_alias());
+        holder.sns_location_full.setText(item.getLocation());
+        holder.locationTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            public void onClick(View view) {
+                String location = holder.locationTextView.getText().toString();
+                Log.d("location",location);
+                Intent intent = new Intent(holder.itemView.getContext(), SnsHashTagActivity.class);
+                HashTagSingleton.getInstance().setHash("~"+location);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
     }
 
     private void setHashTagTextView(final ViewHolder holder, Resources res, SnsListItem item) {
@@ -268,7 +285,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
             public void onHashTagClicked(String hashTag) {
                 Log.d("TAG",hashTag);
                 Intent intent = new Intent(holder.itemView.getContext(), SnsHashTagActivity.class);
-                HashTagSingleton.getInstance().setHash(hashTag);
+                HashTagSingleton.getInstance().setHash("#"+hashTag);
 //                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 holder.itemView.getContext().startActivity(intent);
             }
@@ -321,6 +338,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
 //        ViewPager sns_viewPager;
 //        LinearLayout sliderDotsPanel;
         TextView sns_comment_count;
+        TextView sns_location_full;
         ViewHolder(final View itemView) {
             super(itemView);
             contentTextView = itemView.findViewById(R.id.sns_con);
@@ -334,6 +352,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
 //            viewPager = itemView.findViewById(R.id.viewPager);
 //            indicator = itemView.findViewById(R.id.dots_indicator);
             locationTextView = itemView.findViewById(R.id.sns_location);
+            sns_location_full = itemView.findViewById(R.id.sns_location_full);
             ims_layout = itemView.findViewById(R.id.ims_layout);
             reply = itemView.findViewById(R.id.reply);
             sns_updated_at = itemView.findViewById(R.id.sns_updated_at);

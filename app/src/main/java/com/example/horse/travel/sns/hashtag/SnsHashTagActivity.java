@@ -67,6 +67,14 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
 
     String hashtag;
 
+    final int HASHTAG = 0;
+
+    final int PROFILE = 1;
+
+    final int LOCATION = 2;
+
+    int category = 0;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +85,8 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
         setSupportActionBar(toolbar);
 
         hashtag = HashTagSingleton.getInstance().getHash();
+
+
 //        searchView.setSuggestions(getResources().getStringArray(R.array.query_suggestions));
 
         searchView.setOnQueryTextListener(this);
@@ -98,7 +108,24 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
         adapter.setHasStableIds(true);
         snsRe.setAdapter(adapter);
 
-        getSnsList(hashtag,init_page);
+
+
+        if (hashtag.charAt(0) == '#'){
+            category = HASHTAG;
+            hashtag = hashtag.substring(1);
+            getSnsList(hashtag, category, init_page);
+        } else if (hashtag.charAt(0) == '@'){
+            category = PROFILE;
+            hashtag = hashtag.substring(1);
+
+            Log.d("SUBSTRING",hashtag.substring(1));
+            getSnsList(hashtag, category, init_page);
+        } else {
+            category = LOCATION;
+            hashtag = hashtag.substring(1);
+
+            getSnsList(hashtag, category, init_page);
+        }
 
         writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +139,7 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
             @Override
             public void onLoadMore(final int page, int totalItemsCount, RecyclerView view) {
                 Log.d("SCROLL","END! | "+page);
-                getSnsList(hashtag,page+1);
+                getSnsList(hashtag,category,page+1);
             }
         };
 
@@ -120,9 +147,9 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
         snsRe.addOnScrollListener(endlessRecyclerViewScrollListener);
     }
 
-    void getSnsList(String hashtag,int page){
+    void getSnsList(String hashtag, int category, int page){
         InterfaceSnsList list = ApiClient.getClient().create(InterfaceSnsList.class);
-        Call<SnsListDTO> call = list.listSnsForHashTag(hashtag,page);
+        Call<SnsListDTO> call = list.listSnsForHashTag(category, hashtag, page);
         call.enqueue(new Callback<SnsListDTO>() {
             @Override
             public void onResponse(@NonNull Call<SnsListDTO> call, @NonNull Response<SnsListDTO> response) {
@@ -163,7 +190,7 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
             allItems.clear();
             isRe = true;
             snsRe.getRecycledViewPool().setMaxRecycledViews(0,10);
-            getSnsList(hashtag,1);
+            getSnsList(hashtag,category,1);
         }
     }
     @Override
