@@ -18,13 +18,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.arlib.floatingsearchview.FloatingSearchView;
 import com.bumptech.glide.Glide;
 import com.example.horse.travel.ApiClient;
 import com.example.horse.travel.SearchViewCustom;
 import com.example.horse.travel.EndlessRecyclerViewScrollListener;
 import com.example.horse.travel.R;
+import com.example.horse.travel.sns.hashtag.InterfaceSnsHashtag;
+import com.example.horse.travel.sns.hashtag.SnsHashtagDTO;
 import com.example.horse.travel.sns.list.InterfaceSnsList;
 import com.example.horse.travel.sns.list.SnsListDTO;
 import com.example.horse.travel.sns.list.SnsListItem;
@@ -33,6 +39,7 @@ import com.example.horse.travel.sns.write.ActivityImageSelect;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -40,6 +47,8 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by horse on 2017. 10. 9..
@@ -79,6 +88,9 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
     @BindView(R.id.search_view)
     SearchViewCustom searchView;
 
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -101,6 +113,40 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
 
         ButterKnife.bind(this, rootview);
 
+        InterfaceSnsHashtag hashtag = new Retrofit.Builder()
+                .baseUrl("http://168.115.225.120:5000/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build().create(InterfaceSnsHashtag.class);
+        Call<SnsHashtagDTO> call = hashtag.getHashtag();
+        call.enqueue(new Callback<SnsHashtagDTO>(){
+            @Override
+            public void onResponse(Call<SnsHashtagDTO> call, Response<SnsHashtagDTO> response) {
+                if(response.body().getResult_code()==200){
+                    String[] suggestions = new String[response.body().getResult_body().size()];
+                    for(int i = 0; i < response.body().getResult_body().size(); i++){
+                        Log.e("FragmentSns", "ALL::"+response.body().getResult_body().toString());
+                        suggestions[i] = response.body().getResult_body().get(i).getTag();
+                    }
+                    Log.e("FragmentSns", Arrays.toString(suggestions));
+                    searchView.setSuggestions(suggestions);
+                    searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            String query = (String) adapterView.getItemAtPosition(i);
+                            Log.d("RE",query);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SnsHashtagDTO> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        progressBar.setVisibility(View.INVISIBLE);
+
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
         setHasOptionsMenu(true);
@@ -117,8 +163,9 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
 //        snsRe.setNestedScrollingEnabled(false);
         snsRe.getRecycledViewPool().setMaxRecycledViews(0,10);
 
-        adapter = new SnsRecyclerAdapter(Glide.with(this));
+        adapter = new SnsRecyclerAdapter(Glide.with(this), getContext().getContentResolver());
         adapter.setHasStableIds(true);
+        adapter.setContext(getContext());
         snsRe.setAdapter(adapter);
 
         getSnsList(init_page);
@@ -135,7 +182,9 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
             @Override
             public void onLoadMore(final int page, int totalItemsCount, RecyclerView view) {
                 Log.d("SCROLL","END! | "+page);
-                getSnsList(page+1);
+                progressBar.setVisibility(View.VISIBLE);
+                getSnsList(page + 1);
+                progressBar.setVisibility(View.INVISIBLE);
             }
         };
 
@@ -143,6 +192,7 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         snsRe.addOnScrollListener(endlessRecyclerViewScrollListener);
         return rootview;
     }
+
     void getSnsList(int page){
         InterfaceSnsList list = ApiClient.getClient().create(InterfaceSnsList.class);
         Call<SnsListDTO> call = list.listSns(page);
@@ -209,7 +259,6 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         inflater.inflate(R.menu.menu_main, menu);
         MenuItem item = menu.findItem(R.id.action_search);
         searchView.setMenuItem(item);
-
     }
 
 }
