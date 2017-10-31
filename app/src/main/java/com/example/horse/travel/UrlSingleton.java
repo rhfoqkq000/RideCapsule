@@ -15,7 +15,7 @@ public class UrlSingleton {
         return Singleton.instance;
     }
 
-    public String getSERVER_URL() {
+    public String getSERVER_URL() 
         return "http://168.115.204.65:5000/";
     }
 }

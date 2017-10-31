@@ -12,4 +12,7 @@ import retrofit2.http.Query;
 public interface InterfaceSnsList {
     @GET("/sns/list/{page}")
     Call<SnsListDTO> listSns(@Path("page") int page);
+
+    @GET("/sns/list/{hashtag}/{page}")
+    Call<SnsListDTO> listSnsForHashTag(@Path("hashtag") String hashtag, @Path("page") int page);
 }

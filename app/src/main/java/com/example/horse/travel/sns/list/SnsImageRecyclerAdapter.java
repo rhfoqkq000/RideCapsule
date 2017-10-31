@@ -60,19 +60,7 @@ public class SnsImageRecyclerAdapter extends RecyclerView.Adapter<SnsImageRecycl
         Picasso.with(holder.itemView.getContext())
                 .load(url+img_urls[position])
                 .into(holder.sns_image);
-        EventBus.getDefault().post(new PositionEvent(position));
 
-//        if (getItemCount()>1){
-//            holder.imgs_count.setText(res.getString(R.string.imgs_count_text,position+1,getItemCount()));
-//            flipImgCount(holder);
-//            holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    flipImgCount(holder);
-//                }
-//            });
-//
-//        }
     }
 
     @Override
