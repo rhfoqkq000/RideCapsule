@@ -90,7 +90,6 @@ public class FragmentTourist extends Fragment {
         family_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("imageView", "버튼");
                 Intent familyintent = new Intent(getActivity(), ActivityFamilyCourse.class);
                 startActivity(familyintent);
             }
@@ -98,7 +97,6 @@ public class FragmentTourist extends Fragment {
         walking_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("imageView", "버튼");
                 Intent walkingintent = new Intent(getActivity(), ActivityWakingCourse.class);
                 startActivity(walkingintent);
             }
@@ -106,7 +104,6 @@ public class FragmentTourist extends Fragment {
         alone_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("imageView", "버튼");
                 Intent aloneintent = new Intent(getActivity(), ActivityAloneCourse.class);
                 startActivity(aloneintent);
             }
@@ -114,7 +111,6 @@ public class FragmentTourist extends Fragment {
         healing_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("imageView", "버튼");
                 Intent healingintent = new Intent(getActivity(), ActivityHealingCourse.class);
                 startActivity(healingintent);
             }
@@ -122,7 +118,6 @@ public class FragmentTourist extends Fragment {
         taste_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("imageView", "버튼");
                 Intent tasteintent = new Intent(getActivity(), ActivityTasteCourse.class);
                 startActivity(tasteintent);
             }
@@ -130,7 +125,6 @@ public class FragmentTourist extends Fragment {
         camping_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("imageView", "버튼");
                 Intent campingintent = new Intent(getActivity(), ActivityCampingCourse.class);
                 startActivity(campingintent);
             }

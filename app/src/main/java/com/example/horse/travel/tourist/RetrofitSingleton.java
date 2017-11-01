@@ -113,7 +113,7 @@ public class RetrofitSingleton extends AppCompatActivity {
             public void onResponse(Call<TourOverviewRepo> call, Response<TourOverviewRepo> response) {
                 Log.d("RetrofitSingleTon", response.raw().request().url().toString()); // uri 출력
                 Log.d("RetrofitSingleTon", response.body().getResponse().getHeader().getResultMsg());
-                overviewOneItem.setOverview(response.body().getResponse().getBody().getItems().getItem().getOverview().toString());
+                //overviewOneItem.setOverview(response.body().getResponse().getBody().getItems().getItem().getOverview().toString());
                 //overviewitemList.get(index).setOverview(response.body().getResponse().getBody().getItems().getItem().getOverview());
             }
             @Override

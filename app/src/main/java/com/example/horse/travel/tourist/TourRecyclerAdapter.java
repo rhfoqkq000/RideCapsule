@@ -23,6 +23,16 @@ public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapte
     private ArrayList<TourListRepo.Item> items;
     //private ArrayList<TourOverviewRepo.Item> overviewitems;
 
+    //아이템 클릭시 실행 함수
+    private ItemClick itemClick;
+    public interface ItemClick {
+        public void onClick(View view,int position);
+    }
+
+    //아이템 클릭시 실행 함수 등록 함수
+    public void setItemClick(ItemClick itemClick) {
+        this.itemClick = itemClick;
+    }
 
     @Override
     public TourRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -32,6 +42,7 @@ public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapte
 
     @Override
     public void onBindViewHolder(TourRecyclerAdapter.ViewHolder holder, int position) {
+        final int Position = position;
         TourListRepo.Item item = items.get(position);
 
         holder.family_title.setText(item.getTitle());
@@ -39,6 +50,15 @@ public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapte
         //holder.family_content.setText(overviewitems.get(position).getOverview());
         holder.family_readcount.setText(item.getReadcount());
         Picasso.with(holder.itemView.getContext()).load(item.getFirstimage()).into(holder.family_img);
+
+        holder.family_img.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                if(itemClick != null){
+                    itemClick.onClick(view, Position);
+                }
+            }
+        });
     }
 
     @Override

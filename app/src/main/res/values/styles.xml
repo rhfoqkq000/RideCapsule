@@ -48,4 +48,7 @@
         <!-- Hint for edit text -->
         <item name="android:hint">@string/search_hint</item>
     </style>
+    <style name="DetailButtonStyle" parent="Base.Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorAccent</item>
+    </style>
 </resources>

@@ -6,10 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.horse.travel.R;
+import com.example.horse.travel.tourist.detailPage.DetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +59,14 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         singleton.areaCodeRetrofit();
         //singleton.weatherRetrofit();
         singleton.tourRetrofit(adapter,"C0112");
-
+        adapter.setItemClick(new TourRecyclerAdapter.ItemClick() {
+            @Override
+            public void onClick(View view, int position) {
+                Toast.makeText(getApplicationContext(), "눌러졌당", Toast.LENGTH_LONG).show();
+                Intent detailintent = new Intent(ActivityFamilyCourse.this, DetailActivity.class);
+                startActivity(detailintent);
+            }
+        });
 
 
 
