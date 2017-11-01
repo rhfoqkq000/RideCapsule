@@ -35,6 +35,7 @@ public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapte
 
         holder.family_title.setText(item.getTitle());
         holder.family_content.setText(item.getAddr1());
+        holder.family_readcount.setText(item.getReadcount());
         Picasso.with(holder.itemView.getContext()).load(item.getFirstimage()).into(holder.family_img);
     }
 
@@ -62,12 +63,16 @@ public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView family_title ;
         TextView family_content;
+        TextView family_readcount;
         ImageView family_img;
+
         public ViewHolder(View itemView) {
             super(itemView);
             family_title = itemView.findViewById(R.id.family_title);
             family_content = itemView.findViewById(R.id.family_content);
+            family_readcount = itemView.findViewById(R.id.family_readcount);
             family_img = itemView.findViewById(R.id.family_img);
+
         }
     }
 }
