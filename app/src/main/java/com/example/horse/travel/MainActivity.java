@@ -12,6 +12,7 @@ import com.example.horse.travel.capsule.FragmentCapsule;
 import com.example.horse.travel.hotchu.FragmentHot;
 import com.example.horse.travel.mypage.FragmentMypage;
 import com.example.horse.travel.sns.FragmentSns;
+import com.example.horse.travel.tourist.FragmentTourist;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
@@ -24,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager;
     Fragment active;
-//    Fragment fragmentTourist = FragmentTourist.newInstance(1);
-    Fragment fragmentSamplee = FragmentSample.newInstance(1);
+    Fragment fragmentTourist = FragmentTourist.newInstance(1);
+//    Fragment fragmentSamplee = FragmentSample.newInstance(1);
     Fragment fragmentSns = FragmentSns.newInstance(2);
     Fragment fragmentCapsule = FragmentCapsule.newInstance(3);
     Fragment fragmentInn = FragmentHot.newInstance(4);
@@ -125,11 +126,11 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(@IdRes int tabId) {
                 switch (tabId) {
                     case R.id.bottom_tourist:
-                    if (active != fragmentSamplee)
-                        hideShowFragment(active,fragmentSamplee);
+                    if (active != fragmentTourist)
+                        hideShowFragment(active,fragmentTourist);
 //                    else
 //                        fm.beginTransaction().show(fragmentSample).commit();
-                    active = fragmentSamplee;
+                    active = fragmentTourist;
                         break;
                     case R.id.bottom_sns:
                         hideShowFragment(active, fragmentSns);
@@ -166,13 +167,13 @@ public class MainActivity extends AppCompatActivity {
 //
     //Add all the fragments that need to be added and hidden. Also, add the one that is supposed to be the starting one, that one is not hidden.
     private void createFragments() {
-        addHideFragment(fragmentSamplee);
+        addHideFragment(fragmentTourist);
         addHideFragment(fragmentSns);
         addHideFragment(fragmentCapsule);
         addHideFragment(fragmentInn);
         addHideFragment(fragmentMypage);
-        fragmentManager.beginTransaction().show(fragmentSamplee).commit();
-        active = fragmentSamplee;
+        fragmentManager.beginTransaction().show(fragmentTourist).commit();
+        active = fragmentTourist;
     }
 }
 

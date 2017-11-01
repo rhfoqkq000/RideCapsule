@@ -19,8 +19,8 @@
 
     <item
         android:id="@+id/bottom_house"
-        android:icon="@drawable/inn"
-        android:title="@string/title_house" />
+        android:icon="@drawable/ten"
+        android:title="@string/title_hotten" />
 
     <item
         android:id="@+id/bottom_mypage"
