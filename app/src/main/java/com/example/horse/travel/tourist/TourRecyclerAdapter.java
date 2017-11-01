@@ -21,6 +21,7 @@ import java.util.List;
 
 public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapter.ViewHolder> {
     private ArrayList<TourListRepo.Item> items;
+    //private ArrayList<TourOverviewRepo.Item> overviewitems;
 
 
     @Override
@@ -35,6 +36,7 @@ public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapte
 
         holder.family_title.setText(item.getTitle());
         holder.family_content.setText(item.getAddr1());
+        //holder.family_content.setText(overviewitems.get(position).getOverview());
         holder.family_readcount.setText(item.getReadcount());
         Picasso.with(holder.itemView.getContext()).load(item.getFirstimage()).into(holder.family_img);
     }
@@ -57,6 +59,7 @@ public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapte
     public void addNew(ArrayList<TourListRepo.Item> items)
     {
         this.items = items;
+        //this.overviewitems = overviewitems;
         notifyDataSetChanged();
     }
 

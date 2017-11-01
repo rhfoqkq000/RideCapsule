@@ -48,6 +48,7 @@ public class RetrofitSingleton extends AppCompatActivity {
     String[] region = areaData.getSeoUl(); //초기값 서울
 
 
+    TourOverviewRepo.Item overviewOneItem ;
 
     private RetrofitSingleton() {}
     private static class Singleton {
@@ -77,10 +78,21 @@ public class RetrofitSingleton extends AppCompatActivity {
                 Log.d("RetrofitSingleTon", response.raw().request().url().toString()); // uri 출력
                 Log.d("RetrofitSingleTon", response.body().getResponse().getHeader().getResultMsg());
                 ArrayList<TourListRepo.Item> itemList = response.body().getResponse().getBody().getItems().getItem();
+                /*
+                ArrayList<TourOverviewRepo.Item> overviewitemList = new ArrayList<TourOverviewRepo.Item>();
+                String[] overviews = new String[response.body().getResponse().getBody().getItems().getItem().size()];
+                for (int index = 0; index < response.body().getResponse().getBody().getItems().getItem().size(); index++) {
+                    //overviews[index] = overviewRetrofit(response.body().getResponse().getBody().getItems().getItem().get(index).getContentid(), index);
+                    Log.i("summer", "2");
+                    overviewRetrofit(response.body().getResponse().getBody().getItems().getItem().get(index).getContentid(), index);
+                    Log.i("summer", index+"");
+                    Log.i("summer", overviewitemList.get(index).getOverview().toString());
+                    overviewitemList.set(index, overviewOneItem);
+
+                }*/
 
                 adapter.addNew(itemList);
                 Log.d("RetrofitSingleTon", itemList.toString());
-
             }
             @Override
             public void onFailure(Call<TourListRepo> call, Throwable t) {
@@ -89,6 +101,27 @@ public class RetrofitSingleton extends AppCompatActivity {
         });
     }
 
+    //공통정보조회 Retrofit (코스에 대한 개요, 주소 얻어오기 위해)
+    public void overviewRetrofit(String ContentId, final int index) {
+        Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/").addConverterFactory(GsonConverterFactory.create()).build();
+        TourOverviewRepo.TourOverviewAppInterface overviewService = client.create(TourOverviewRepo.TourOverviewAppInterface.class);
+        Call<TourOverviewRepo> call = overviewService.get_overview_retrofit
+                ("mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==","1", "1",
+                        "AND","TourList",ContentId, "25", "Y", "Y", "json");
+        call.enqueue(new Callback<TourOverviewRepo>() {
+            @Override
+            public void onResponse(Call<TourOverviewRepo> call, Response<TourOverviewRepo> response) {
+                Log.d("RetrofitSingleTon", response.raw().request().url().toString()); // uri 출력
+                Log.d("RetrofitSingleTon", response.body().getResponse().getHeader().getResultMsg());
+                overviewOneItem.setOverview(response.body().getResponse().getBody().getItems().getItem().getOverview().toString());
+                //overviewitemList.get(index).setOverview(response.body().getResponse().getBody().getItems().getItem().getOverview());
+            }
+            @Override
+            public void onFailure(Call<TourOverviewRepo> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
 
     //날씨, 도시 관련 설정 Start
     private void cityDialog(final String[] region) {
