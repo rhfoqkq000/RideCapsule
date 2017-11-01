@@ -83,6 +83,9 @@ public class ActivitySnsWrite extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // 글 작성하는 액티비티임 ㅅㄱ
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sns_write);
         ButterKnife.bind(this);

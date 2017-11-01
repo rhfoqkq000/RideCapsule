@@ -115,6 +115,7 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
 
         ButterKnife.bind(this, rootview);
 
+        // 해시태그, 닉네임, 지역 받아오기
         InterfaceSnsHashtag hashtag = ApiClient.getClient().create(InterfaceSnsHashtag.class);
         Call<SnsHashtagDTO> call = hashtag.getHashtag();
         call.enqueue(new Callback<SnsHashtagDTO>(){
@@ -148,6 +149,7 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
             }
         });
 
+        // 스크롤할 때 보여야 할 프로그레스바임 첨엔 안보이고 더 로딩할 때 보였다가 끝나면 안보임
         progressBar.setVisibility(View.INVISIBLE);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);

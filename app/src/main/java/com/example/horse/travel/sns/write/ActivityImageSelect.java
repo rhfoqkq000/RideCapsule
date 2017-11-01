@@ -81,6 +81,9 @@ public class ActivityImageSelect extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // 시작과 동시에 휴대폰 갤러리에서 1~10개의 사진을 선택 후 recyclerView에 박음
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_select);
         ButterKnife.bind(this);

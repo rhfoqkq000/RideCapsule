@@ -77,6 +77,10 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+        // 해시태그, 유저 닉네임, 지역명으로 검색된 결과를 출력하는 액티비티임
+        // FragmentSns와 거의 유사함.. 받아온 hashtag 값으로 SNS 목록 받아옴
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hashtag_result);
         ButterKnife.bind(this);
