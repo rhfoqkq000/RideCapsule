@@ -1,32 +1,22 @@
 package com.example.horse.travel.tourist;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.horse.travel.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by ekekd on 2017-11-01.
  */
 
-public class ActivityFamilyCourse extends AppCompatActivity {
+public class ActivityWakingCourse extends AppCompatActivity {
 
     @BindView(R.id.family_re)
     RecyclerView family_re;
@@ -46,7 +36,7 @@ public class ActivityFamilyCourse extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_family_course);
+        setContentView(R.layout.activity_walking_course);
         ButterKnife.bind(this);
 
         family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -55,7 +45,7 @@ public class ActivityFamilyCourse extends AppCompatActivity {
 
         singleton.areaCodeRetrofit();
         //singleton.weatherRetrofit();
-        singleton.tourRetrofit(adapter,"C0112");
+        singleton.tourRetrofit(adapter,"C0115");
 
 
 

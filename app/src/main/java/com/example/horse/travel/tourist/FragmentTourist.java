@@ -111,6 +111,46 @@ public class FragmentTourist extends Fragment {
                 startActivity(familyintent);
             }
         });
+        walking_course.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("imageView", "버튼");
+                Intent walkingintent = new Intent(getActivity(), ActivityWakingCourse.class);
+                startActivity(walkingintent);
+            }
+        });
+        alone_course.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("imageView", "버튼");
+                Intent aloneintent = new Intent(getActivity(), ActivityAloneCourse.class);
+                startActivity(aloneintent);
+            }
+        });
+        healing_course.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("imageView", "버튼");
+                Intent healingintent = new Intent(getActivity(), ActivityHealingCourse.class);
+                startActivity(healingintent);
+            }
+        });
+        taste_course.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("imageView", "버튼");
+                Intent tasteintent = new Intent(getActivity(), ActivityTasteCourse.class);
+                startActivity(tasteintent);
+            }
+        });
+        camping_course.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("imageView", "버튼");
+                Intent campingintent = new Intent(getActivity(), ActivityCampingCourse.class);
+                startActivity(campingintent);
+            }
+        });
 
 
         return rootview;

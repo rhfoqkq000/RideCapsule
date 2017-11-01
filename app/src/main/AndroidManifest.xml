@@ -36,6 +36,16 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".tourist.ActivityFamilyCourse"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".tourist.ActivityWakingCourse"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".tourist.ActivityAloneCourse"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".tourist.ActivityHealingCourse"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".tourist.ActivityTasteCourse"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".tourist.ActivityCampingCourse"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".sns.write.ActivityLocationSelect"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".sns.comment.SnsCommentActivity"/>
