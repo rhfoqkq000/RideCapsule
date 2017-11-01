@@ -67,7 +67,7 @@ public class RetrofitSingleton extends AppCompatActivity {
         TourListRepo.TourListAppInterface tourService = client.create(TourListRepo.TourListAppInterface.class);
 
         Call<TourListRepo> call = tourService.get_tour_retrofit
-                ("2", "1", "AND",
+                ("3", "1", "AND",
                         "TourList",
                         "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==",
                         "Y", "P", "25", "1", "C01",cat2,"json");
