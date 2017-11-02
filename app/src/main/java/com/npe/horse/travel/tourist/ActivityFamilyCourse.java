@@ -52,15 +52,9 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         adapter = new TourRecyclerAdapter();
         family_re.setAdapter(adapter);
-
-        family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        adapter = new TourRecyclerAdapter();
-        family_re.setAdapter(adapter);
-
         singleton.areaCodeRetrofit();
         //singleton.weatherRetrofit();
         singleton.tourRetrofit(adapter,"C0112");
-
     }
 
 }
