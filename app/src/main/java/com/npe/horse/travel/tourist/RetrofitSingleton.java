@@ -91,13 +91,24 @@ public class RetrofitSingleton extends AppCompatActivity {
 
 
     //Tour Retorofit
-    public static void tourRetrofit(final TourRecyclerAdapter adapter, String cat2) {
+/*    public static Call<TourListRepo> tourRetrofit(final TourRecyclerAdapter adapter, String cat2) {
+        Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        TourListRepo.TourListAppInterface tourService = client.create(TourListRepo.TourListAppInterface.class);
+
+        //Call<TourListRepo> call =
+        return tourService.get_tour_retrofit("10", "1", "AND", "TourList",
+                        "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==",
+                        "Y", "P", "25", areaData.getareaCode(), "C01",cat2,"json");
+
+    }*/
+   public static void tourRetrofit(final TourRecyclerAdapter adapter, String cat2, int page) {
         Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         TourListRepo.TourListAppInterface tourService = client.create(TourListRepo.TourListAppInterface.class);
 
         Call<TourListRepo> call = tourService.get_tour_retrofit
-                ("10", "1", "AND",
+                ("10", String.valueOf(page), "AND",
                         "TourList",
                         "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==",
                         "Y", "P", "25", areaData.getareaCode(), "C01",cat2,"json");
@@ -107,9 +118,10 @@ public class RetrofitSingleton extends AppCompatActivity {
                 Log.d("RetrofitSingleTon", response.raw().request().url().toString()); // uri 출력
                 Log.d("RetrofitSingleTon", response.body().getResponse().getHeader().getResultMsg());
                 ArrayList<TourListRepo.Item> itemList = response.body().getResponse().getBody().getItems().getItem();
-
                 adapter.addNew(itemList);
+                adapter.notifyDataSetChanged();
                 Log.d("RetrofitSingleTon", itemList.toString());
+                TourContentSingleton.getInstance().setTotalCount(response.body().getResponse().getBody().getTotalCount());
             }
             @Override
             public void onFailure(Call<TourListRepo> call, Throwable t) {
@@ -149,7 +161,7 @@ public class RetrofitSingleton extends AppCompatActivity {
                         // 선택 버튼 클릭시 , 여기서 선택한 값을 메인 Activity 로 넘기면 된다.
                         weatherRetrofit(areaData.getLat(), areaData.getLon());
                         areaCodeRetrofit();
-                        tourRetrofit(ActivityFamilyCourse.adapter, "C0112");
+                        tourRetrofit(ActivityFamilyCourse.adapter, "C0112", 1);
                         //tourRetrofit("C01"); //여행코스
 /*                        tourRetrofit(false, "A05"); //맛집
                         tourRetrofit(false, "A02"); //예술, 문화, 역사

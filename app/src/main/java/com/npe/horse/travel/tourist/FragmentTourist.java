@@ -31,8 +31,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class FragmentTourist extends Fragment {
-    @BindView(R.id.weather_sky)
-    TextView weather_sky;
+/*    @BindView(R.id.weather_sky)
+    TextView weather_sky;*/
     @BindView(R.id.weather_tem)
     TextView weather_tem;
     @BindView(R.id.weather_img)
@@ -84,13 +84,6 @@ public class FragmentTourist extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_tour_course, container, false);
         ButterKnife.bind(this, rootview);
-//        Picasso.with(getContext()).load(R.drawable.family_course).into(family_course);
-//        Picasso.with(getContext()).load(R.drawable.walking_course).into(walking_course);
-//        Picasso.with(getContext()).load(R.drawable.alone_course).into(alone_course);
-//        Picasso.with(getContext()).load(R.drawable.camping_course).into(camping_course);
-//        Picasso.with(getContext()).load(R.drawable.healing_course).into(healing_course);
-//        Picasso.with(getContext()).load(R.drawable.taste_course).into(taste_course);
-
 
         //날씨 불러옴
         weatherRetrofit(areaData.getLat(), areaData.getLon());
@@ -229,14 +222,16 @@ public class FragmentTourist extends Fragment {
         call.enqueue(new Callback<WeatherRepo>() {
             @Override
             public void onResponse(Call<WeatherRepo> call, Response<WeatherRepo> response) {
-                 //현재온도
-                 Log.i("MainActivity", response.body().getWeather().getHourly().get(0).getTemperature().getTc());
-                  weather_sky.setText(response.body().getWeather().getHourly().get(0).getTemperature().getTc());
-                  //현재 하늘 상태
+
+                 /* //현재 하늘 상태
                   Log.i("MainActivity", response.body().getWeather().getHourly().get(0).getSky().getName());
-                 weather_tem.setText(response.body().getWeather().getHourly().get(0).getSky().getName());
-                  //하늘 상태에 따른 이미지
+
+                  *///하늘 상태에 따른 이미지
                  setWeatherImg(response.body().getWeather().getHourly().get(0).getSky().getName());
+                //현재온도
+                Log.i("MainActivity", response.body().getWeather().getHourly().get(0).getTemperature().getTc());
+                //weather_sky.setText( response.body().getWeather().getHourly().get(0).getTemperature().getTc()+"℃");
+                weather_tem.setText(response.body().getWeather().getHourly().get(0).getTemperature().getTc()+"℃");
             }
             @Override
             public void onFailure(Call<WeatherRepo> call, Throwable t) {

@@ -5,13 +5,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.npe.horse.travel.EndlessRecyclerViewScrollListener;
 import com.npe.horse.travel.R;
 import com.npe.horse.travel.tourist.detailPage.DetailActivity;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +33,9 @@ public class ActivityAloneCourse extends AppCompatActivity {
     @BindView(R.id.family_re)
     RecyclerView family_re;
 
+    @BindView(R.id.alone_course_progressBar)
+    ProgressBar progressBar;
+    EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
 
     @BindView(R.id.course_alone_img)
     ImageView course_alone_img;
@@ -43,14 +51,28 @@ public class ActivityAloneCourse extends AppCompatActivity {
 
         Picasso.with(getApplicationContext()).load(R.drawable.course_alone_img).into(course_alone_img);
 
-        family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        progressBar.setVisibility(View.INVISIBLE);
+
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+//        layoutManager.setInitialPrefetchItemCount(10);
+//        layoutManager.setItemPrefetchEnabled(true);
+        family_re.setLayoutManager(layoutManager);
         adapter = new TourRecyclerAdapter();
         family_re.setAdapter(adapter);
 
+        endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(final int page, int totalItemsCount, RecyclerView view) {
+                Log.d("SCROLL","END! | "+page);
+                progressBar.setVisibility(View.VISIBLE);
+                RetrofitSingleton.tourRetrofit(adapter, "C0113", page+1);
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        };
+        family_re.addOnScrollListener(endlessRecyclerViewScrollListener);
+
         singleton.areaCodeRetrofit();
-        //singleton.weatherRetrofit();
-        singleton.tourRetrofit(adapter,"C0113");
-        //TourContentSingleton.getInstance().getContent_id()
+        singleton.tourRetrofit(adapter,"C0113", 1);
         adapter.setItemClick(new TourRecyclerAdapter.ItemClick() {
             @Override
             public void onClick(View view, int position) {

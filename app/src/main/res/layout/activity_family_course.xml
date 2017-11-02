@@ -59,5 +59,14 @@
             android:background="#F1EEE9">
 
         </android.support.v7.widget.RecyclerView>
+        <ProgressBar
+            android:id="@+id/family_course_progressBar"
+            style="@android:style/Widget.Holo.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:indeterminate="true"
+            app:layout_anchor="@id/swipe_refresh"
+            app:layout_anchorGravity="bottom|center_horizontal" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

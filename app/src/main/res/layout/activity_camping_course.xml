@@ -50,4 +50,14 @@
         android:layout_height="match_parent"
         android:id="@+id/family_re">
     </android.support.v7.widget.RecyclerView>
+
+    <ProgressBar
+        android:id="@+id/camping_course_progressBar"
+        style="@android:style/Widget.Holo.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:indeterminate="true"
+        app:layout_anchor="@id/swipe_refresh"
+        app:layout_anchorGravity="bottom|center_horizontal" />
 </LinearLayout>
