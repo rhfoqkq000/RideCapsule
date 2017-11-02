@@ -38,7 +38,7 @@ public class FragmentHot extends Fragment {
         final View rootview = inflater.inflate(R.layout.fragment_hot, container, false);
         ButterKnife.bind(this, rootview);
         final HorizontalInfiniteCycleViewPager horizontalInfiniteCycleViewPager = rootview.findViewById(R.id.hicvp);
-
+        // HOT10 받아오기
 
         InterfaceHotchuList interfaceHotchuList = ApiClient.getClient().create(InterfaceHotchuList.class);
         Call<HotchuDTO> call = interfaceHotchuList.getList();

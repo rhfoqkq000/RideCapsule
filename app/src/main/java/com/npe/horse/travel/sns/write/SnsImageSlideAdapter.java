@@ -18,6 +18,7 @@ import java.util.ArrayList;
  */
 
 public class SnsImageSlideAdapter extends RecyclerView.Adapter<SnsImageSlideAdapter.ViewHolder> {
+    // SNS 말고 ActivityImageSelect에서 사용하는 어댑터임
     private ArrayList<Uri> imgArr;
     private Context context;
 

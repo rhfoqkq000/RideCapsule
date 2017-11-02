@@ -10,7 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary= true
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -85,5 +85,6 @@ dependencies {
     compile 'com.github.arimorty:floatingsearchview:2.1.1'
     // get location data from gps or network
     compile 'io.nlopez.smartlocation:library:3.3.3'
-
+    compile group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
+    compile 'com.android.support:design:26.1.0'
 }

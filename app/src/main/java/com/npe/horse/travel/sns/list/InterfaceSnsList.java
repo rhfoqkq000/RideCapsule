@@ -9,9 +9,9 @@ import retrofit2.http.Path;
  */
 
 public interface InterfaceSnsList {
-    @GET("/sns/list/{page}")
-    Call<SnsListDTO> listSns(@Path("page") int page);
+    @GET("/sns/{user_id}/list/{page}")
+    Call<SnsListDTO> listSns(@Path("user_id") int user_id, @Path("page") int page);
 
-    @GET("/sns/list/{category}/{hashtag}/{page}")
-    Call<SnsListDTO> listSnsForHashTag(@Path("category") int category, @Path("hashtag") String hashtag,  @Path("page") int page);
+    @GET("/sns/{user_id}/list/{category}/{hashtag}/{page}")
+    Call<SnsListDTO> listSnsForHashTag(@Path("user_id") int user_id, @Path("category") int category, @Path("hashtag") String hashtag,  @Path("page") int page);
 }

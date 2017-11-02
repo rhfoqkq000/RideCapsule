@@ -27,6 +27,9 @@ import com.npe.horse.travel.ApiClient;
 import com.npe.horse.travel.SearchViewCustom;
 import com.npe.horse.travel.EndlessRecyclerViewScrollListener;
 import com.npe.horse.travel.R;
+import com.npe.horse.travel.kakao.InterfaceReg;
+import com.npe.horse.travel.kakao.KakaoRegDTO;
+import com.npe.horse.travel.kakao.KakaoSingleton;
 import com.npe.horse.travel.sns.hashtag.HashTagSingleton;
 import com.npe.horse.travel.sns.hashtag.InterfaceSnsHashtag;
 import com.npe.horse.travel.sns.hashtag.SnsHashTagActivity;
@@ -36,9 +39,12 @@ import com.npe.horse.travel.sns.list.SnsListDTO;
 import com.npe.horse.travel.sns.list.SnsListItem;
 import com.npe.horse.travel.sns.list.SnsRecyclerAdapter;
 import com.npe.horse.travel.sns.write.ActivityImageSelect;
-
-
 import java.util.ArrayList;
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.MeResponseCallback;
+import com.kakao.usermgmt.response.model.UserProfile;
+import com.kakao.util.helper.log.Logger;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,6 +53,8 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by horse on 2017. 10. 9..
@@ -110,7 +118,7 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         final View rootview = inflater.inflate(R.layout.fragment_sns, container, false);
 
         ButterKnife.bind(this, rootview);
-
+        // 해시태그, 닉네임, 지역 받아오기
         InterfaceSnsHashtag hashtag = ApiClient.getClient().create(InterfaceSnsHashtag.class);
         Call<SnsHashtagDTO> call = hashtag.getHashtag();
         call.enqueue(new Callback<SnsHashtagDTO>(){
@@ -119,10 +127,8 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
                 if(response.body().getResult_code()==200){
                     String[] suggestions = new String[response.body().getResult_body().size()];
                     for(int i = 0; i < response.body().getResult_body().size(); i++){
-                        Log.e("FragmentSns", "ALL::"+response.body().getResult_body().toString());
                         suggestions[i] = response.body().getResult_body().get(i).getResult();
                     }
-                    Log.e("FragmentSns", Arrays.toString(suggestions));
                     searchView.setSuggestions(suggestions);
                     searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
@@ -144,6 +150,7 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
             }
         });
 
+        // 스크롤할 때 보여야 할 프로그레스바임 첨엔 안보이고 더 로딩할 때 보였다가 끝나면 안보임
         progressBar.setVisibility(View.INVISIBLE);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
@@ -167,7 +174,7 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         adapter.setContext(getContext());
         snsRe.setAdapter(adapter);
 
-        getSnsList(init_page);
+        requestMe();
 
         writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,7 +201,7 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
 
     void getSnsList(int page){
         InterfaceSnsList list = ApiClient.getClient().create(InterfaceSnsList.class);
-        Call<SnsListDTO> call = list.listSns(page);
+        Call<SnsListDTO> call = list.listSns(KakaoSingleton.getInstance().getId(), page);
         call.enqueue(new Callback<SnsListDTO>() {
             @Override
             public void onResponse(@NonNull Call<SnsListDTO> call, @NonNull Response<SnsListDTO> response) {
@@ -260,4 +267,46 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         searchView.setMenuItem(item);
     }
 
+    private void requestMe() {
+        UserManagement.requestMe(new MeResponseCallback() {
+            @Override
+            public void onFailure(ErrorResult errorResult) {
+                String message = "failed to get user info. msg=" + errorResult;
+                Logger.d(message);
+            }
+
+            @Override
+            public void onSessionClosed(ErrorResult errorResult) {
+                Logger.d("onSessionClosed");
+            }
+
+            @Override
+            public void onSuccess(UserProfile userProfile) {
+                Logger.d("UserProfile : " + userProfile);
+                InterfaceReg reg = new Retrofit.Builder()
+                        .baseUrl("http://168.115.226.218:5000/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build().create(InterfaceReg.class);
+                Call<KakaoRegDTO> call = reg.reg(userProfile.getEmail(), userProfile.getNickname(), userProfile.getThumbnailImagePath());
+                call.enqueue(new Callback<KakaoRegDTO>() {
+                    @Override
+                    public void onResponse(Call<KakaoRegDTO> call, Response<KakaoRegDTO> response) {
+                        KakaoSingleton.getInstance().setId(response.body().getResult_code());
+                        getSnsList(init_page);
+                    }
+
+                    @Override
+                    public void onFailure(Call<KakaoRegDTO> call, Throwable t) {
+                        Toast.makeText(getContext(), "로그인 중 에러가 발생했습니다. 앱을 다시 실행해주세요.", Toast.LENGTH_SHORT).show();
+                        t.printStackTrace();
+                    }
+                });
+            }
+
+            @Override
+            public void onNotSignedUp() {
+                Logger.d("onNotSignedUp");
+            }
+        });
+    }
 }
