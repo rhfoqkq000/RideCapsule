@@ -41,8 +41,6 @@ public class ActivityFamilyCourse extends AppCompatActivity {
     @BindView(R.id.weather_img)
     ImageView weatherImg;
 
-
-
     static TourRecyclerAdapter adapter;
 
     RetrofitSingleton singleton = RetrofitSingleton.getInstance();
@@ -51,21 +49,9 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_course);
         ButterKnife.bind(this);
-        familyTest.setText("성공");
         family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         adapter = new TourRecyclerAdapter();
         family_re.setAdapter(adapter);
-        tourRetrofit();
-
-
-
-    }
-
-
-
-
-
-
 
         family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         adapter = new TourRecyclerAdapter();
@@ -74,7 +60,10 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         singleton.areaCodeRetrofit();
         //singleton.weatherRetrofit();
         singleton.tourRetrofit(adapter,"C0112");
+
     }
+
+}
 
 /*
 
@@ -123,4 +112,4 @@ public class ActivityFamilyCourse extends AppCompatActivity {
     }
 
     }*/
-}
+
