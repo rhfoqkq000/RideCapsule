@@ -83,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
         getKeyHash(getApplicationContext());
 
         fragmentManager = getSupportFragmentManager();
-        createFragments();
-        setUIListeners();
+//        createFragments();
+//        setUIListeners();
 
         //카카오로그인 세션 체크
         callback = new MainActivity.SessionCallback();
@@ -225,6 +225,8 @@ public class MainActivity extends AppCompatActivity {
                 KakaoSingleton.getInstance().setEmail(userProfile.getEmail());
                 KakaoSingleton.getInstance().setNickname(userProfile.getNickname());
                 KakaoSingleton.getInstance().setSmallImage(userProfile.getThumbnailImagePath());
+                createFragments();
+                setUIListeners();
             }
 
             @Override
@@ -267,4 +269,3 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 }
-

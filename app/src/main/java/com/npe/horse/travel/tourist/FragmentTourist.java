@@ -63,12 +63,12 @@ public class FragmentTourist extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_tour_course, container, false);
         ButterKnife.bind(this, rootview);
-        Picasso.with(getContext()).load(R.drawable.family_course).into(family_course);
-        Picasso.with(getContext()).load(R.drawable.walking_course).into(walking_course);
-        Picasso.with(getContext()).load(R.drawable.alone_course).into(alone_course);
-        Picasso.with(getContext()).load(R.drawable.camping_course).into(camping_course);
-        Picasso.with(getContext()).load(R.drawable.healing_course).into(healing_course);
-        Picasso.with(getContext()).load(R.drawable.taste_course).into(taste_course);
+//        Picasso.with(getContext()).load(R.drawable.family_course).into(family_course);
+//        Picasso.with(getContext()).load(R.drawable.walking_course).into(walking_course);
+//        Picasso.with(getContext()).load(R.drawable.alone_course).into(alone_course);
+//        Picasso.with(getContext()).load(R.drawable.camping_course).into(camping_course);
+//        Picasso.with(getContext()).load(R.drawable.healing_course).into(healing_course);
+//        Picasso.with(getContext()).load(R.drawable.taste_course).into(taste_course);
 
         family_course.setOnClickListener(new View.OnClickListener() {
             @Override

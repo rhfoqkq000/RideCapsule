@@ -285,6 +285,10 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
             @Override
             public void onSuccess(UserProfile userProfile) {
                 Logger.d("UserProfile : " + userProfile);
+//                InterfaceReg reg = new Retrofit.Builder()
+//                        .baseUrl("http://168.115.224.15:5000/")
+//                        .addConverterFactory(GsonConverterFactory.create())
+//                        .build().create(InterfaceReg.class);
                 InterfaceReg reg = ApiClient.getClient().create(InterfaceReg.class);
                 Call<KakaoRegDTO> call = reg.reg(userProfile.getEmail(), userProfile.getNickname(), userProfile.getThumbnailImagePath());
                 call.enqueue(new Callback<KakaoRegDTO>() {
