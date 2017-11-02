@@ -27,13 +27,6 @@ public class ActivityWakingCourse extends AppCompatActivity {
     @BindView(R.id.family_re)
     RecyclerView family_re;
 
-    @BindView(R.id.weather_sky)
-    TextView weather_sky;
-    @BindView(R.id.weather_tem)
-    TextView weather_tem;
-    @BindView(R.id.weather_img)
-    ImageView weatherImg;
-
 
 
     static TourRecyclerAdapter adapter;

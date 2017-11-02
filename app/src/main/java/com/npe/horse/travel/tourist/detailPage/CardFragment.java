@@ -69,7 +69,7 @@ public class CardFragment extends Fragment {
         if ( getArguments().getInt("position") == 0 ){
             TourOverviewRepo.Item item = RetrofitSingleton.getOverview().getResponse().getBody().getItems().getItem();
             detail_title.setText("미리보기");
-            Picasso.with(getContext()).load(item.getFirstimage());
+            Picasso.with(getContext()).load(item.getFirstimage()).into(detail_img);
             detail_content.setText(item.getOverview());
         } else {
             SubCourseRepo.Item[] items = RetrofitSingleton.getSubCourse().getResponse().getBody().getItems().getItem();
