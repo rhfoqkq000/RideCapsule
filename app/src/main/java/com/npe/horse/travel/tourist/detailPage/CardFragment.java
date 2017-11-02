@@ -11,14 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.horse.travel.tourist.SubCourseRepo;
 import com.npe.horse.travel.ApiClient;
 import com.npe.horse.travel.R;
 import com.npe.horse.travel.UrlSingleton;
 import com.npe.horse.travel.tourist.RetrofitSingleton;
+import com.npe.horse.travel.tourist.SubCourseRepo;
 import com.npe.horse.travel.tourist.TourContentSingleton;
 import com.npe.horse.travel.tourist.TourListRepo;
 
@@ -33,6 +34,11 @@ public class CardFragment extends Fragment {
 
     private CardView cardView;
     RetrofitSingleton singleton;
+
+    TextView detail_title;
+    ImageView detail_img ;
+    TextView detail_content;
+    Button detail_button;
 
     private final String NUMOFROW = "10";
     private final String PAGE_NO = "1";
@@ -61,18 +67,23 @@ public class CardFragment extends Fragment {
         cardView = (CardView) view.findViewById(R.id.cardView);
         cardView.setMaxCardElevation(cardView.getCardElevation() * CardAdapter.MAX_ELEVATION_FACTOR);
 
-        TextView title = (TextView) view.findViewById(R.id.title);
-        Button button = (Button)view.findViewById(R.id.button);
+        detail_title = (TextView) view.findViewById(R.id.detail_title);
+        detail_img = (ImageView) view.findViewById(R.id.detail_img) ;
+        detail_content = (TextView) view.findViewById(R.id.detail_content) ;
+        detail_button = (Button)view.findViewById(R.id.detail_button);
 
-        title.setText(String.format("Card %d", getArguments().getInt("position")));
-        button.setOnClickListener(new View.OnClickListener() {
+        getDetailJSON();
+
+
+        //detail_title.setText(String.format("Card %d", getArguments().getInt("position")));
+/*        detail_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Button in Card " + getArguments().getInt("position")
-                        + "Clicked!", Toast.LENGTH_SHORT).show();
+                *//*Toast.makeText(getActivity(), "Button in Card " + getArguments().getInt("position")
+                        + "Clicked!", Toast.LENGTH_SHORT).show();*//*
                 getDetailJSON();
             }
-        });
+        });*/
 
         return view;
     }
@@ -96,8 +107,12 @@ public class CardFragment extends Fragment {
             @Override
             public void onResponse(Call<SubCourseRepo> call, Response<SubCourseRepo> response) {
                 Log.d("URL_BTN",response.raw().request().url().toString());
-//                Toast.makeText(getContext(), "?????", Toast.LENGTH_SHORT).show();
-
+                //Toast.makeText(getContext(), "?????", Toast.LENGTH_SHORT).show();
+                if ( getArguments().getInt("position") == 0 ){
+                    detail_title.setText("메인");
+                } else {
+                    detail_title.setText("코스");
+                }
             }
 
             @Override

@@ -62,11 +62,13 @@
             <LinearLayout
                 android:layout_weight="6"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+               >
                 <ImageView
                     android:src="@drawable/weather38"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
                     android:id="@+id/family_img"
                     android:scaleType="fitXY"/>
             </LinearLayout>
