@@ -125,13 +125,10 @@ public class SnsCommentActivity extends AppCompatActivity{
             public void onResponse(Call<SnsCommentDTO> call, Response<SnsCommentDTO> response) {
                 Log.e("comment_write_success", String.valueOf(response.body().getResult_code()));
                 allItems.addAll(response.body().getResult_body());
+
                 sns_comment_write.setText("");
                 adapter.addNew(allItems);
-//                if(allItems.size()==1){
-//                    adapter.notifyDataSetChanged();
-//                }else{
                     adapter.notifyItemInserted(allItems.size());
-//                }
                 sns_comment_re.scrollToPosition(allItems.size() - 1);
             }
 

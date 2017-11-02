@@ -19,7 +19,7 @@ public class UrlSingleton {
     public String getSERVER_URL(){
         return "http://dongaboomin.xyz:20090/";
     }
-
+  
     public String getPublicServer(){
         return "http://api.visitkorea.or.kr/";
     }
