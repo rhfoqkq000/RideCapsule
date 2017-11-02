@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F9F8F3"
-    tools:context="com.example.horse.travel.MainActivity">
+    tools:context="com.npe.horse.travel.MainActivity">
 
     <FrameLayout
         android:id="@+id/content"
