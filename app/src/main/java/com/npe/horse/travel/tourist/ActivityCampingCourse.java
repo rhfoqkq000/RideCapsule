@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.npe.horse.travel.EndlessRecyclerViewScrollListener;
 import com.bumptech.glide.Glide;
 import com.npe.horse.travel.R;
 import com.npe.horse.travel.tourist.detailPage.DetailActivity;
@@ -33,6 +36,10 @@ public class ActivityCampingCourse extends AppCompatActivity {
     @BindView(R.id.course_camping_img)
     ImageView course_camping_img;
 
+    @BindView(R.id.camping_course_progressBar)
+    ProgressBar progressBar;
+
+    EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
 
     static TourRecyclerAdapter adapter;
 
@@ -45,13 +52,32 @@ public class ActivityCampingCourse extends AppCompatActivity {
 
         Picasso.with(getApplicationContext()).load(R.drawable.course_camping_img).into(course_camping_img);
 
+        progressBar.setVisibility(View.INVISIBLE);
+
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        layoutManager.setInitialPrefetchItemCount(10);
+        layoutManager.setItemPrefetchEnabled(true);
+        family_re.setLayoutManager(layoutManager);
+        adapter = new TourRecyclerAdapter();
         family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         adapter = new TourRecyclerAdapter(Glide.with(getApplicationContext()));
         family_re.setAdapter(adapter);
 
+        endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(final int page, int totalItemsCount, RecyclerView view) {
+                Log.d("SCROLL","END! | "+page);
+                progressBar.setVisibility(View.VISIBLE);
+                RetrofitSingleton.tourRetrofit(adapter, "C0113", page+1);
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        };
+
+        family_re.addOnScrollListener(endlessRecyclerViewScrollListener);
+
         singleton.areaCodeRetrofit();
         //singleton.weatherRetrofit();
-        singleton.tourRetrofit(adapter,"C0116");
+        singleton.tourRetrofit(adapter,"C0116", 1);
 
 
         adapter.setItemClick(new TourRecyclerAdapter.ItemClick() {
