@@ -55,13 +55,11 @@
         <activity
             android:name="com.npe.horse.travel.sns.write.ActivityImageFilter"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".kakao.KakaoSignupActivity" />
+
         <activity
             android:name="com.npe.horse.travel.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name="com.npe.horse.travel.kakao.KakaoSignupActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
@@ -89,13 +87,7 @@
         <activity
             android:name=".tourist.detailPage.DetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".sns.write.ActivityLocationSelect"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".sns.comment.SnsCommentActivity" />
-        <activity
-            android:name=".sns.hashtag.SnsHashTagActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -108,9 +100,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".tourist.detailPage.MapsActivity"
-            android:label="@string/title_activity_maps">
     </application>
 
 </manifest>
