@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.common.api.Api;
 import com.npe.horse.travel.ApiClient;
 import com.npe.horse.travel.SearchViewCustom;
 import com.npe.horse.travel.EndlessRecyclerViewScrollListener;
@@ -126,7 +127,6 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         call.enqueue(new Callback<SnsHashtagDTO>(){
             @Override
             public void onResponse(Call<SnsHashtagDTO> call, Response<SnsHashtagDTO> response) {
-                if(response.body().getResult_code()==200){
                     String[] suggestions = new String[response.body().getResult_body().size()];
                     for(int i = 0; i < response.body().getResult_body().size(); i++){
                         suggestions[i] = response.body().getResult_body().get(i).getResult();
@@ -143,7 +143,7 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
                             getContext().startActivity(intent);
                         }
                     });
-                }
+
             }
 
             @Override
@@ -285,10 +285,8 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
             @Override
             public void onSuccess(UserProfile userProfile) {
                 Logger.d("UserProfile : " + userProfile);
-                InterfaceReg reg = new Retrofit.Builder()
-                        .baseUrl("http://168.115.226.218:5000/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build().create(InterfaceReg.class);
+                InterfaceReg reg = ApiClient.getClient().create(InterfaceReg.class);
+
                 Call<KakaoRegDTO> call = reg.reg(userProfile.getEmail(), userProfile.getNickname(), userProfile.getThumbnailImagePath());
                 call.enqueue(new Callback<KakaoRegDTO>() {
                     @Override
