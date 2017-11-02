@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.TextView;
+import com.npe.horse.travel.R;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,13 +30,11 @@ import butterknife.ButterKnife;
  */
 
 public class ActivityFamilyCourse extends AppCompatActivity {
-    @BindView(R.id.familyTest)
-    TextView familyTest;
+//    @BindView(R.id.familyTest)
+//    TextView familyTest;
 
     @BindView(R.id.family_re)
     RecyclerView family_re;
-
-
     private ProgressDialog mProgressDialog;
     @BindView(R.id.weather_sky)
     TextView weather_sky;
@@ -41,8 +42,6 @@ public class ActivityFamilyCourse extends AppCompatActivity {
     TextView weather_tem;
     @BindView(R.id.weather_img)
     ImageView weatherImg;
-
-
 
     static TourRecyclerAdapter adapter;
 
@@ -52,15 +51,15 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_course);
         ButterKnife.bind(this);
-
         family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         adapter = new TourRecyclerAdapter();
         family_re.setAdapter(adapter);
-
         singleton.areaCodeRetrofit();
         //singleton.weatherRetrofit();
         singleton.tourRetrofit(adapter,"C0112");
     }
+
+}
 
 /*
 
@@ -129,5 +128,6 @@ public class ActivityFamilyCourse extends AppCompatActivity {
     }
 }
 
+
     }*/
-}
+
