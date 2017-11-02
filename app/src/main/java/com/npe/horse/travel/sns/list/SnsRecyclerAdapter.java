@@ -50,6 +50,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
     private Resources res;
     private Context context;
     private ContentResolver contentResolver;
+    private boolean isDeletable;
 
     public SnsRecyclerAdapter(RequestManager glide, ContentResolver contentResolver) {
         this.glide=glide;
@@ -91,6 +92,15 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         setUI(holder, position);
+        if (isDeletable){
+            holder.listview_sns_layout.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Log.e("SnsRecyclerAdapter", "onLongClicked");
+                    return true;
+                }
+            });
+        }
     }
 
     @Override
@@ -185,23 +195,20 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
     }
 
     private void setLike(final ViewHolder holder, final SnsListItem item, int position) {
+        Log.e("SnsRecyclerAdapter", String.valueOf(item.getLike_id()));
+
         if (item.getLike_id()!=0){
             glide.load(R.drawable.go).into(holder.like);
         } else {
             Log.d("ID",item.getLike_id()+" | "+position+" | "+item.getPost());
         }
         holder.sns_good.setText(String.valueOf(item.getLike_count()));
-
-        Log.e("SnsRecyclerAdapter", item.getLike_user());
-        Log.e("SnsRecyclerAdapter", item.getNickname());
-
-        if (item.getLike_user().equals("none")){
-            holder.like_users.setVisibility(View.GONE);
-        } else if (item.getLike_user().equals(item.getNickname())){
-            holder.like_users.setText("본인(?!)");
-        } else {
-            holder.like_users.setText(item.getLike_user());
-        }
+//
+//        if (item.getLike_user().equals("none")){
+//            holder.like_users.setVisibility(View.GONE);
+//        } else {
+//            holder.like_users.setText(item.getLike_user());
+//        }
 
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -331,33 +338,27 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         TextView userIdTextView;
         ImageView like;
         TextView sns_good;
-        TextView like_users;
+//        TextView like_users;
         RecyclerViewPager imgRe;
         TextView imgs_count;
         LinearLayout ims_layout;
         ImageView reply;
         TextView sns_updated_at;
         CircleImageView profile_image;
-        //        ImageView main_img;
-//        CustomPager viewPager;
-//        DotsIndicator indicator;
         TextView locationTextView;
-//        ViewPager sns_viewPager;
-//        LinearLayout sliderDotsPanel;
         TextView sns_comment_count;
         TextView sns_location_full;
+        LinearLayout listview_sns_layout;
         ViewHolder(final View itemView) {
             super(itemView);
             contentTextView = itemView.findViewById(R.id.sns_con);
             userIdTextView = itemView.findViewById(R.id.user_id);
             like = itemView.findViewById(R.id.love);
             sns_good = itemView.findViewById(R.id.sns_good);
-            like_users = itemView.findViewById(R.id.like_users);
+//            like_users = itemView.findViewById(R.id.like_users);
             imgRe = itemView.findViewById(R.id.img_re);
             imgs_count = itemView.findViewById(R.id.imgs_count);
-//            main_img = itemView.findViewById(R.id.imageView);
-//            viewPager = itemView.findViewById(R.id.viewPager);
-//            indicator = itemView.findViewById(R.id.dots_indicator);
+            listview_sns_layout = itemView.findViewById(R.id.listview_sns_layout);
             locationTextView = itemView.findViewById(R.id.sns_location);
             sns_location_full = itemView.findViewById(R.id.sns_location_full);
             ims_layout = itemView.findViewById(R.id.ims_layout);
@@ -393,5 +394,9 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
             sb.append(digit);
         }
         return Integer.parseInt(sb.toString());
+    }
+
+    private void setDeletable(boolean isDeletable){
+        this.isDeletable = isDeletable;
     }
 }
