@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.npe.horse.travel.kakao.GlobalApplication"
+        android:name=".kakao.GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.npe.horse.travel.SplashActivity"
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,55 +27,78 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.npe.horse.travel.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.npe.horse.travel.sns.write.ActivitySnsWrite" />
+        <activity android:name=".sns.write.ActivitySnsWrite" />
         <activity
-            android:name="com.npe.horse.travel.capsule.ActivityCapsuleContent"
+            android:name=".capsule.ActivityCapsuleContent"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="com.npe.horse.travel.sns.write.ActivityImageSelect"
+            android:name=".sns.write.ActivityImageSelect"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.npe.horse.travel.tourist.ActivityFamilyCourse"
+            android:name=".tourist.ActivityFamilyCourse"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.npe.horse.travel.sns.write.ActivityLocationSelect"
+            android:name=".sns.write.ActivityLocationSelect"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.npe.horse.travel.sns.comment.SnsCommentActivity" />
-        <activity android:name="com.npe.horse.travel.sns.write.ActivityImageFilter" />
+        <activity android:name=".sns.comment.SnsCommentActivity" />
+        <activity android:name=".sns.write.ActivityImageFilter" />
         <activity
-            android:name="com.npe.horse.travel.sns.hashtag.SnsHashTagActivity"
+            android:name=".sns.hashtag.SnsHashTagActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.npe.horse.travel.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.npe.horse.travel.kakao.KakaoSignupActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".kakao.KakaoSignupActivity" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/app_name" />
-        <activity android:name="com.npe.horse.travel.tourist.ActivityWakingCourse"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.npe.horse.travel.tourist.ActivityAloneCourse"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.npe.horse.travel.tourist.ActivityHealingCourse"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.npe.horse.travel.tourist.ActivityTasteCourse"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.npe.horse.travel.tourist.ActivityCampingCourse"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.npe.horse.travel.tourist.detailPage.DetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.npe.horse.travel.sns.write.ActivityLocationSelect"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.npe.horse.travel.sns.comment.SnsCommentActivity"/>
-        <activity android:name="com.npe.horse.travel.sns.hashtag.SnsHashTagActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+        android:theme="@style/AppTheme.NoActionBar"
+        android:label="@string/app_name" />
+        <activity
+            android:name=".tourist.ActivityWakingCourse"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".tourist.ActivityAloneCourse"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".tourist.ActivityHealingCourse"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".tourist.ActivityTasteCourse"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".tourist.ActivityCampingCourse"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".tourist.detailPage.DetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".sns.write.ActivityLocationSelect"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".sns.comment.SnsCommentActivity" />
+        <activity
+            android:name=".sns.hashtag.SnsHashTagActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".tourist.detailPage.MapsActivity"
+            android:label="@string/title_activity_maps"></activity>
     </application>
 
 </manifest>

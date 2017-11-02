@@ -29,8 +29,7 @@ import butterknife.ButterKnife;
  */
 
 public class ActivityFamilyCourse extends AppCompatActivity {
-//    @BindView(R.id.familyTest)
-//    TextView familyTest;
+
 
     @BindView(R.id.family_re)
     RecyclerView family_re;
@@ -42,7 +41,6 @@ public class ActivityFamilyCourse extends AppCompatActivity {
     ImageView weatherImg;
 
 
-
     static TourRecyclerAdapter adapter;
 
     RetrofitSingleton singleton = RetrofitSingleton.getInstance();
@@ -51,20 +49,9 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_course);
         ButterKnife.bind(this);
-        familyTest.setText("성공");
         family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         adapter = new TourRecyclerAdapter();
         family_re.setAdapter(adapter);
-        tourRetrofit();
-
-
-
-    }
-
-
-
-
-
 
 
         family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -74,6 +61,16 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         singleton.areaCodeRetrofit();
         //singleton.weatherRetrofit();
         singleton.tourRetrofit(adapter,"C0112");
+
+    }
+
+
+
+
+
+
+
+
     }
 
 /*
@@ -123,4 +120,4 @@ public class ActivityFamilyCourse extends AppCompatActivity {
     }
 
     }*/
-}
+

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +14,33 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.horse.travel.tourist.SubCourseRepo;
+import com.npe.horse.travel.ApiClient;
 import com.npe.horse.travel.R;
+import com.npe.horse.travel.UrlSingleton;
 import com.npe.horse.travel.tourist.RetrofitSingleton;
+import com.npe.horse.travel.tourist.TourContentSingleton;
+import com.npe.horse.travel.tourist.TourListRepo;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class CardFragment extends Fragment {
 
     private CardView cardView;
     RetrofitSingleton singleton;
+
+    private final String NUMOFROW = "10";
+    private final String PAGE_NO = "1";
+    private final String OS = "AND";
+    private final String APPNAME = "tourlist";
+    private final String CONTENTTYPEID = "25";
+    private final String DETAILYN = "Y";
+    private final String TYPE = "json";
 
     public static Fragment getInstance(int position) {
         CardFragment f = new CardFragment();
@@ -49,6 +70,7 @@ public class CardFragment extends Fragment {
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Button in Card " + getArguments().getInt("position")
                         + "Clicked!", Toast.LENGTH_SHORT).show();
+                getDetailJSON();
             }
         });
 
@@ -57,5 +79,32 @@ public class CardFragment extends Fragment {
 
     public CardView getCardView() {
         return cardView;
+    }
+
+    private void getDetailJSON(){
+//        Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
+//                .addConverterFactory(GsonConverterFactory.create()).build();
+//        SubCourseRepo.SubCourseAppInterface subCourseAppInterface = client.create(SubCourseRepo.SubCourseAppInterface.class);
+        SubCourseRepo.SubCourseAppInterface retrofit = ApiClient.getPublicClient().create(SubCourseRepo.SubCourseAppInterface.class);
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl("http://api.visitkorea.or.kr/")
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//        SubCourseRepo.SubCourseAppInterface subCourseAppInterface = retrofit.create(SubCourseRepo.SubCourseAppInterface.class);
+        Call<SubCourseRepo> call = retrofit.get_subcourse_retrofit(UrlSingleton.getInstance().serviceKey(),NUMOFROW,PAGE_NO,OS,APPNAME, TourContentSingleton.getInstance().getContent_id(),CONTENTTYPEID,DETAILYN,TYPE);
+        call.enqueue(new Callback<SubCourseRepo>() {
+            @Override
+            public void onResponse(Call<SubCourseRepo> call, Response<SubCourseRepo> response) {
+                Log.d("URL_BTN",response.raw().request().url().toString());
+//                Toast.makeText(getContext(), "?????", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onFailure(Call<SubCourseRepo> call, Throwable t) {
+                Log.d("URL_BTN",t.getMessage());
+
+            }
+        });
     }
 }
