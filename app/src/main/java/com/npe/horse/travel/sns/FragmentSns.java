@@ -45,6 +45,8 @@ import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.helper.log.Logger;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

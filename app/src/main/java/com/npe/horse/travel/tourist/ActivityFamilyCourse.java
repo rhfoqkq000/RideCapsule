@@ -29,18 +29,17 @@ import butterknife.ButterKnife;
  */
 
 public class ActivityFamilyCourse extends AppCompatActivity {
+//    @BindView(R.id.familyTest)
+//    TextView familyTest;
 
     @BindView(R.id.family_re)
     RecyclerView family_re;
-
     @BindView(R.id.weather_sky)
     TextView weather_sky;
     @BindView(R.id.weather_tem)
     TextView weather_tem;
     @BindView(R.id.weather_img)
     ImageView weatherImg;
-
-
 
     static TourRecyclerAdapter adapter;
 
@@ -53,26 +52,12 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         adapter = new TourRecyclerAdapter();
         family_re.setAdapter(adapter);
-
-
-        family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        adapter = new TourRecyclerAdapter();
-        family_re.setAdapter(adapter);
-
         singleton.areaCodeRetrofit();
         //singleton.weatherRetrofit();
         singleton.tourRetrofit(adapter,"C0112");
-
     }
 
-
-
-
-
-
-
-
-    }
+}
 
 /*
 
@@ -121,3 +106,4 @@ public class ActivityFamilyCourse extends AppCompatActivity {
     }
 
     }*/
+

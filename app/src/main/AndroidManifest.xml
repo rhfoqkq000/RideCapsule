@@ -69,12 +69,6 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="com.npe.horse.travel.tourist.detailPage.DetailActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.npe.horse.travel.sns.write.ActivityLocationSelect"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.npe.horse.travel.sns.comment.SnsCommentActivity"/>
-        <activity android:name="com.npe.horse.travel.sns.hashtag.SnsHashTagActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
     </application>
 
 </manifest>
