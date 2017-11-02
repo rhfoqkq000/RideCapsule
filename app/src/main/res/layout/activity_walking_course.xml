@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/backgroundColor"
-    tools:context="com.example.horse.travel.tourist.FragmentTourist">
+    tools:context="com.npe.horse.travel.tourist.FragmentTourist">
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="wrap_content"
