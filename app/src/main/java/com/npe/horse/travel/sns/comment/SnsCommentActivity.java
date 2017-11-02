@@ -127,8 +127,8 @@ public class SnsCommentActivity extends AppCompatActivity{
                 allItems.addAll(response.body().getResult_body());
 
                 sns_comment_write.setText("");
-                int curSize = adapter.getItemCount();
-                adapter.notifyItemRangeInserted(curSize,allItems.size()-1);
+                adapter.addNew(allItems);
+                    adapter.notifyItemInserted(allItems.size());
                 sns_comment_re.scrollToPosition(allItems.size() - 1);
             }
 

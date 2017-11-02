@@ -1,10 +1,14 @@
 package com.npe.horse.travel;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 
 import com.bumptech.glide.Glide;
@@ -21,15 +25,20 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
-import com.npe.horse.travel.mypage.FragmentMypage;
 import com.npe.horse.travel.tourist.FragmentTourist;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.Signature;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.kakao.util.helper.Utility.getPackageInfo;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -71,9 +80,11 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         JodaTimeAndroid.init(this);
 
+        getKeyHash(getApplicationContext());
+
         fragmentManager = getSupportFragmentManager();
-        createFragments();
-        setUIListeners();
+//        createFragments();
+//        setUIListeners();
 
         //카카오로그인 세션 체크
         callback = new MainActivity.SessionCallback();
@@ -214,6 +225,8 @@ public class MainActivity extends AppCompatActivity {
                 KakaoSingleton.getInstance().setEmail(userProfile.getEmail());
                 KakaoSingleton.getInstance().setNickname(userProfile.getNickname());
                 KakaoSingleton.getInstance().setSmallImage(userProfile.getThumbnailImagePath());
+                createFragments();
+                setUIListeners();
             }
 
             @Override
@@ -238,5 +251,21 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-}
 
+    public static String getKeyHash(final Context context) {
+        PackageInfo packageInfo = getPackageInfo(context, PackageManager.GET_SIGNATURES);
+        if (packageInfo == null)
+            return null;
+
+        for (android.content.pm.Signature signature : packageInfo.signatures) {
+            try {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                return Base64.encodeToString(md.digest(), Base64.NO_WRAP);
+            } catch (NoSuchAlgorithmException e) {
+                Log.w("SIGNATURE", "Unable to get MessageDigest. signature=" + signature, e);
+            }
+        }
+        return null;
+    }
+}

@@ -6,6 +6,7 @@ package com.npe.horse.travel;
 
 public class UrlSingleton {
 
+
     private UrlSingleton () {}
     private static class Singleton {
         private static final UrlSingleton instance = new UrlSingleton();
@@ -18,9 +19,12 @@ public class UrlSingleton {
     public String getSERVER_URL(){
         return "http://dongaboomin.xyz:20090/";
     }
+  
+    public String getPublicServer(){
+        return "http://api.visitkorea.or.kr/";
+    }
 
-//    public String getSERVER_URL(){
-//        return "http://168.115.204.239:5000/";
-//    }
-
+    public String serviceKey(){
+        return "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==";
+    }
 }
