@@ -26,13 +26,11 @@ import butterknife.ButterKnife;
  */
 
 public class ActivityFamilyCourse extends AppCompatActivity {
-    @BindView(R.id.familyTest)
-    TextView familyTest;
+//    @BindView(R.id.familyTest)
+//    TextView familyTest;
 
     @BindView(R.id.family_re)
     RecyclerView family_re;
-
-    TourRecyclerAdapter adapter;
     @BindView(R.id.weather_sky)
     TextView weather_sky;
     @BindView(R.id.weather_tem)
