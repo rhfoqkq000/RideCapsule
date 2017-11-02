@@ -14,6 +14,9 @@ import com.npe.horse.travel.tourist.detailPage.DetailActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by ekekd on 2017-11-01.
@@ -54,8 +57,35 @@ public class ActivityCampingCourse extends AppCompatActivity {
         adapter.setItemClick(new TourRecyclerAdapter.ItemClick() {
             @Override
             public void onClick(View view, int position) {
-                Intent detailintent = new Intent(ActivityCampingCourse.this, DetailActivity.class);
-                startActivity(detailintent);
+                Call<TourOverviewRepo> call = RetrofitSingleton.overviewRetrofit();
+                call.enqueue(new Callback<TourOverviewRepo>() {
+                    @Override
+                    public void onResponse(Call<TourOverviewRepo> call, Response<TourOverviewRepo> response) {
+                        RetrofitSingleton.overview = response.body();
+                        Call<SubCourseRepo> call2 = RetrofitSingleton.subcourseRetrofit();
+                        call2.enqueue(new Callback<SubCourseRepo>() {
+                            @Override
+                            public void onResponse(Call<SubCourseRepo> call, Response<SubCourseRepo> response) {
+                                RetrofitSingleton.subCourse = response.body();
+                                Intent detailintent = new Intent(ActivityCampingCourse.this, DetailActivity.class);
+                                startActivity(detailintent);
+                            }
+
+                            @Override
+                            public void onFailure(Call<SubCourseRepo> call, Throwable t) {
+                                t.printStackTrace();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(Call<TourOverviewRepo> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
+
+
+
             }
         });
 

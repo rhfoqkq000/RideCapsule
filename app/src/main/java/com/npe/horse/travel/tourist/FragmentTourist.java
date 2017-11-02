@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.npe.horse.travel.R;
 import com.squareup.picasso.Picasso;
@@ -24,33 +25,7 @@ import butterknife.OnClick;
 public class FragmentTourist extends Fragment {
     @BindView(R.id.family_course)
     ImageView family_course;
-/*    @OnClick(R.id.family_course)
-    void clickFamaily() {
-        Intent Familyintent = new Intent(getActivity(), ActivityFamilyCourse.class);
-//    }*/
-//
-//    @BindView(R.id.walking_course)
-//    ImageView walking_course;
-//    @OnClick(R.id.family_course)
-//    void clickWalking() {}
 
-//    @BindView(R.id.alone_course)
-//    ImageView alone_course;
-//    @OnClick(R.id.family_course)
-//    void clickAlone() {}
-//
-//    @BindView(R.id.camping_course)
-//    ImageView camping_course;
-//    @OnClick(R.id.family_course)
-////    void clickCamping() {}
-//
-//    @BindView(R.id.healing_course)
-//    ImageView healing_course;
-//    @OnClick(R.id.family_course)
-//    void clickHealing() {}
-//
-//    @BindView(R.id.taste_course)
-//    ImageView taste_course;
     @OnClick(R.id.family_course)
     void clickTaste() {}
 
@@ -68,6 +43,7 @@ public class FragmentTourist extends Fragment {
 
     @BindView(R.id.taste_course)
     ImageView taste_course;
+
 
     public FragmentTourist() {
 //        Required empty public constructor

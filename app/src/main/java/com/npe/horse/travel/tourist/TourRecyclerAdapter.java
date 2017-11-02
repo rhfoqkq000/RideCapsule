@@ -42,7 +42,7 @@ public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapte
     public void onBindViewHolder(TourRecyclerAdapter.ViewHolder holder, int position) {
 
         final int Position = position;
-        TourListRepo.Item item = items.get(position);
+        final TourListRepo.Item item = items.get(position);
 
         holder.family_title.setText(item.getTitle());
         //holder.family_content.setText(overviewitems.get(position).getOverview());
@@ -53,6 +53,7 @@ public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapte
             @Override
             public void onClick(View view) {
                 if(itemClick != null){
+                    TourContentSingleton.getInstance().setContent_id(item.getContentid());
                     itemClick.onClick(view, Position);
                 }
             }

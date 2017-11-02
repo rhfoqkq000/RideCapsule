@@ -290,7 +290,6 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
 //                        .addConverterFactory(GsonConverterFactory.create())
 //                        .build().create(InterfaceReg.class);
                 InterfaceReg reg = ApiClient.getClient().create(InterfaceReg.class);
-
                 Call<KakaoRegDTO> call = reg.reg(userProfile.getEmail(), userProfile.getNickname(), userProfile.getThumbnailImagePath());
                 call.enqueue(new Callback<KakaoRegDTO>() {
                     @Override

@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.widget.CardView;
 import android.view.ViewGroup;
 
+import com.npe.horse.travel.tourist.RetrofitSingleton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class CardFragmentPagerAdapter extends FragmentStatePagerAdapter implemen
         fragments = new ArrayList<>();
         this.baseElevation = baseElevation;
 
-        for(int i = 0; i< 8; i++){
+        for(int i = 0; i< (  Integer.parseInt(RetrofitSingleton.getOverview().getResponse().getBody().getItems().getItem().getMlevel()) ) ; i++){
             addCardFragment(new CardFragment());
         }
     }

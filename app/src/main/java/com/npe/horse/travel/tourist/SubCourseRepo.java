@@ -8,7 +8,7 @@ import retrofit2.http.Query;
  * Created by ekekd on 2017-10-13.
  */
 
-public class TourOverviewRepo {
+public class SubCourseRepo {
 
     private Response response;
 
@@ -102,13 +102,13 @@ public class TourOverviewRepo {
     }
 
     public class Items{
-        private Item item;
+        private Item[] item;
 
-        public Item getItem() {
+        public Item[] getItem() {
             return item;
         }
 
-        public void setItem(Item item) {
+        public void setItem(Item[] item) {
             this.item = item;
         }
     }
@@ -116,11 +116,13 @@ public class TourOverviewRepo {
     public class Item{
         private String contentid;
         private String contenttypeid;
-        private String firstimage;
-        private Double mapx;
-        private Double mapy;
-        private String mlevel;
-        private String overview;
+        private String subcontentid;
+        private String subdetailalt;
+        private String subdetailimg;
+        private String subdetailoverview;
+        private String subname;
+        private String subnum;
+
 
         public String getContentid() {
             return contentid;
@@ -138,51 +140,59 @@ public class TourOverviewRepo {
             this.contenttypeid = contenttypeid;
         }
 
-        public String getFirstimage() {
-            return firstimage;
+        public String getSubcontentid() {
+            return subcontentid;
         }
 
-        public void setFirstimage(String firstimage) {
-            this.firstimage = firstimage;
+        public void setSubcontentid(String subcontentid) {
+            this.subcontentid = subcontentid;
         }
 
-        public Double getMapx() {
-            return mapx;
+        public String getSubdetailalt() {
+            return subdetailalt;
         }
 
-        public void setMapx(Double mapx) {
-            this.mapx = mapx;
+        public void setSubdetailalt(String subdetailalt) {
+            this.subdetailalt = subdetailalt;
         }
 
-        public Double getMapy() {
-            return mapy;
+        public String getSubdetailimg() {
+            return subdetailimg;
         }
 
-        public void setMapy(Double mapy) {
-            this.mapy = mapy;
+        public void setSubdetailimg(String subdetailimg) {
+            this.subdetailimg = subdetailimg;
         }
 
-        public String getMlevel() {
-            return mlevel;
+        public String getSubdetailoverview() {
+            return subdetailoverview;
         }
 
-        public void setMlevel(String mlevel) {
-            this.mlevel = mlevel;
+        public void setSubdetailoverview(String subdetailoverview) {
+            this.subdetailoverview = subdetailoverview;
         }
 
-        public String getOverview() {
-            return overview;
+        public String getSubname() {
+            return subname;
         }
 
-        public void setOverview(String overview) {
-            this.overview = overview;
+        public void setSubname(String subname) {
+            this.subname = subname;
+        }
+
+        public String getSubnum() {
+            return subnum;
+        }
+
+        public void setSubnum(String subnum) {
+            this.subnum = subnum;
         }
     }
-    public interface TourOverviewAppInterface {
-        @GET("/openapi/service/rest/KorService/detailCommon")
-        Call<TourOverviewRepo> get_overview_retrofit(@Query("ServiceKey") String ServiceKey, @Query("numOfRows") String numOfRows, @Query("pageNo") String pageNo, @Query("MobileOS") String MobileOS, @Query("MobileApp") String MobileApp,
-                                                 @Query("contentId") String contentId, @Query("contentTypeId") String contentTypeId,
-                                                 @Query("firstImageYN") String firstImageYN, @Query("mapinfoYN") String mapinfoYN, @Query("overviewYN") String overviewYN ,@Query("_type") String type);
+    public interface SubCourseAppInterface {
+        @GET("/openapi/service/rest/KorService/detailInfo")
+        Call<SubCourseRepo> get_subcourse_retrofit(@Query("ServiceKey") String ServiceKey, @Query("numOfRows") String numOfRows, @Query("pageNo") String pageNo, @Query("MobileOS") String MobileOS, @Query("MobileApp") String MobileApp,
+                                                   @Query("contentId") String contentId, @Query("contentTypeId") String contentTypeId,
+                                                   @Query("detailYN") String detailYN, @Query("_type") String type);
     }
 
 
