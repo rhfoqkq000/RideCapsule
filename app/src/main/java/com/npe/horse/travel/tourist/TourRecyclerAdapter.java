@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.RequestManager;
 import com.npe.horse.travel.R;
 import com.squareup.picasso.Picasso;
 
@@ -18,8 +19,14 @@ import java.util.ArrayList;
 
 public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapter.ViewHolder> {
     private ArrayList<TourListRepo.Item> items;
+    private RequestManager glide;
 
     //private ArrayList<TourOverviewRepo.Item> overviewitems;
+
+
+    public TourRecyclerAdapter(RequestManager glide) {
+        this.glide = glide;
+    }
 
     //아이템 클릭시 실행 함수
     private ItemClick itemClick;
@@ -47,7 +54,7 @@ public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapte
         holder.family_title.setText(item.getTitle());
         //holder.family_content.setText(overviewitems.get(position).getOverview());
         holder.family_readcount.setText(item.getReadcount());
-        Picasso.with(holder.itemView.getContext()).load(item.getFirstimage()).into(holder.family_img);
+        glide.load(item.getFirstimage()).into(holder.family_img);
 
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override

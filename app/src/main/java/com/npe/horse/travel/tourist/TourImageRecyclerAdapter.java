@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.npe.horse.travel.R;
 import com.npe.horse.travel.UrlSingleton;
 
@@ -25,9 +26,11 @@ public class TourImageRecyclerAdapter extends RecyclerView.Adapter<TourImageRecy
 
     private List<TourListItem> tourListItems;
     Context context;
+    RequestManager glide;
 
-    TourImageRecyclerAdapter(Context context) {
+    TourImageRecyclerAdapter(Context context, RequestManager glide) {
         this.context = context;
+        this.glide = glide;
     }
 
     @Override
@@ -49,7 +52,7 @@ public class TourImageRecyclerAdapter extends RecyclerView.Adapter<TourImageRecy
       
         holder.tour_item_txt.setText(tourListItems.get(position).getTour_title());
 //        holder.tour_item_img.setBackground(holder.itemView.getResources().getDrawable(R.drawable.weather01));
-        Glide.with(context).load(tourListItems.get(position).getTour_image()).into(holder.tour_item_img);
+        glide.load(tourListItems.get(position).getTour_image()).into(holder.tour_item_img);
         Log.e("TourImageRecyclerA", tourListItems.get(position).getTour_title());
     }
 

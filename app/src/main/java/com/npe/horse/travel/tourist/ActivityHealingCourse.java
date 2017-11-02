@@ -17,6 +17,10 @@ import com.npe.horse.travel.tourist.detailPage.DetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import com.bumptech.glide.Glide;
+import com.npe.horse.travel.R;
+import com.npe.horse.travel.tourist.detailPage.DetailActivity;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

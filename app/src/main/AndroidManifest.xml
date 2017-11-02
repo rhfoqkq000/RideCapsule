@@ -55,7 +55,6 @@
         <activity
             android:name="com.npe.horse.travel.sns.write.ActivityImageFilter"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name="com.npe.horse.travel.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
