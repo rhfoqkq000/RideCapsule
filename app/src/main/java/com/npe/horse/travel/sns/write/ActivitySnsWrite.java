@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.npe.horse.travel.ApiClient;
 import com.npe.horse.travel.MainActivity;
 import com.npe.horse.travel.R;
 import com.volokh.danylo.hashtaghelper.HashTagHelper;
@@ -49,10 +50,12 @@ public class ActivitySnsWrite extends AppCompatActivity {
     void snsWrite(){
         List<String> allHashTags = mTextHashTagHelper.getAllHashTags();
         Log.e("allHashTags", allHashTags.toString());
-        InterfaceSnsWrite write = new Retrofit.Builder()
-                .baseUrl("http://168.115.226.218:5000/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build().create(InterfaceSnsWrite.class);
+//        InterfaceSnsWrite write = new Retrofit.Builder()
+//                .baseUrl("http://168.115.226.218:5000/")
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build().create(InterfaceSnsWrite.class);
+        InterfaceSnsWrite write = ApiClient.getClient().create(InterfaceSnsWrite.class);
+
         RequestBody requestBodyPost = RequestBody.create(MediaType.parse("text/plain"), snsWriteText.getText().toString());
         RequestBody requestBodyLocation = RequestBody.create(MediaType.parse("text/plain"), location);
         RequestBody requestBodyLocation_alias = RequestBody.create(MediaType.parse("text/plain"), location_alias);

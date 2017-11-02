@@ -1,5 +1,6 @@
 package com.npe.horse.travel.tourist;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,6 +32,7 @@ public class ActivityFamilyCourse extends AppCompatActivity {
     RecyclerView family_re;
 
     TourRecyclerAdapter adapter;
+    private ProgressDialog mProgressDialog;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +55,7 @@ public class ActivityFamilyCourse extends AppCompatActivity {
 
 
     public void tourRetrofit() {
+        showProgressDialog();
         Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         TourListRepo.TourListAppInterface tourService = client.create(TourListRepo.TourListAppInterface.class);
@@ -77,6 +80,7 @@ public class ActivityFamilyCourse extends AppCompatActivity {
 //                }
                 adapter.addNew(itemList);
                 Log.d("ActivityFamilyCourse", itemList.toString());
+                hideProgressDialog();
 
 //                final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//아니면 액티비티이름.this
 //                layoutManager.setItemPrefetchEnabled(true);
@@ -91,8 +95,26 @@ public class ActivityFamilyCourse extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<TourListRepo> call, Throwable t) {
+                hideProgressDialog();
                 t.printStackTrace();
             }
         });
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage("로딩 중입니다.");
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+            mProgressDialog.dismiss();
+        }
     }
 }

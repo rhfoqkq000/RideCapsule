@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.npe.horse.travel.ApiClient;
 import com.npe.horse.travel.MainActivity;
 import com.npe.horse.travel.R;
 
@@ -94,10 +95,11 @@ public class ActivityLocationSelect extends AppCompatActivity {
     @OnClick(R.id.select_loc_btn)
     void insertLocation(){
         if(!location_et.getText().toString().equals("") && !location_alias_et.getText().toString().equals("")){
-            InterfaceSnsLocationInsert location = new Retrofit.Builder()
-                    .baseUrl("http://168.115.225.120:5000/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build().create(InterfaceSnsLocationInsert.class);
+//            InterfaceSnsLocationInsert location = new Retrofit.Builder()
+//                    .baseUrl("http://168.115.225.120:5000/")
+//                    .addConverterFactory(GsonConverterFactory.create())
+//                    .build().create(InterfaceSnsLocationInsert.class);
+            InterfaceSnsLocationInsert location = ApiClient.getClient().create(InterfaceSnsLocationInsert.class);
             Call<SnsWriteDTO> call = location.writeLocation(location_et.getText().toString(), location_alias_et.getText().toString());
             call.enqueue(new Callback<SnsWriteDTO>() {
                 @Override
@@ -118,10 +120,12 @@ public class ActivityLocationSelect extends AppCompatActivity {
 
     @OnClick(R.id.search_loc_btn)
     void searchLocation(){
-        InterfaceSnsLocationSearch location = new Retrofit.Builder()
-                .baseUrl("http://168.115.226.218:5000/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build().create(InterfaceSnsLocationSearch.class);
+//        InterfaceSnsLocationSearch location = new Retrofit.Builder()
+//                .baseUrl("http://168.115.226.218:5000/")
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build().create(InterfaceSnsLocationSearch.class);
+        InterfaceSnsLocationSearch location = ApiClient.getClient().create(InterfaceSnsLocationSearch.class);
+
         Call<SnsLocationDTO> call = location.searchLocation(location_search_et.getText().toString());
         call.enqueue(new Callback<SnsLocationDTO>() {
             @Override

@@ -126,7 +126,12 @@ public class SnsCommentActivity extends AppCompatActivity{
                 Log.e("comment_write_success", String.valueOf(response.body().getResult_code()));
                 allItems.addAll(response.body().getResult_body());
                 sns_comment_write.setText("");
-                adapter.notifyItemInserted(allItems.size());
+                adapter.addNew(allItems);
+//                if(allItems.size()==1){
+//                    adapter.notifyDataSetChanged();
+//                }else{
+                    adapter.notifyItemInserted(allItems.size());
+//                }
                 sns_comment_re.scrollToPosition(allItems.size() - 1);
             }
 

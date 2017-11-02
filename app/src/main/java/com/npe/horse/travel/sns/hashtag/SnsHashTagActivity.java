@@ -38,6 +38,8 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by JRokH on 2017-10-30.
@@ -73,6 +75,8 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
     final int PROFILE = 1;
 
     final int LOCATION = 2;
+
+    final int LIKE = 3;
 
     int category = 0;
 
@@ -121,11 +125,14 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
 
             Log.d("SUBSTRING",hashtag.substring(1));
             getSnsList(hashtag, category, init_page);
-        } else {
+        } else if (hashtag.charAt(0) == '~'){
             category = LOCATION;
             hashtag = hashtag.substring(1, hashtag.length());
 
             getSnsList(hashtag, category, init_page);
+        } else {
+            category = LIKE;
+            getSnsListLike(init_page);
         }
 
         writeBtn.setOnClickListener(new View.OnClickListener() {
@@ -140,7 +147,11 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
             @Override
             public void onLoadMore(final int page, int totalItemsCount, RecyclerView view) {
                 Log.d("SCROLL","END! | "+page);
-                getSnsList(hashtag,category,page+1);
+                if (category == LIKE){
+                    getSnsListLike(page+1);
+                }else{
+                    getSnsList(hashtag,category,page+1);
+                }
             }
         };
 
@@ -180,6 +191,44 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
             }
         });
     }
+
+    void getSnsListLike(int page){
+        InterfaceSnsList list = ApiClient.getClient().create(InterfaceSnsList.class);
+//        InterfaceSnsList list = new Retrofit.Builder()
+//                .baseUrl("http://168.115.224.15:5000/")
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build().create(InterfaceSnsList.class);
+        Call<SnsListDTO> call = list.listSnsLike(KakaoSingleton.getInstance().getId(), page);
+        call.enqueue(new Callback<SnsListDTO>() {
+            @Override
+            public void onResponse(@NonNull Call<SnsListDTO> call, @NonNull Response<SnsListDTO> response) {
+                Log.d("URL",response.raw().request().url().toString());
+                if (response.body().getItems_count()!=0){
+                    allItems.addAll(response.body().getResult_body());
+                    int curSize = adapter.getItemCount();
+                    adapter.addNew(allItems);
+                    snsRe.getRecycledViewPool().setMaxRecycledViews(0,allItems.size());
+                    if (isRe){
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        adapter.notifyItemRangeChanged(curSize,allItems.size()-1);
+                    }
+                } else {
+                    Log.d("SCROLL","END!");
+                }
+                if (isRe){
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<SnsListDTO> call, @NonNull Throwable t) {
+                t.getStackTrace();
+                Log.e("RETROFIT", t.getMessage());
+                Toast.makeText(getApplicationContext(),"글을 불러오는데 실패했습니다. 잠시후 다시 시도해 주세요.",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     @Override
     public void onRefresh() {
         refresh();
@@ -191,7 +240,11 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
             allItems.clear();
             isRe = true;
             snsRe.getRecycledViewPool().setMaxRecycledViews(0,10);
-            getSnsList(hashtag,category,1);
+            if (category == LIKE) {
+                getSnsListLike(1);
+            }else{
+                getSnsList(hashtag,category,1);
+            }
         }
     }
     @Override
