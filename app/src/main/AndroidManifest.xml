@@ -46,6 +46,8 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".tourist.ActivityCampingCourse"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".tourist.detailPage.DetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".sns.write.ActivityLocationSelect"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".sns.comment.SnsCommentActivity"/>

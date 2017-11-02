@@ -66,9 +66,9 @@ public class TourListRepo {
 
     public class Body{
         private Items items;
-        private int numOfRows;
-        private int pageNo;
-        private int totalCount;
+        private String numOfRows;
+        private String pageNo;
+        private String totalCount;
 
         public Items getItems() {
             return items;
@@ -78,27 +78,27 @@ public class TourListRepo {
             this.items = items;
         }
 
-        public int getNumOfRows() {
+        public String getNumOfRows() {
             return numOfRows;
         }
 
-        public void setNumOfRows(int numOfRows) {
+        public void setNumOfRows(String numOfRows) {
             this.numOfRows = numOfRows;
         }
 
-        public int getPageNo() {
+        public String getPageNo() {
             return pageNo;
         }
 
-        public void setPageNo(int pageNo) {
+        public void setPageNo(String pageNo) {
             this.pageNo = pageNo;
         }
 
-        public int getTotalCount() {
+        public String getTotalCount() {
             return totalCount;
         }
 
-        public void setTotalCount(int totalCount) {
+        public void setTotalCount(String totalCount) {
             this.totalCount = totalCount;
         }
     }
@@ -118,24 +118,24 @@ public class TourListRepo {
     public class Item{
         private String addr1;
         private String addr2;
-        private int areacode;
+        private String areacode;
         private String cat1;
         private String cat2;
         private String cat3;
-        private int contentid;
-        private int contenttypeid;
+        private String contentid;
+        private String contenttypeid;
         private long createdtime;
         private String firstimage;
         private String firstimage2;
         private Double mapx;
         private Double mapy;
-        private int mlevel;
+        private String mlevel;
         private long modifiedtime;
-        private int readcount;
-        private int sigungucode;
+        private String readcount;
+        private String sigungucode;
         private String tel;
         private String title;
-        private int zipcode;
+        private String zipcode;
 
         public String getAddr1() {
             return addr1;
@@ -153,11 +153,11 @@ public class TourListRepo {
             this.addr2 = addr2;
         }
 
-        public int getAreacode() {
+        public String getAreacode() {
             return areacode;
         }
 
-        public void setAreacode(int areacode) {
+        public void setAreacode(String areacode) {
             this.areacode = areacode;
         }
 
@@ -185,19 +185,19 @@ public class TourListRepo {
             this.cat3 = cat3;
         }
 
-        public int getContentid() {
+        public String getContentid() {
             return contentid;
         }
 
-        public void setContentid(int contentid) {
+        public void setContentid(String contentid) {
             this.contentid = contentid;
         }
 
-        public int getContenttypeid() {
+        public String getContenttypeid() {
             return contenttypeid;
         }
 
-        public void setContenttypeid(int contenttypeid) {
+        public void setContenttypeid(String contenttypeid) {
             this.contenttypeid = contenttypeid;
         }
 
@@ -241,11 +241,11 @@ public class TourListRepo {
             this.mapy = mapy;
         }
 
-        public int getMlevel() {
+        public String getMlevel() {
             return mlevel;
         }
 
-        public void setMlevel(int mlevel) {
+        public void setMlevel(String mlevel) {
             this.mlevel = mlevel;
         }
 
@@ -257,19 +257,19 @@ public class TourListRepo {
             this.modifiedtime = modifiedtime;
         }
 
-        public int getReadcount() {
+        public String getReadcount() {
             return readcount;
         }
 
-        public void setReadcount(int readcount) {
+        public void setReadcount(String readcount) {
             this.readcount = readcount;
         }
 
-        public int getSigungucode() {
+        public String getSigungucode() {
             return sigungucode;
         }
 
-        public void setSigungucode(int sigungucode) {
+        public void setSigungucode(String sigungucode) {
             this.sigungucode = sigungucode;
         }
 
@@ -289,11 +289,11 @@ public class TourListRepo {
             this.title = title;
         }
 
-        public int getZipcode() {
+        public String getZipcode() {
             return zipcode;
         }
 
-        public void setZipcode(int zipcode) {
+        public void setZipcode(String zipcode) {
             this.zipcode = zipcode;
         }
     }

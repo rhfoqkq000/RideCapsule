@@ -46,35 +46,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FragmentTourist extends Fragment {
     @BindView(R.id.family_course)
     ImageView family_course;
-/*    @OnClick(R.id.family_course)
-    void clickFamaily() {
-        Intent Familyintent = new Intent(getActivity(), ActivityFamilyCourse.class);
-    }*/
 
     @BindView(R.id.walking_course)
     ImageView walking_course;
-    @OnClick(R.id.family_course)
-    void clickWalking() {}
 
     @BindView(R.id.alone_course)
     ImageView alone_course;
-    @OnClick(R.id.family_course)
-    void clickAlone() {}
 
     @BindView(R.id.camping_course)
     ImageView camping_course;
-    @OnClick(R.id.family_course)
-    void clickCamping() {}
 
     @BindView(R.id.healing_course)
     ImageView healing_course;
-    @OnClick(R.id.family_course)
-    void clickHealing() {}
 
     @BindView(R.id.taste_course)
     ImageView taste_course;
-    @OnClick(R.id.family_course)
-    void clickTaste() {}
 
     public FragmentTourist() {
 //        Required empty public constructor
@@ -93,9 +79,7 @@ public class FragmentTourist extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_tour_course, container, false);
-        Log.e("fragmenttourist", "ddddddd1");
         ButterKnife.bind(this, rootview);
-        Log.e("fragmenttourist", "ddddddd2");
         Picasso.with(getContext()).load(R.drawable.family_course).into(family_course);
         Picasso.with(getContext()).load(R.drawable.walking_course).into(walking_course);
         Picasso.with(getContext()).load(R.drawable.alone_course).into(alone_course);
@@ -106,7 +90,6 @@ public class FragmentTourist extends Fragment {
         family_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("imageView", "버튼");
                 Intent familyintent = new Intent(getActivity(), ActivityFamilyCourse.class);
                 startActivity(familyintent);
             }
@@ -114,7 +97,6 @@ public class FragmentTourist extends Fragment {
         walking_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("imageView", "버튼");
                 Intent walkingintent = new Intent(getActivity(), ActivityWakingCourse.class);
                 startActivity(walkingintent);
             }
@@ -122,7 +104,6 @@ public class FragmentTourist extends Fragment {
         alone_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("imageView", "버튼");
                 Intent aloneintent = new Intent(getActivity(), ActivityAloneCourse.class);
                 startActivity(aloneintent);
             }
@@ -130,7 +111,6 @@ public class FragmentTourist extends Fragment {
         healing_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("imageView", "버튼");
                 Intent healingintent = new Intent(getActivity(), ActivityHealingCourse.class);
                 startActivity(healingintent);
             }
@@ -138,7 +118,6 @@ public class FragmentTourist extends Fragment {
         taste_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("imageView", "버튼");
                 Intent tasteintent = new Intent(getActivity(), ActivityTasteCourse.class);
                 startActivity(tasteintent);
             }
@@ -146,7 +125,6 @@ public class FragmentTourist extends Fragment {
         camping_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("imageView", "버튼");
                 Intent campingintent = new Intent(getActivity(), ActivityCampingCourse.class);
                 startActivity(campingintent);
             }

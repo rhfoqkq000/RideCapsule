@@ -1,13 +1,17 @@
 package com.example.horse.travel.tourist;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.horse.travel.R;
+import com.example.horse.travel.tourist.detailPage.DetailActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,7 +52,13 @@ public class ActivityCampingCourse extends AppCompatActivity {
         singleton.tourRetrofit(adapter,"C0116");
 
 
-
+        adapter.setItemClick(new TourRecyclerAdapter.ItemClick() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent detailintent = new Intent(ActivityCampingCourse.this, DetailActivity.class);
+                startActivity(detailintent);
+            }
+        });
 
 
     }
