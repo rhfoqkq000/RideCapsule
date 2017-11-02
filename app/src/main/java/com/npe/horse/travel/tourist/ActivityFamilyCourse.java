@@ -1,6 +1,7 @@
 package com.npe.horse.travel.tourist;
 
 import android.content.Intent;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,8 +22,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,6 +43,14 @@ public class ActivityFamilyCourse extends AppCompatActivity {
     @BindView(R.id.course_family_img)
     ImageView course_family_img;
 
+
+    private ProgressDialog mProgressDialog;
+    @BindView(R.id.weather_sky)
+    TextView weather_sky;
+    @BindView(R.id.weather_tem)
+    TextView weather_tem;
+    @BindView(R.id.weather_img)
+    ImageView weatherImg;
 
     static TourRecyclerAdapter adapter;
 
@@ -98,19 +105,12 @@ public class ActivityFamilyCourse extends AppCompatActivity {
             }
         });
     }
-
-
-
-
-
-
-
-
-    }
+}
 
 /*
 
     public void tourRetrofit() {
+        showProgressDialog();
         Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         TourListRepo.TourListAppInterface tourService = client.create(TourListRepo.TourListAppInterface.class);
@@ -135,6 +135,7 @@ public class ActivityFamilyCourse extends AppCompatActivity {
 //                }
                 adapter.addNew(itemList);
                 Log.d("ActivityFamilyCourse", itemList.toString());
+                hideProgressDialog();
 
 //                final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//아니면 액티비티이름.this
 //                layoutManager.setItemPrefetchEnabled(true);
@@ -149,10 +150,27 @@ public class ActivityFamilyCourse extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<TourListRepo> call, Throwable t) {
+                hideProgressDialog();
                 t.printStackTrace();
             }
         });
     }
+    
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage("로딩 중입니다.");
+            mProgressDialog.setIndeterminate(true);
+        }
 
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+            mProgressDialog.dismiss();
+        }
+        }
     }*/
 
