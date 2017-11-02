@@ -335,7 +335,6 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         ImageView reply;
         TextView sns_updated_at;
         CircleImageView profile_image;
-
         //        ImageView main_img;
 //        CustomPager viewPager;
 //        DotsIndicator indicator;

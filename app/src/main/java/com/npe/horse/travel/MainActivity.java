@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     Fragment active;
     private MainActivity.SessionCallback callback;
-  
+ 
     Fragment fragmentTourist = FragmentTourist.newInstance(1);
     //Fragment fragmentSamplee = FragmentSample.newInstance(2);
     Fragment fragmentSns = FragmentSns.newInstance(2);
@@ -195,7 +195,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.beginTransaction().show(fragmentTourist).commit();
         active = fragmentTourist;
     }
-
     private void requestMe() {
         UserManagement.requestMe(new MeResponseCallback() {
             @Override

@@ -42,7 +42,6 @@ public class ActivityLocationSelect extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         // 이용자의 지역을 입력 / 검색하는 액티비티임
         // 반드시 지역명과 상세주소가 입력되어야 ActivitySnsWrite로 이동할 수 있음
         // 지역명 상세주소 입력 후 추가 누르면 DB에 저장됨
@@ -125,7 +124,7 @@ public class ActivityLocationSelect extends AppCompatActivity {
     @OnClick(R.id.search_loc_btn)
     void searchLocation(){
         InterfaceSnsLocationSearch location = new Retrofit.Builder()
-                .baseUrl("http://168.115.226.218:5000/")
+                .baseUrl("http://168.115.225.120:5000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(InterfaceSnsLocationSearch.class);
         Call<SnsLocationDTO> call = location.searchLocation(location_search_et.getText().toString());

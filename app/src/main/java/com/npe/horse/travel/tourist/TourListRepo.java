@@ -77,6 +77,7 @@ public class TourListRepo {
         public void setItems(Items items) {
             this.items = items;
         }
+      
         public String getNumOfRows() {
             return numOfRows;
         }
@@ -128,7 +129,6 @@ public class TourListRepo {
         private String firstimage2;
         private Double mapx;
         private Double mapy;
-
         private String mlevel;
         private long modifiedtime;
         private String readcount;
@@ -136,7 +136,6 @@ public class TourListRepo {
         private String tel;
         private String title;
         private String zipcode;
-
         public String getAddr1() {
             return addr1;
         }
@@ -238,7 +237,6 @@ public class TourListRepo {
         public void setMapy(Double mapy) {
             this.mapy = mapy;
         }
-
         public String getMlevel() {
             return mlevel;
         }
@@ -254,7 +252,6 @@ public class TourListRepo {
         public void setModifiedtime(long modifiedtime) {
             this.modifiedtime = modifiedtime;
         }
-
         public String getReadcount() {
             return readcount;
         }
