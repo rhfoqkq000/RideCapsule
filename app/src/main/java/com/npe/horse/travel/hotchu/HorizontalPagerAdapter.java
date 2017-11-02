@@ -49,9 +49,9 @@ public class HorizontalPagerAdapter extends PagerAdapter {
         final View view;
 
         if(position==0){
-            // 첫번째에는 목록 나열
+          // 첫번째에는 목록 나열
             view = mLayoutInflater.inflate(R.layout.hot_item_index, container, false);
-            setupList(view, items);
+            setupList(view, items);   
         }else{
             // 두번째부터 마지막까지 뉴스
             view = mLayoutInflater.inflate(R.layout.hot_item, container, false);

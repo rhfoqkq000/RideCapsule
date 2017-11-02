@@ -137,7 +137,6 @@ public class FragmentTourist extends Fragment {
             }
         });
 
-
         return rootview;
     }
 

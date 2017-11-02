@@ -40,6 +40,7 @@ public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapte
 
     @Override
     public void onBindViewHolder(TourRecyclerAdapter.ViewHolder holder, int position) {
+
         final int Position = position;
         TourListRepo.Item item = items.get(position);
 
@@ -83,7 +84,6 @@ public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapte
         TextView family_title ;
         TextView family_readcount;
         ImageView family_img;
-
         public ViewHolder(View itemView) {
             super(itemView);
             family_title = itemView.findViewById(R.id.family_title);

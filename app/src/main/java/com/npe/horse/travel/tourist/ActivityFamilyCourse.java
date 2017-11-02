@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.TextView;
+import com.npe.horse.travel.R;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -50,6 +53,21 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_course);
         ButterKnife.bind(this);
+        familyTest.setText("성공");
+        family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        adapter = new TourRecyclerAdapter();
+        family_re.setAdapter(adapter);
+        tourRetrofit();
+
+
+
+    }
+
+
+
+
+
+
 
         family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         adapter = new TourRecyclerAdapter();
@@ -104,6 +122,7 @@ public class ActivityFamilyCourse extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
 
     }*/
 }

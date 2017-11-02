@@ -39,6 +39,7 @@ import com.npe.horse.travel.sns.list.SnsListDTO;
 import com.npe.horse.travel.sns.list.SnsListItem;
 import com.npe.horse.travel.sns.list.SnsRecyclerAdapter;
 import com.npe.horse.travel.sns.write.ActivityImageSelect;
+import java.util.ArrayList;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.MeResponseCallback;
@@ -117,8 +118,6 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         final View rootview = inflater.inflate(R.layout.fragment_sns, container, false);
 
         ButterKnife.bind(this, rootview);
-
-
         // 해시태그, 닉네임, 지역 받아오기
         InterfaceSnsHashtag hashtag = ApiClient.getClient().create(InterfaceSnsHashtag.class);
         Call<SnsHashtagDTO> call = hashtag.getHashtag();
@@ -176,7 +175,6 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         snsRe.setAdapter(adapter);
 
         requestMe();
-//        getSnsList(init_page);
 
         writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,7 +201,6 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
 
     void getSnsList(int page){
         InterfaceSnsList list = ApiClient.getClient().create(InterfaceSnsList.class);
-        Log.e("FragmentSns", String.valueOf(KakaoSingleton.getInstance().getId()));
         Call<SnsListDTO> call = list.listSns(KakaoSingleton.getInstance().getId(), page);
         call.enqueue(new Callback<SnsListDTO>() {
             @Override
