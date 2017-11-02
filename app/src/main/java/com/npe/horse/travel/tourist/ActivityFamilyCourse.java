@@ -33,10 +33,8 @@ public class ActivityFamilyCourse extends AppCompatActivity {
     @BindView(R.id.family_re)
     RecyclerView family_re;
 
-    TourRecyclerAdapter adapter;
-<<<<<<< HEAD
+
     private ProgressDialog mProgressDialog;
-=======
     @BindView(R.id.weather_sky)
     TextView weather_sky;
     @BindView(R.id.weather_tem)
@@ -49,7 +47,6 @@ public class ActivityFamilyCourse extends AppCompatActivity {
     static TourRecyclerAdapter adapter;
 
     RetrofitSingleton singleton = RetrofitSingleton.getInstance();
->>>>>>> b0bb657f5bb58c03b29f6ea2647a77c3c89703a5
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +109,6 @@ public class ActivityFamilyCourse extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
-<<<<<<< HEAD
     }
 
     private void showProgressDialog() {
@@ -132,8 +128,6 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         }
     }
 }
-=======
 
     }*/
 }
->>>>>>> b0bb657f5bb58c03b29f6ea2647a77c3c89703a5
