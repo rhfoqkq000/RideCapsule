@@ -192,6 +192,9 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         }
         holder.sns_good.setText(String.valueOf(item.getLike_count()));
 
+        Log.e("SnsRecyclerAdapter", item.getLike_user());
+        Log.e("SnsRecyclerAdapter", item.getNickname());
+
         if (item.getLike_user().equals("none")){
             holder.like_users.setVisibility(View.GONE);
         } else if (item.getLike_user().equals(item.getNickname())){
