@@ -1,124 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/listview_sns_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants"
     android:focusable="false"
     android:focusableInTouchMode="false"
-    android:id="@+id/listview_sns_layout"
-    android:descendantFocusability="blocksDescendants">
-
+    android:gravity="center_vertical"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profile_image"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="15dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             android:src="@drawable/profile"
-            app:civ_border_width="2dp"
-            app:civ_border_color="#fff"/>
-
-        <!--<ImageView-->
-            <!--android:id="@+id/profile_image"-->
-            <!--android:layout_width="35dp"-->
-            <!--android:layout_height="35dp" />-->
-
-        <!--<ImageView-->
-        <!--android:layout_width="50dp"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:layout_marginRight="5dp"-->
-        <!--/>-->
+            app:civ_border_color="#fff"
+            app:civ_border_width="2dp" />
 
         <TextView
             android:id="@+id/user_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="5dp"
-            />
-
-        <!--<TextView-->
-            <!--android:id="@+id/sns_location"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center_vertical"-->
-            <!--android:gravity="end"-->
-            <!--android:textSize="15sp"-->
-            <!--android:layout_marginEnd="15dp"/>-->
+            android:layout_marginEnd="5dp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginStart="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/location"
-            android:layout_gravity="center_vertical"/>
+            android:src="@drawable/location" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginStart="5dp">
+            android:layout_marginStart="5dp"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/sns_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:textSize="15sp"
-                />
+                android:textSize="15sp" />
+
             <TextView
                 android:id="@+id/sns_location_full"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:textSize="12sp"
-                android:textStyle="italic"
                 android:textColor="#8F8F8F"
-                />
+                android:textSize="12sp"
+                android:textStyle="italic" />
         </LinearLayout>
 
     </LinearLayout>
 
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
             android:id="@+id/img_re"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:rvp_triggerOffset="0.1"
-            app:rvp_singlePageFling="true"
-            android:focusableInTouchMode="true"
+            android:clipToPadding="false"
             android:descendantFocusability="blocksDescendants"
-            android:clipToPadding="false"/>
-        <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/img_re"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:focusableInTouchMode="true"-->
-            <!--android:descendantFocusability="blocksDescendants"-->
-            <!--app:layoutManager="android.support.v7.widget.LinearLayoutManager" />-->
+            android:focusableInTouchMode="true"
+            app:rvp_singlePageFling="true"
+            app:rvp_triggerOffset="0.1" />
         <TextView
             android:id="@+id/imgs_count"
             android:layout_width="wrap_content"
@@ -129,82 +98,50 @@
             android:layout_marginTop="9dp"
             android:background="@drawable/rounded_corner"
             android:gravity="center"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:paddingTop="3dp"
             android:paddingBottom="3dp"
-            android:textSize="13sp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="3dp"
             android:textColor="#fff"
-            android:visibility="gone"/>
+            android:textSize="13sp"
+            android:visibility="gone" />
     </RelativeLayout>
 
-
     <LinearLayout
+        android:id="@+id/ims_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ims_layout"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal">
-        <!--<ImageView-->
-            <!--android:layout_width="10dp"-->
-            <!--android:layout_height="10dp"-->
-            <!--android:src="@drawable/tab_indicator_selected" />-->
+        android:layout_marginTop="5dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
     </LinearLayout>
-    <!--<com.example.horse.travel.sns.list.CustomPager-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="5dp"-->
-        <!--android:layout_marginBottom="5dp"-->
-        <!--android:id="@+id/viewPager" />-->
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center_horizontal">-->
-
-        <!--<com.tbuonomo.viewpagerdotsindicator.DotsIndicator-->
-            <!--android:id="@+id/dots_indicator"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--app:dotsColor="#000000"-->
-            <!--app:dotsSize="8dp"-->
-            <!--app:dotsWidthFactor="2" />-->
-
-    <!--</LinearLayout>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="20dp"
                 android:id="@+id/love"
-                android:src="@drawable/normal"/>
-            <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="15dp"
+                android:src="@drawable/normal" />
+
+            <ImageView
                 android:id="@+id/reply"
-                android:src="@drawable/chat"/>
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/chat" />
 
         </LinearLayout>
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content">-->
-            <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginStart="15dp"-->
-                <!--android:layout_marginTop="5dp"-->
-                <!--android:id="@+id/like_users" />-->
-        <!--</LinearLayout>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -212,50 +149,54 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/love"
                 android:id="@+id/good"
-                android:text="@string/sns_like_title"/>
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="15dp"
+                android:text="@string/sns_like_title"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/love" />
+
+            <TextView
                 android:id="@+id/sns_good"
-                app:layout_constraintRight_toRightOf="@+id/good"
-                />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                app:layout_constraintRight_toRightOf="@+id/good" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sns_like_count" />
+                android:text="@string/sns_like_count"
+                android:textStyle="bold" />
         </LinearLayout>
 
 
         <TextView
+            android:id="@+id/sns_con"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/sns_con"
+            android:layout_marginBottom="15dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="15dp"
-            />
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/comment_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
-            />
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/sns_updated_at"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:layout_marginBottom="10dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="3dp"
-            android:layout_marginBottom="10dp"
-            />
+            android:textSize="10sp" />
     </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.npe.horse.travel.capsule;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -17,11 +19,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.npe.horse.travel.ApiClient;
 import com.npe.horse.travel.R;
 import com.npe.horse.travel.capsule.retrofit.InterfaceCapsule;
 import com.npe.horse.travel.capsule.retrofit.CapsuleDTO;
+import com.npe.horse.travel.kakao.KakaoSingleton;
 import com.sangcomz.fishbun.FishBun;
 import com.sangcomz.fishbun.define.Define;
 
@@ -39,6 +43,8 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by horse on 2017. 10. 16..
@@ -52,6 +58,8 @@ public class ActivityCapsuleContent extends AppCompatActivity {
     private ArrayList<File> imgFileArr;
     private ArrayList<RequestBody> emailArr;
     private ArrayList<EditText> editTextArr;
+    private RequestBody requestBodyCapsuleDate;
+    private MultipartBody.Part[] imagesParts;
     private int count = 0;
 
     @BindView(R.id.capsule_img_bt)
@@ -85,7 +93,7 @@ public class ActivityCapsuleContent extends AppCompatActivity {
     @BindView(R.id.together_mail5)
     EditText together_mail5;
 
-//    이미지 선택 버튼
+    //    이미지 선택 버튼
     @OnClick(R.id.capsule_img_bt)
     void img_select() {
         FishBun.with(ActivityCapsuleContent.this)
@@ -106,7 +114,7 @@ public class ActivityCapsuleContent extends AppCompatActivity {
                 .startAlbum();
     }
 
-    @OnClick(R.id. add_mail_bt1)
+    @OnClick(R.id.add_mail_bt1)
     void add_mail_bt1() {
         add_mail_bt1.setVisibility(View.GONE);
         together_mail1.setVisibility(View.VISIBLE);
@@ -114,7 +122,7 @@ public class ActivityCapsuleContent extends AppCompatActivity {
         count += 1;
     }
 
-    @OnClick(R.id. add_mail_bt2)
+    @OnClick(R.id.add_mail_bt2)
     void add_mail_bt2() {
         add_mail_bt2.setVisibility(View.GONE);
         together_mail2.setVisibility(View.VISIBLE);
@@ -122,7 +130,7 @@ public class ActivityCapsuleContent extends AppCompatActivity {
         count += 1;
     }
 
-    @OnClick(R.id. add_mail_bt3)
+    @OnClick(R.id.add_mail_bt3)
     void add_mail_bt3() {
         add_mail_bt3.setVisibility(View.GONE);
         together_mail3.setVisibility(View.VISIBLE);
@@ -130,24 +138,24 @@ public class ActivityCapsuleContent extends AppCompatActivity {
         count += 1;
     }
 
-    @OnClick(R.id. add_mail_bt4)
+    @OnClick(R.id.add_mail_bt4)
     void add_mail_bt4() {
         add_mail_bt4.setVisibility(View.GONE);
         together_mail4.setVisibility(View.VISIBLE);
         add_mail_bt5.setVisibility(View.VISIBLE);
         count += 1;
     }
-
-    @OnClick(R.id. add_mail_bt5)
+    @OnClick(R.id.add_mail_bt5)
     void add_mail_bt5() {
         add_mail_bt5.setVisibility(View.GONE);
         together_mail5.setVisibility(View.VISIBLE);
         count += 1;
     }
 
+
     //    전송받길 원하는 날짜 선택
     @OnClick(R.id.capsule_date)
-    void dateClick(){
+    void dateClick() {
         Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR);
         int mMonth = c.get(Calendar.MONTH);
@@ -165,22 +173,58 @@ public class ActivityCapsuleContent extends AppCompatActivity {
 
     //    보내기 버튼 클릭
     @OnClick(R.id.capsule_send)
-    void sendClick(){
-        //        eidttext내용 저장
-        requestBodyCapsuleContent = RequestBody.create(MediaType.parse("text/plain"), capsule_edit.getText().toString());
+    void sendClick() {
 
         emailArr = new ArrayList<>();
-        for(int i = 0; i<count; i++){
-            if (editTextArr.get(i).getText().toString().replace(" ", "").equals("")) {
-                break;
-            }else{
-                RequestBody requestBodyEmail = RequestBody.create(MediaType.parse("text/plain"), editTextArr.get(i).getText().toString());
-                emailArr.add(requestBodyEmail);
-            }
-        }
-        Log.i("=======**",""+emailArr.get(0));
 
-        getJson();
+        try {
+            if (capsule_viewPager.getAdapter() == null ||
+                    capsule_edit.getText().toString().replace(" ", "").equals("") ||
+                    together_mail1.getText().toString().replace(" ", "").equals("") ||
+                    capsule_date.getText().equals("추억 받을 날짜 선택")) {
+                Log.d("SEND", "NOT PASS");
+                Toast.makeText(getApplicationContext(), "내용을 입력해주세요.", Toast.LENGTH_LONG).show();
+            } else {
+                Log.d("SEND", "PASS");
+            //        eidttext내용 저장
+            requestBodyCapsuleContent = RequestBody.create(MediaType.parse("text/plain"), capsule_edit.getText().toString());
+//            이메일저장
+            for (int i = 0; i < count; i++) {
+                if (editTextArr.get(i).getText().toString().replace(" ", "").equals("")) {
+                    break;
+                } else {
+                    RequestBody requestBodyEmail = RequestBody.create(MediaType.parse("text/plain"), editTextArr.get(i).getText().toString());
+                    emailArr.add(requestBodyEmail);
+                }
+            }
+//            이미지저장
+            imagesParts = new MultipartBody.Part[imgFileArr.size()];
+
+            for (int i = 0; i < imgFileArr.size(); i++) {
+                File file = imgFileArr.get(i);
+                RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+                imagesParts[i] = MultipartBody.Part.createFormData("imagefile", file.getName(), requestBody);
+            }
+//            날짜저장
+            requestBodyCapsuleDate = RequestBody.create(MediaType.parse("text/plain"), capsule_date.getText().toString());
+            getJson(requestBodyCapsuleContent, requestBodyCapsuleDate, imagesParts,emailArr);
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert.setTitle("추억 저장");
+
+                alert.setMessage("에러가 발생 하였습니다.");
+
+                alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+                alert.show();
+            }
+        }catch (Exception e){
+            Log.e("SEND",e.getMessage());
+        }
     }
 
     @Override
@@ -194,10 +238,10 @@ public class ActivityCapsuleContent extends AppCompatActivity {
                     Log.e("============", path.get(0).toString());
                     imgFileArr = new ArrayList<>();
                     SingletonCapsule.getInstance().setLength(path.size());
-                    for(int i = 0; i < path.size(); i++){
+                    for (int i = 0; i < path.size(); i++) {
                         try {
 //                            images에 갤러리 사진 url넣기
-                            SingletonCapsule.getInstance().setUri(path);
+//                            SingletonCapsule.getInstance().setUri(path);
 //                            Log.d("================", ""+images[0]);
                             File file = new File(getPath(path.get(i)));
 //                            compressor = 이미지 용량 줄여줌 화질이나 사이즈 변화가 얼마나 있는지는 아직 확인안함
@@ -209,19 +253,19 @@ public class ActivityCapsuleContent extends AppCompatActivity {
                         }
                     }
 
-                    ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
+                    ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this,path);
                     capsule_viewPager.setAdapter(viewPagerAdapter);
 
                     dotsCount = viewPagerAdapter.getCount();
                     dots = new ImageView[dotsCount];
 
-                    for(int i = 0; i<dotsCount; i++){
+                    for (int i = 0; i < dotsCount; i++) {
                         dots[i] = new ImageView(this);
                         dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot));
 
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-                        params.setMargins(8,0,8,0);
+                        params.setMargins(8, 0, 8, 0);
                         sliderDotsPanel.addView(dots[i], params);
                     }
 
@@ -234,7 +278,7 @@ public class ActivityCapsuleContent extends AppCompatActivity {
 
                         @Override
                         public void onPageSelected(int position) {
-                            for(int i=0; i<dotsCount; i++){
+                            for (int i = 0; i < dotsCount; i++) {
                                 dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot));
                             }
                             dots[position].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
@@ -257,19 +301,19 @@ public class ActivityCapsuleContent extends AppCompatActivity {
     public String getPath(Uri uri) {
         Cursor cursor = null;
         try {
-            if( uri == null ) {
+            if (uri == null) {
                 return null;
             }
-            String[] projection = { MediaStore.Images.Media.DATA };
+            String[] projection = {MediaStore.Images.Media.DATA};
             cursor = getContentResolver().query(uri, projection, null, null, null);
-            if( cursor != null ){
+            if (cursor != null) {
                 int column_index = cursor
                         .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
                 cursor.moveToFirst();
                 return cursor.getString(column_index);
             }
-        } catch (Exception e){
-            Log.e("GET_PATH",e.getMessage());
+        } catch (Exception e) {
+            Log.e("GET_PATH", e.getMessage());
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -292,25 +336,18 @@ public class ActivityCapsuleContent extends AppCompatActivity {
         editTextArr.add(together_mail5);
     }
 
-    void getJson() {
+    void getJson(RequestBody requestBodyCapsuleContent, RequestBody requestBodyCapsuleDate, MultipartBody.Part[] imagesParts, ArrayList<RequestBody> emailArr) {
         InterfaceCapsule uploadImage = ApiClient.getClient().create(InterfaceCapsule.class);
-        MultipartBody.Part[] imagesParts = new MultipartBody.Part[imgFileArr.size()];
 
-        int user_id = 9;
+        int user_id = KakaoSingleton.getInstance().getId();
 
-        for (int i = 0; i < imgFileArr.size(); i++) {
-            File file = imgFileArr.get(i);
-            RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
-            imagesParts[i] = MultipartBody.Part.createFormData("imagefile", file.getName(), requestBody);
-        }
 
-        RequestBody requestBodyCapsuleDate = RequestBody.create(MediaType.parse("text/plain"), capsule_date.getText().toString());
-
-        Call<CapsuleDTO> call = uploadImage.capsule(requestBodyCapsuleContent, requestBodyCapsuleDate, user_id,imagesParts,emailArr);
+        Call<CapsuleDTO> call = uploadImage.capsule(requestBodyCapsuleContent, requestBodyCapsuleDate, user_id, imagesParts, emailArr);
         call.enqueue(new Callback<CapsuleDTO>() {
             @Override
             public void onResponse(Call<CapsuleDTO> call, Response<CapsuleDTO> response) {
-                Log.e("IMAGE UPLOAD", "Capsule Success!!"+response.body().getResult_code());
+                Log.e("IMAGE UPLOAD", "Capsule Success!!" + response.body().getResult_code());
+                finish();
             }
 
             @Override

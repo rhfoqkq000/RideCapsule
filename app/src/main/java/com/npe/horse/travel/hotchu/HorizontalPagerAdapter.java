@@ -2,6 +2,7 @@ package com.npe.horse.travel.hotchu;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,12 @@ public class HorizontalPagerAdapter extends PagerAdapter {
             // 두번째부터 마지막까지 뉴스
             view = mLayoutInflater.inflate(R.layout.hot_item, container, false);
             setupItem(view, items.get(position-1),position);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("ONCLCNK",items.get(position-1).getContent());
+                }
+            });
         }
 
 

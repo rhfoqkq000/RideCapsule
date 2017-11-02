@@ -21,6 +21,13 @@
             android:text="이미지를 선택하세요."
             android:textSize="13sp"
             android:visibility="visible" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="첫 번째 사진이 메인입니다"
+            android:textSize="9sp"
+            android:textColor="#8D8D8D"
+            android:layout_marginTop="5dp"/>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/capsule_viewPager"
@@ -183,7 +190,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginLeft="5dp"
-                    android:hint="함께 받을 메일을 적으세요."
+                    android:hint="추억을 받을 메일을 적으세요."
                     android:inputType="text"
                     android:padding="10dp"
                     android:textSize="13sp"
@@ -196,7 +203,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@color/colorAccent"
-                android:text="캡슐 받을 날짜 선택"
+                android:text="추억 받을 날짜 선택"
                 android:textColor="#fff"
                 android:textSize="13sp" />
 

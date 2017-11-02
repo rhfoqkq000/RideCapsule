@@ -58,7 +58,9 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary" />
-
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         <com.npe.horse.travel.SearchViewCustom
             android:id="@+id/search_view"
             android:layout_width="match_parent"
