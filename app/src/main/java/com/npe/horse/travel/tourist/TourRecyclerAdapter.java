@@ -49,7 +49,7 @@ public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapte
         holder.family_readcount.setText(item.getReadcount());
         Picasso.with(holder.itemView.getContext()).load(item.getFirstimage()).into(holder.family_img);
 
-        holder.family_img.setOnClickListener(new View.OnClickListener(){
+        holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 if(itemClick != null){

@@ -56,7 +56,7 @@ public class RetrofitSingleton extends AppCompatActivity {
     private static final String TYPE = "json";
 
 
-    AreaData areaData = new AreaData();
+    static AreaData areaData = AreaData.getInstance();
     String[] region = areaData.getSeoUl(); //초기값 서울
 
 
@@ -97,10 +97,10 @@ public class RetrofitSingleton extends AppCompatActivity {
         TourListRepo.TourListAppInterface tourService = client.create(TourListRepo.TourListAppInterface.class);
 
         Call<TourListRepo> call = tourService.get_tour_retrofit
-                ("3", "1", "AND",
+                ("10", "1", "AND",
                         "TourList",
                         "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==",
-                        "Y", "P", "25", "1", "C01",cat2,"json");
+                        "Y", "P", "25", areaData.getareaCode(), "C01",cat2,"json");
         call.enqueue(new Callback<TourListRepo>() {
             @Override
             public void onResponse(Call<TourListRepo> call, Response<TourListRepo> response) {
@@ -125,38 +125,8 @@ public class RetrofitSingleton extends AppCompatActivity {
     }
 
     public static Call<SubCourseRepo> subcourseRetrofit(){
-//        Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
-//                .addConverterFactory(GsonConverterFactory.create()).build();
-//        SubCourseRepo.SubCourseAppInterface subCourseAppInterface = client.create(SubCourseRepo.SubCourseAppInterface.class);
         SubCourseRepo.SubCourseAppInterface retrofit = ApiClient.getPublicClient().create(SubCourseRepo.SubCourseAppInterface.class);
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("http://api.visitkorea.or.kr/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                  .build();
-//        SubCourseRepo.SubCourseAppInterface subCourseAppInterface = retrofit.create(SubCourseRepo.SubCourseAppInterface.class);
         return retrofit.get_subcourse_retrofit(UrlSingleton.getInstance().serviceKey(),NUMOFROW,PAGE_NO,OS,APPNAME, TourContentSingleton.getInstance().getContent_id(),CONTENTTYPEID,DETAILYN,TYPE);
-//        call.enqueue(new Callback<SubCourseRepo>() {
-//            @Override
-//            public void onResponse(Call<SubCourseRepo> call, Response<SubCourseRepo> response) {
-//                Log.d("URL_BTN",response.raw().request().url().toString());
-//                //Toast.makeText(getContext(), "?????", Toast.LENGTH_SHORT).show();
-///*                if ( getArguments().getInt("position") == 0 ){
-//                    overviewRetrofit();
-//                } else {*/
-//                subCourse = response.body();
-//                //setDetail_title_sub(response.body().getResponse().getBody().getItems().getItem()[getArguments().getInt("position")].getSubname());
-//                 //detail_title.setText(response.body().getResponse().getBody().getItems().getItem()[getArguments().getInt("position")].getSubname());
-//                 //Picasso.with(getContext()).load(response.body().getResponse().getBody().getItems().getItem()[getArguments().getInt("position")].getSubdetailimg()).into(detail_img);
-//                 //etail_content.setText(response.body().getResponse().getBody().getItems().getItem()[getArguments().getInt("position")].getSubdetailoverview());
-//                //}
-//            }
-//
-//            @Override
-//            public void onFailure(Call<SubCourseRepo> call, Throwable t) {
-//                Log.d("URL_BTN",t.getMessage());
-//
-//            }
-//        });
     }
 
 

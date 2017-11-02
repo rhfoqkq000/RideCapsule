@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.npe.horse.travel.R;
 import com.npe.horse.travel.tourist.detailPage.DetailActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -37,12 +38,9 @@ public class ActivityFamilyCourse extends AppCompatActivity {
     @BindView(R.id.family_re)
     RecyclerView family_re;
     private ProgressDialog mProgressDialog;
-    @BindView(R.id.weather_sky)
-    TextView weather_sky;
-    @BindView(R.id.weather_tem)
-    TextView weather_tem;
-    @BindView(R.id.weather_img)
-    ImageView weatherImg;
+
+    @BindView(R.id.course_family_img)
+    ImageView course_family_img;
   
     static TourRecyclerAdapter adapter;
 
@@ -52,6 +50,8 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_course);
         ButterKnife.bind(this);
+        Picasso.with(getApplicationContext()).load(R.drawable.course_family_img).into(course_family_img);
+
         family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         adapter = new TourRecyclerAdapter();
         family_re.setAdapter(adapter);

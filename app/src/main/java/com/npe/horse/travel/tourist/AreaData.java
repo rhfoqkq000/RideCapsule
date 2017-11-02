@@ -1,10 +1,27 @@
 package com.npe.horse.travel.tourist;
 
+import com.npe.horse.travel.UrlSingleton;
+
 /**
  * Created by ekekd on 2017-10-22.
  */
 
 public class AreaData {
+
+    private AreaData () {}
+    private static class Singleton {
+        private static final AreaData instance = new AreaData();
+    }
+
+    public static AreaData getInstance () {
+        return AreaData.Singleton.instance;
+    }
+
+   /* public String getSERVER_URL(){
+        return "http://dongaboomin.xyz:20090/";
+    }*/
+
+
     //위도, 경도
     int version = 1;
     String lat = "37.540705";
@@ -56,7 +73,10 @@ public class AreaData {
     String areaCode = "1";
     String sigunguCode;
     String sigunguName = "선택없음";
-    String[][] sigunguCodes;
+
+    public String getareaCode(){
+        return areaCode;
+    }
 
     public void setAreaCode(String areaCode) {
         this.areaCode = areaCode;
@@ -76,13 +96,6 @@ public class AreaData {
     public String getSigunguName() { return sigunguName;}
     public void setSigunguName(String sigunguName) {this.sigunguName = sigunguName;}
 
-    public String[][] getSigunguCodes() {
-        return sigunguCodes;
-    }
-
-    public void setSigunguCodes(String[][] sigunguCodes) {
-        this.sigunguCodes = sigunguCodes;
-    }
 
     public String[] getCitys() {
         return citys;
