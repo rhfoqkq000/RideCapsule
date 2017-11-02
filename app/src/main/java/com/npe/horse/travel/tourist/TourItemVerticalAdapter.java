@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.npe.horse.travel.R;
 import com.npe.horse.travel.UrlSingleton;
 
@@ -49,7 +50,7 @@ public class TourItemVerticalAdapter extends RecyclerView.Adapter<TourItemVertic
 //        Log.d("TEXT",item.getTitle());
 //        holder.title.setText(item.getTitle());
 //        holder.content.setText(item.getContent());
-        TourImageRecyclerAdapter adapter = new TourImageRecyclerAdapter(context);
+        TourImageRecyclerAdapter adapter = new TourImageRecyclerAdapter(context, Glide.with(context));
         adapter.addNew(tourListItems);
         holder.textView.setText(arrTitle.get(position));
         holder.recyclerView.setAdapter(adapter);

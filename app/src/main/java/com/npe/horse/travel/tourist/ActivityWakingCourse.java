@@ -9,8 +9,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.npe.horse.travel.R;
 import com.npe.horse.travel.tourist.detailPage.DetailActivity;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +29,8 @@ public class ActivityWakingCourse extends AppCompatActivity {
     @BindView(R.id.family_re)
     RecyclerView family_re;
 
+    @BindView(R.id.course_walking_img)
+    ImageView course_walking_img;
 
 
     static TourRecyclerAdapter adapter;
@@ -38,8 +42,10 @@ public class ActivityWakingCourse extends AppCompatActivity {
         setContentView(R.layout.activity_walking_course);
         ButterKnife.bind(this);
 
+        Picasso.with(getApplicationContext()).load(R.drawable.course_walking_img).into(course_walking_img);
+
         family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        adapter = new TourRecyclerAdapter();
+        adapter = new TourRecyclerAdapter(Glide.with(getApplicationContext()));
         family_re.setAdapter(adapter);
 
         singleton.areaCodeRetrofit();

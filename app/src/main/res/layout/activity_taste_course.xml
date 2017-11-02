@@ -39,43 +39,10 @@
         </android.support.design.widget.AppBarLayout>
     </android.support.design.widget.CoordinatorLayout>
 
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp">
-        <Button
-            android:id="@+id/city"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:paddingEnd="10dp"
-            android:paddingStart="10dp"
-            android:text="서울특별시"
-            android:textColor="#fff" />
-
-        <TextView
-            android:id="@+id/weather_tem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp" />
-        <TextView
-            android:id="@+id/weather_sky"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp" />
-        <ImageView
-            android:id="@+id/weather_img"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:src="@drawable/weather38" />
-    </LinearLayout>
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/course_taste_img"
+        android:id="@+id/course_taste_img"
         android:adjustViewBounds="true"/>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
