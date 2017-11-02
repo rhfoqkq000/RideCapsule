@@ -91,6 +91,7 @@ public class SnsCommentActivity extends AppCompatActivity{
         String author = item.getNickname();
         Log.d("article",article);
 
+
         // 해시태그 설정
         HashTagHelper mTextHashTagHelper = HashTagHelper.Creator.create(getApplication().getResources().getColor(R.color.blue), new HashTagHelper.OnHashTagClickListener() {
                 @Override

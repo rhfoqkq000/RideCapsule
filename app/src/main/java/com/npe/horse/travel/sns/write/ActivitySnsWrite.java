@@ -50,7 +50,7 @@ public class ActivitySnsWrite extends AppCompatActivity {
         List<String> allHashTags = mTextHashTagHelper.getAllHashTags();
         Log.e("allHashTags", allHashTags.toString());
         InterfaceSnsWrite write = new Retrofit.Builder()
-                .baseUrl("http://168.115.225.120:5000/")
+                .baseUrl("http://168.115.226.218:5000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(InterfaceSnsWrite.class);
         RequestBody requestBodyPost = RequestBody.create(MediaType.parse("text/plain"), snsWriteText.getText().toString());
@@ -80,9 +80,7 @@ public class ActivitySnsWrite extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         // 글 작성하는 액티비티임 ㅅㄱ
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sns_write);
         ButterKnife.bind(this);

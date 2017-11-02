@@ -2,19 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.npe.horse.travel">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name="com.npe.horse.travel.kakao.GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.npe.horse.travel.SplashActivity"
             android:theme="@style/SplashTheme">
@@ -26,16 +27,36 @@
         </activity>
         <activity
             android:name="com.npe.horse.travel.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.npe.horse.travel.sns.write.ActivitySnsWrite" />
+        <activity
+            android:name="com.npe.horse.travel.capsule.ActivityCapsuleContent"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="com.npe.horse.travel.sns.write.ActivityImageSelect"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.npe.horse.travel.tourist.ActivityFamilyCourse"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.npe.horse.travel.sns.write.ActivityLocationSelect"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.npe.horse.travel.sns.comment.SnsCommentActivity" />
+        <activity android:name="com.npe.horse.travel.sns.write.ActivityImageFilter" />
+        <activity
+            android:name="com.npe.horse.travel.sns.hashtag.SnsHashTagActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.npe.horse.travel.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.npe.horse.travel.kakao.KakaoSignupActivity" />
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
             android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/app_name" />
-        <activity android:name="com.npe.horse.travel.sns.write.ActivitySnsWrite" />
-        <activity android:name="com.npe.horse.travel.capsule.ActivityCapsuleContent"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name="com.npe.horse.travel.sns.write.ActivityImageSelect"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.npe.horse.travel.tourist.ActivityFamilyCourse"
-            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="com.npe.horse.travel.tourist.ActivityWakingCourse"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="com.npe.horse.travel.tourist.ActivityAloneCourse"
@@ -55,4 +76,5 @@
             android:theme="@style/AppTheme.NoActionBar"
             />
     </application>
+
 </manifest>

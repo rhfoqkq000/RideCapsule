@@ -21,6 +21,8 @@ import com.npe.horse.travel.ApiClient;
 import com.npe.horse.travel.SearchViewCustom;
 import com.npe.horse.travel.EndlessRecyclerViewScrollListener;
 import com.npe.horse.travel.R;
+import com.npe.horse.travel.kakao.KakaoSingleton;
+
 import com.npe.horse.travel.sns.list.InterfaceSnsList;
 import com.npe.horse.travel.sns.list.SnsListDTO;
 import com.npe.horse.travel.sns.list.SnsListItem;
@@ -77,10 +79,8 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-
         // 해시태그, 유저 닉네임, 지역명으로 검색된 결과를 출력하는 액티비티임
         // FragmentSns와 거의 유사함.. 받아온 hashtag 값으로 SNS 목록 받아옴
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hashtag_result);
         ButterKnife.bind(this);
@@ -153,7 +153,7 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
 
     void getSnsList(String hashtag, int category, int page){
         InterfaceSnsList list = ApiClient.getClient().create(InterfaceSnsList.class);
-        Call<SnsListDTO> call = list.listSnsForHashTag(category, hashtag, page);
+        Call<SnsListDTO> call = list.listSnsForHashTag(KakaoSingleton.getInstance().getId(), category, hashtag, page);
         call.enqueue(new Callback<SnsListDTO>() {
             @Override
             public void onResponse(@NonNull Call<SnsListDTO> call, @NonNull Response<SnsListDTO> response) {

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapter.ViewHolder> {
     private ArrayList<TourListRepo.Item> items;
+
     //private ArrayList<TourOverviewRepo.Item> overviewitems;
 
     //아이템 클릭시 실행 함수
@@ -75,7 +76,6 @@ public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapte
     public void addNew(ArrayList<TourListRepo.Item> items)
     {
         this.items = items;
-        //this.overviewitems = overviewitems;
         notifyDataSetChanged();
     }
 
@@ -89,7 +89,6 @@ public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapte
             family_title = itemView.findViewById(R.id.family_title);
             family_readcount = itemView.findViewById(R.id.family_readcount);
             family_img = itemView.findViewById(R.id.family_img);
-
         }
     }
 }

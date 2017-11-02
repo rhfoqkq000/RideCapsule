@@ -33,7 +33,7 @@ import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 import com.volokh.danylo.hashtaghelper.HashTagHelper;
 
 import java.util.List;
-
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,9 +62,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-
         // FragmentSns에서 사용함. 전체 SNS를 출력하는 adapter.
-
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.listview_sns,viewGroup,false);
         final ViewHolder viewHolder = new ViewHolder(view);
 
@@ -168,7 +166,6 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
 //        RequestOptions options = new RequestOptions();
 //        options.fitCenter().override(Target.SIZE_ORIGINAL, holder.myImageView.getHeight());
 //        options.fitCenter();
-
         // 각 글마다 스크롤 가능한 이미지 세팅
         final String[] imgArr = item.getImgs().split(",");
 
@@ -254,9 +251,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
     }
 
     private void setHeaderTextView(final ViewHolder holder, final SnsListItem item) {
-
         // 기본정보
-
         String location = item.getNickname()+" | location";
         SpannableString content = new SpannableString(location);
         content.setSpan(new UnderlineSpan(), 0, location.length(), 0);
@@ -284,6 +279,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
                 holder.itemView.getContext().startActivity(intent);
             }
         });
+        glide.load(item.getUser_profile()).into(holder.profile_image);
     }
 
     private void setHashTagTextView(final ViewHolder holder, Resources res, SnsListItem item) {
@@ -338,6 +334,8 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         LinearLayout ims_layout;
         ImageView reply;
         TextView sns_updated_at;
+        CircleImageView profile_image;
+
         //        ImageView main_img;
 //        CustomPager viewPager;
 //        DotsIndicator indicator;
@@ -364,6 +362,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
             reply = itemView.findViewById(R.id.reply);
             sns_updated_at = itemView.findViewById(R.id.sns_updated_at);
             sns_comment_count = itemView.findViewById(R.id.comment_count);
+            profile_image = itemView.findViewById(R.id.profile_image);
         }
     }
 

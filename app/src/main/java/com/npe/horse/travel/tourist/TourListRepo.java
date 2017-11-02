@@ -77,7 +77,6 @@ public class TourListRepo {
         public void setItems(Items items) {
             this.items = items;
         }
-
         public String getNumOfRows() {
             return numOfRows;
         }
@@ -129,6 +128,7 @@ public class TourListRepo {
         private String firstimage2;
         private Double mapx;
         private Double mapy;
+
         private String mlevel;
         private long modifiedtime;
         private String readcount;
@@ -152,7 +152,6 @@ public class TourListRepo {
         public void setAddr2(String addr2) {
             this.addr2 = addr2;
         }
-
         public String getAreacode() {
             return areacode;
         }
@@ -184,7 +183,6 @@ public class TourListRepo {
         public void setCat3(String cat3) {
             this.cat3 = cat3;
         }
-
         public String getContentid() {
             return contentid;
         }

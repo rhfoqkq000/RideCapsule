@@ -48,7 +48,6 @@ public class ActivityLocationSelect extends AppCompatActivity {
         // 지역명 상세주소 입력 후 추가 누르면 DB에 저장됨
         // 지역가져오기 누르면 GPS 혹은 네트워크 통해서 위치 받아옴 실내에서는 잘 안됨
         // 검색어 입력 후 검색 누르면 목록이 쭉 뜸.. 그거 선택하면 지역명과 상세주소에 입력됨
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_select);
         ButterKnife.bind(this);
@@ -126,7 +125,7 @@ public class ActivityLocationSelect extends AppCompatActivity {
     @OnClick(R.id.search_loc_btn)
     void searchLocation(){
         InterfaceSnsLocationSearch location = new Retrofit.Builder()
-                .baseUrl("http://168.115.225.120:5000/")
+                .baseUrl("http://168.115.226.218:5000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(InterfaceSnsLocationSearch.class);
         Call<SnsLocationDTO> call = location.searchLocation(location_search_et.getText().toString());

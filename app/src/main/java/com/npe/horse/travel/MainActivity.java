@@ -10,6 +10,17 @@ import android.util.Log;
 import com.bumptech.glide.Glide;
 import com.npe.horse.travel.capsule.FragmentCapsule;
 import com.npe.horse.travel.hotchu.FragmentHot;
+import com.npe.horse.travel.kakao.KakaoSingleton;
+import com.npe.horse.travel.mypage.FragmentMypage;
+import com.npe.horse.travel.sns.FragmentSns;
+import com.kakao.auth.ISessionCallback;
+import com.kakao.auth.Session;
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.MeResponseCallback;
+import com.kakao.usermgmt.response.model.UserProfile;
+import com.kakao.util.exception.KakaoException;
+import com.kakao.util.helper.log.Logger;
 import com.npe.horse.travel.mypage.FragmentMypage;
 import com.npe.horse.travel.tourist.FragmentTourist;
 import com.roughike.bottombar.BottomBar;
@@ -24,9 +35,11 @@ public class MainActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager;
     Fragment active;
+    private MainActivity.SessionCallback callback;
+  
     Fragment fragmentTourist = FragmentTourist.newInstance(1);
-    Fragment fragmentSamplee = FragmentSample.newInstance(2);
-//    Fragment fragmentSns = FragmentSns.newInstance(2);
+    //Fragment fragmentSamplee = FragmentSample.newInstance(2);
+    Fragment fragmentSns = FragmentSns.newInstance(2);
     Fragment fragmentCapsule = FragmentCapsule.newInstance(3);
     Fragment fragmentInn = FragmentHot.newInstance(4);
     Fragment fragmentMypage = FragmentMypage.newInstance(5);
@@ -59,10 +72,18 @@ public class MainActivity extends AppCompatActivity {
         JodaTimeAndroid.init(this);
 
         fragmentManager = getSupportFragmentManager();
-//
         createFragments();
         setUIListeners();
 
+        //카카오로그인 세션 체크
+        callback = new MainActivity.SessionCallback();
+        Session.getCurrentSession().addCallback(callback);
+        if (Session.getCurrentSession().isOpened()){
+            Log.e("LoginActivity isOpened", "OPEN!");
+            requestMe();
+        }else{
+            Log.e("LoginActivity isOpened", "NOT OPENDED");
+        }
         // 절대 지우지 말것!! 혹시나...
 //        final FragmentTourist fragmentTourist = new FragmentTourist();
 
@@ -125,15 +146,15 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(@IdRes int tabId) {
                 switch (tabId) {
                     case R.id.bottom_tourist:
-                    if (active != fragmentTourist)
-                        hideShowFragment(active,fragmentTourist);
+                    if (active != fragmentSamplee)
+                        hideShowFragment(active,fragmentSamplee);
 //                    else
 //                        fm.beginTransaction().show(fragmentSample).commit();
-                    active = fragmentTourist;
+                    active = fragmentSamplee;
                         break;
                     case R.id.bottom_sns:
-                        hideShowFragment(active, fragmentSamplee);
-                        active = fragmentSamplee;
+                        hideShowFragment(active, fragmentSns);
+                        active = fragmentSns;
                         break;
                     case R.id.bottom_capsule:
                         hideShowFragment(active, fragmentCapsule);
@@ -166,13 +187,57 @@ public class MainActivity extends AppCompatActivity {
 //
     //Add all the fragments that need to be added and hidden. Also, add the one that is supposed to be the starting one, that one is not hidden.
     private void createFragments() {
-        addHideFragment(fragmentTourist);
         addHideFragment(fragmentSamplee);
+        addHideFragment(fragmentSns);
         addHideFragment(fragmentCapsule);
         addHideFragment(fragmentInn);
         addHideFragment(fragmentMypage);
-        fragmentManager.beginTransaction().show(fragmentTourist).commit();
-        active = fragmentTourist;
+        fragmentManager.beginTransaction().show(fragmentSamplee).commit();
+        active = fragmentSamplee;
+    }
+
+    private void requestMe() {
+        UserManagement.requestMe(new MeResponseCallback() {
+            @Override
+            public void onFailure(ErrorResult errorResult) {
+                String message = "failed to get user info. msg=" + errorResult;
+                Log.e("MainActivity", message);
+            }
+
+            @Override
+            public void onSessionClosed(ErrorResult errorResult) {
+                Log.e("MainActivity", "onSessionClosed");
+            }
+
+            @Override
+            public void onSuccess(UserProfile userProfile) {
+                Log.e("MainActivity", "UserProfile : " + userProfile);
+                KakaoSingleton.getInstance().setEmail(userProfile.getEmail());
+                KakaoSingleton.getInstance().setNickname(userProfile.getNickname());
+                KakaoSingleton.getInstance().setSmallImage(userProfile.getThumbnailImagePath());
+            }
+
+            @Override
+            public void onNotSignedUp() {
+                //세션 오픈은 성공했으나 사용자 정보 요청 결과 사용자 가입이 안된 상태로 자동 가입 앱이 아닌 경우에만 호출된다
+                Log.e("MainActivity", "onNotSignedUp");
+            }
+        });
+    }
+
+    private class SessionCallback implements ISessionCallback {
+
+        @Override
+        public void onSessionOpened() {
+            requestMe();
+        }
+
+        @Override
+        public void onSessionOpenFailed(KakaoException exception) {
+            if(exception != null) {
+                Logger.e(exception);
+            }
+        }
     }
 }
 

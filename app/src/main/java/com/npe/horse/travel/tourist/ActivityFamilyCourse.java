@@ -4,11 +4,20 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.npe.horse.travel.R;
+import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -17,10 +26,13 @@ import butterknife.ButterKnife;
  */
 
 public class ActivityFamilyCourse extends AppCompatActivity {
+    @BindView(R.id.familyTest)
+    TextView familyTest;
 
     @BindView(R.id.family_re)
     RecyclerView family_re;
 
+    TourRecyclerAdapter adapter;
     @BindView(R.id.weather_sky)
     TextView weather_sky;
     @BindView(R.id.weather_tem)
@@ -47,10 +59,6 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         //singleton.weatherRetrofit();
         singleton.tourRetrofit(adapter,"C0112");
     }
-
-
-
-
 
 /*
 
@@ -96,5 +104,6 @@ public class ActivityFamilyCourse extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+
     }*/
 }

@@ -3,6 +3,7 @@ package com.npe.horse.travel.tourist;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by horse on 2017. 10. 9..
@@ -22,6 +24,35 @@ import butterknife.ButterKnife;
 public class FragmentTourist extends Fragment {
     @BindView(R.id.family_course)
     ImageView family_course;
+/*    @OnClick(R.id.family_course)
+    void clickFamaily() {
+        Intent Familyintent = new Intent(getActivity(), ActivityFamilyCourse.class);
+    }*/
+
+    @BindView(R.id.walking_course)
+    ImageView walking_course;
+    @OnClick(R.id.family_course)
+    void clickWalking() {}
+
+    @BindView(R.id.alone_course)
+    ImageView alone_course;
+    @OnClick(R.id.family_course)
+    void clickAlone() {}
+
+    @BindView(R.id.camping_course)
+    ImageView camping_course;
+    @OnClick(R.id.family_course)
+    void clickCamping() {}
+
+    @BindView(R.id.healing_course)
+    ImageView healing_course;
+    @OnClick(R.id.family_course)
+    void clickHealing() {}
+
+    @BindView(R.id.taste_course)
+    ImageView taste_course;
+    @OnClick(R.id.family_course)
+    void clickTaste() {}
 
     @BindView(R.id.walking_course)
     ImageView walking_course;
