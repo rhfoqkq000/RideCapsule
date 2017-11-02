@@ -14,4 +14,7 @@ public interface InterfaceSnsList {
 
     @GET("/sns/{user_id}/list/{category}/{hashtag}/{page}")
     Call<SnsListDTO> listSnsForHashTag(@Path("user_id") int user_id, @Path("category") int category, @Path("hashtag") String hashtag,  @Path("page") int page);
+
+    @GET("/sns/list/like/{page}/{user_id}")
+    Call<SnsListDTO> listSnsLike(@Path("user_id") int user_id, @Path("page") int page);
 }

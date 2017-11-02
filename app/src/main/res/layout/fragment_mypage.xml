@@ -6,6 +6,7 @@
     android:background="@color/backgroundColor">
 
     <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/mypage_coordinatorLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -34,4 +35,73 @@
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
     </android.support.design.widget.CoordinatorLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/mypage_coordinatorLayout"
+        android:id="@+id/mypage_relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/mypage_profileImg"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="4"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6">
+
+                <TextView
+                    android:id="@+id/mypage_nicknameTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/mypage_emailTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/mypage_relativeLayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/mypage_writtenBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="내가 쓴 글" />
+
+        <Button
+            android:id="@+id/mypage_likeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="좋아요 한 글" />
+
+        <Button
+            android:id="@+id/mypage_editDeleteBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="수정 및 삭제" />
+
+    </LinearLayout>
+
 </RelativeLayout>
