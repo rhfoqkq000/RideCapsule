@@ -21,6 +21,8 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
+import com.npe.horse.travel.mypage.FragmentMypage;
+import com.npe.horse.travel.tourist.FragmentTourist;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
@@ -34,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     Fragment active;
     private MainActivity.SessionCallback callback;
-    //    Fragment fragmentTourist = FragmentTourist.newInstance(1);
-    Fragment fragmentSamplee = FragmentSample.newInstance(1);
+  
+    Fragment fragmentTourist = FragmentTourist.newInstance(1);
+    //Fragment fragmentSamplee = FragmentSample.newInstance(2);
     Fragment fragmentSns = FragmentSns.newInstance(2);
     Fragment fragmentCapsule = FragmentCapsule.newInstance(3);
     Fragment fragmentInn = FragmentHot.newInstance(4);
@@ -81,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
         }else{
             Log.e("LoginActivity isOpened", "NOT OPENDED");
         }
-
         // 절대 지우지 말것!! 혹시나...
 //        final FragmentTourist fragmentTourist = new FragmentTourist();
 

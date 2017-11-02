@@ -43,6 +43,12 @@ public class ActivityLocationSelect extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // 이용자의 지역을 입력 / 검색하는 액티비티임
+        // 반드시 지역명과 상세주소가 입력되어야 ActivitySnsWrite로 이동할 수 있음
+        // 지역명 상세주소 입력 후 추가 누르면 DB에 저장됨
+        // 지역가져오기 누르면 GPS 혹은 네트워크 통해서 위치 받아옴 실내에서는 잘 안됨
+        // 검색어 입력 후 검색 누르면 목록이 쭉 뜸.. 그거 선택하면 지역명과 상세주소에 입력됨
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_select);
         ButterKnife.bind(this);

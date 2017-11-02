@@ -26,6 +26,7 @@ public class Utils {
 
         final ImageView img = view.findViewById(R.id.img_item);
         Picasso.with(img.getContext()).load(UrlSingleton.getInstance().getSERVER_URL()+item.getImg_path()).into(img);
+        img.setColorFilter(R.color.alpha);
 //        img.setImageResource(libraryObject.getRes());
     }
     public static void setupList(final View view, final ArrayList<HotchuItem> item) {

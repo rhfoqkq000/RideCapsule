@@ -125,7 +125,6 @@ public class SnsListItem {
     public void setImgs(String imgs) {
         this.imgs = imgs;
     }
-
     public String getUser_profile() {
         return user_profile;
     }

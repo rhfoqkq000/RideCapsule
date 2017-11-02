@@ -39,7 +39,7 @@ public class FragmentHot extends Fragment {
         ButterKnife.bind(this, rootview);
         final HorizontalInfiniteCycleViewPager horizontalInfiniteCycleViewPager = rootview.findViewById(R.id.hicvp);
 
-
+        // HOT10 받아오기
         InterfaceHotchuList interfaceHotchuList = ApiClient.getClient().create(InterfaceHotchuList.class);
         Call<HotchuDTO> call = interfaceHotchuList.getList();
         call.enqueue(new Callback<HotchuDTO>() {

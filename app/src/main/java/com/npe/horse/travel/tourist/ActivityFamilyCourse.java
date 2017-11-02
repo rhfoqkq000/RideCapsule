@@ -6,10 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.npe.horse.travel.R;
-
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -19,6 +19,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by ekekd on 2017-11-01.
@@ -32,27 +34,38 @@ public class ActivityFamilyCourse extends AppCompatActivity {
     RecyclerView family_re;
 
     TourRecyclerAdapter adapter;
+<<<<<<< HEAD
     private ProgressDialog mProgressDialog;
+=======
+    @BindView(R.id.weather_sky)
+    TextView weather_sky;
+    @BindView(R.id.weather_tem)
+    TextView weather_tem;
+    @BindView(R.id.weather_img)
+    ImageView weatherImg;
+
+
+
+    static TourRecyclerAdapter adapter;
+
+    RetrofitSingleton singleton = RetrofitSingleton.getInstance();
+>>>>>>> b0bb657f5bb58c03b29f6ea2647a77c3c89703a5
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_course);
         ButterKnife.bind(this);
-        familyTest.setText("성공");
+
         family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         adapter = new TourRecyclerAdapter();
         family_re.setAdapter(adapter);
-        tourRetrofit();
 
-
-
+        singleton.areaCodeRetrofit();
+        //singleton.weatherRetrofit();
+        singleton.tourRetrofit(adapter,"C0112");
     }
 
-
-
-
-
-
+/*
 
     public void tourRetrofit() {
         showProgressDialog();
@@ -99,6 +112,7 @@ public class ActivityFamilyCourse extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+<<<<<<< HEAD
     }
 
     private void showProgressDialog() {
@@ -118,3 +132,8 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         }
     }
 }
+=======
+
+    }*/
+}
+>>>>>>> b0bb657f5bb58c03b29f6ea2647a77c3c89703a5
