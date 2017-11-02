@@ -4,34 +4,29 @@
         id = "@+id/bottom_tourist"
         icon = "@drawable/ic_home_black_24dp"
         activeColor = "@color/colorPrimary"
-
         title="@string/title_tourist" />
 
     <tab
         id="@+id/bottom_sns"
         icon="@drawable/sns"
         activeColor = "@color/colorPrimary"
-
         title="@string/title_sns" />
 
     <tab
         id="@+id/bottom_capsule"
         icon="@drawable/capsule"
         activeColor = "@color/colorPrimary"
-
         title="@string/title_capsule" />
 
     <tab
         id="@+id/bottom_house"
-        icon="@drawable/inn"
+        icon="@drawable/ten"
         activeColor = "@color/colorPrimary"
-
-        title="@string/title_house" />
+        title="@string/title_hotten" />
 
     <tab
         id="@+id/bottom_mypage"
         icon="@drawable/mypage"
         activeColor = "@color/colorPrimary"
-
         title="@string/title_mypage" />
 </Tab>

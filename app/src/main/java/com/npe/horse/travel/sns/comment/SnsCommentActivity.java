@@ -51,7 +51,7 @@ public class SnsCommentActivity extends AppCompatActivity{
 
     @OnClick(R.id.sns_comment_write_btn)
     void writeComment(){
-
+        // 댓글 쓰기
         postArticle = sns_comment_write.getText().toString();
         postWrite(content_id,user_id,postArticle);
     }
@@ -92,6 +92,7 @@ public class SnsCommentActivity extends AppCompatActivity{
         Log.d("article",article);
 
 
+        // 해시태그 설정
         HashTagHelper mTextHashTagHelper = HashTagHelper.Creator.create(getApplication().getResources().getColor(R.color.blue), new HashTagHelper.OnHashTagClickListener() {
                 @Override
                 public void onHashTagClicked(String hashTag) {

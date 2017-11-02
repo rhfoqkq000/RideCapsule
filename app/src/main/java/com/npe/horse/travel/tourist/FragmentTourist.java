@@ -54,6 +54,21 @@ public class FragmentTourist extends Fragment {
     @OnClick(R.id.family_course)
     void clickTaste() {}
 
+    @BindView(R.id.walking_course)
+    ImageView walking_course;
+
+    @BindView(R.id.alone_course)
+    ImageView alone_course;
+
+    @BindView(R.id.camping_course)
+    ImageView camping_course;
+
+    @BindView(R.id.healing_course)
+    ImageView healing_course;
+
+    @BindView(R.id.taste_course)
+    ImageView taste_course;
+
     public FragmentTourist() {
 //        Required empty public constructor
     }
@@ -71,9 +86,7 @@ public class FragmentTourist extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_tour_course, container, false);
-        Log.e("fragmenttourist", "ddddddd1");
         ButterKnife.bind(this, rootview);
-        Log.e("fragmenttourist", "ddddddd2");
         Picasso.with(getContext()).load(R.drawable.family_course).into(family_course);
         Picasso.with(getContext()).load(R.drawable.walking_course).into(walking_course);
         Picasso.with(getContext()).load(R.drawable.alone_course).into(alone_course);
@@ -84,9 +97,43 @@ public class FragmentTourist extends Fragment {
         family_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("imageView", "버튼");
                 Intent familyintent = new Intent(getActivity(), ActivityFamilyCourse.class);
                 startActivity(familyintent);
+            }
+        });
+        walking_course.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent walkingintent = new Intent(getActivity(), ActivityWakingCourse.class);
+                startActivity(walkingintent);
+            }
+        });
+        alone_course.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent aloneintent = new Intent(getActivity(), ActivityAloneCourse.class);
+                startActivity(aloneintent);
+            }
+        });
+        healing_course.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent healingintent = new Intent(getActivity(), ActivityHealingCourse.class);
+                startActivity(healingintent);
+            }
+        });
+        taste_course.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent tasteintent = new Intent(getActivity(), ActivityTasteCourse.class);
+                startActivity(tasteintent);
+            }
+        });
+        camping_course.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent campingintent = new Intent(getActivity(), ActivityCampingCourse.class);
+                startActivity(campingintent);
             }
         });
 
