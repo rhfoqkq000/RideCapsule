@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/course_camping_img"
+
                 android:layout_marginVertical="10dp"/>
             <TextView
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -40,16 +40,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="내용"
-                android:id="@+id/detail_content"/>
+                android:id="@+id/detail_content"
+                android:textSize="10dp"/>
 
-            <Button
-                style="@style/DetailButtonStyle"
-                android:id="@+id/detail_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Button"
-                android:layout_gravity="bottom"/>
         </LinearLayout>
 
         <ImageView

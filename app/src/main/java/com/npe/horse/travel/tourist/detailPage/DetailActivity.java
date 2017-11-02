@@ -24,7 +24,7 @@ public class DetailActivity extends AppCompatActivity {
 
         viewPager.setAdapter(pagerAdapter);
         viewPager.setPageTransformer(false, fragmentCardShadowTransformer);
-        viewPager.setOffscreenPageLimit(3);
+ //       viewPager.setOffscreenPageLimit(3);
     }
 
     /**

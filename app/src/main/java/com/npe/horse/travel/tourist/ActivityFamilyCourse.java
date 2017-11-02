@@ -1,10 +1,12 @@
 package com.npe.horse.travel.tourist;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import com.npe.horse.travel.R;
 
@@ -12,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.npe.horse.travel.R;
+import com.npe.horse.travel.tourist.detailPage.DetailActivity;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -61,7 +65,40 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         singleton.areaCodeRetrofit();
         //singleton.weatherRetrofit();
         singleton.tourRetrofit(adapter,"C0112");
+        adapter.setItemClick(new TourRecyclerAdapter.ItemClick() {
+            @Override
+            public void onClick(View view, int position) {
+                Call<TourOverviewRepo> call = RetrofitSingleton.overviewRetrofit();
+                call.enqueue(new Callback<TourOverviewRepo>() {
+                    @Override
+                    public void onResponse(Call<TourOverviewRepo> call, Response<TourOverviewRepo> response) {
+                        RetrofitSingleton.overview = response.body();
+                        Call<SubCourseRepo> call2 = RetrofitSingleton.subcourseRetrofit();
+                        call2.enqueue(new Callback<SubCourseRepo>() {
+                            @Override
+                            public void onResponse(Call<SubCourseRepo> call, Response<SubCourseRepo> response) {
+                                RetrofitSingleton.subCourse = response.body();
+                                Intent detailintent = new Intent(ActivityFamilyCourse.this, DetailActivity.class);
+                                startActivity(detailintent);
+                            }
 
+                            @Override
+                            public void onFailure(Call<SubCourseRepo> call, Throwable t) {
+                                t.printStackTrace();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(Call<TourOverviewRepo> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
+
+
+
+            }
+        });
     }
 
 
