@@ -6,12 +6,25 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.horse.travel.capsule.FragmentCapsule;
 import com.example.horse.travel.hotchu.FragmentHot;
+import com.example.horse.travel.kakao.InterfaceReg;
+import com.example.horse.travel.kakao.KakaoRegDTO;
+import com.example.horse.travel.kakao.KakaoSignupActivity;
+import com.example.horse.travel.kakao.KakaoSingleton;
 import com.example.horse.travel.mypage.FragmentMypage;
 import com.example.horse.travel.sns.FragmentSns;
+import com.kakao.auth.ISessionCallback;
+import com.kakao.auth.Session;
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.MeResponseCallback;
+import com.kakao.usermgmt.response.model.UserProfile;
+import com.kakao.util.exception.KakaoException;
+import com.kakao.util.helper.log.Logger;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
@@ -19,12 +32,18 @@ import net.danlew.android.joda.JodaTimeAndroid;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager;
     Fragment active;
-//    Fragment fragmentTourist = FragmentTourist.newInstance(1);
+    private MainActivity.SessionCallback callback;
+    //    Fragment fragmentTourist = FragmentTourist.newInstance(1);
     Fragment fragmentSamplee = FragmentSample.newInstance(1);
     Fragment fragmentSns = FragmentSns.newInstance(2);
     Fragment fragmentCapsule = FragmentCapsule.newInstance(3);
@@ -59,9 +78,18 @@ public class MainActivity extends AppCompatActivity {
         JodaTimeAndroid.init(this);
 
         fragmentManager = getSupportFragmentManager();
-//
         createFragments();
         setUIListeners();
+
+        //카카오로그인 세션 체크
+        callback = new MainActivity.SessionCallback();
+        Session.getCurrentSession().addCallback(callback);
+        if (Session.getCurrentSession().isOpened()){
+            Log.e("LoginActivity isOpened", "OPEN!");
+            requestMe();
+        }else{
+            Log.e("LoginActivity isOpened", "NOT OPENDED");
+        }
 
         // 절대 지우지 말것!! 혹시나...
 //        final FragmentTourist fragmentTourist = new FragmentTourist();
@@ -173,6 +201,50 @@ public class MainActivity extends AppCompatActivity {
         addHideFragment(fragmentMypage);
         fragmentManager.beginTransaction().show(fragmentSamplee).commit();
         active = fragmentSamplee;
+    }
+
+    private void requestMe() {
+        UserManagement.requestMe(new MeResponseCallback() {
+            @Override
+            public void onFailure(ErrorResult errorResult) {
+                String message = "failed to get user info. msg=" + errorResult;
+                Log.e("MainActivity", message);
+            }
+
+            @Override
+            public void onSessionClosed(ErrorResult errorResult) {
+                Log.e("MainActivity", "onSessionClosed");
+            }
+
+            @Override
+            public void onSuccess(UserProfile userProfile) {
+                Log.e("MainActivity", "UserProfile : " + userProfile);
+                KakaoSingleton.getInstance().setEmail(userProfile.getEmail());
+                KakaoSingleton.getInstance().setNickname(userProfile.getNickname());
+                KakaoSingleton.getInstance().setSmallImage(userProfile.getThumbnailImagePath());
+            }
+
+            @Override
+            public void onNotSignedUp() {
+                //세션 오픈은 성공했으나 사용자 정보 요청 결과 사용자 가입이 안된 상태로 자동 가입 앱이 아닌 경우에만 호출된다
+                Log.e("MainActivity", "onNotSignedUp");
+            }
+        });
+    }
+
+    private class SessionCallback implements ISessionCallback {
+
+        @Override
+        public void onSessionOpened() {
+            requestMe();
+        }
+
+        @Override
+        public void onSessionOpenFailed(KakaoException exception) {
+            if(exception != null) {
+                Logger.e(exception);
+            }
+        }
     }
 }
 

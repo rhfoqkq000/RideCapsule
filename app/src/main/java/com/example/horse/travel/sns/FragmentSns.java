@@ -29,6 +29,9 @@ import com.example.horse.travel.ApiClient;
 import com.example.horse.travel.SearchViewCustom;
 import com.example.horse.travel.EndlessRecyclerViewScrollListener;
 import com.example.horse.travel.R;
+import com.example.horse.travel.kakao.InterfaceReg;
+import com.example.horse.travel.kakao.KakaoRegDTO;
+import com.example.horse.travel.kakao.KakaoSingleton;
 import com.example.horse.travel.sns.hashtag.HashTagSingleton;
 import com.example.horse.travel.sns.hashtag.InterfaceSnsHashtag;
 import com.example.horse.travel.sns.hashtag.SnsHashTagActivity;
@@ -38,6 +41,11 @@ import com.example.horse.travel.sns.list.SnsListDTO;
 import com.example.horse.travel.sns.list.SnsListItem;
 import com.example.horse.travel.sns.list.SnsRecyclerAdapter;
 import com.example.horse.travel.sns.write.ActivityImageSelect;
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.MeResponseCallback;
+import com.kakao.usermgmt.response.model.UserProfile;
+import com.kakao.util.helper.log.Logger;
 
 
 import java.util.ArrayList;
@@ -123,10 +131,8 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
                 if(response.body().getResult_code()==200){
                     String[] suggestions = new String[response.body().getResult_body().size()];
                     for(int i = 0; i < response.body().getResult_body().size(); i++){
-                        Log.e("FragmentSns", "ALL::"+response.body().getResult_body().toString());
                         suggestions[i] = response.body().getResult_body().get(i).getResult();
                     }
-                    Log.e("FragmentSns", Arrays.toString(suggestions));
                     searchView.setSuggestions(suggestions);
                     searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
@@ -171,7 +177,8 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         adapter.setContext(getContext());
         snsRe.setAdapter(adapter);
 
-        getSnsList(init_page);
+        requestMe();
+//        getSnsList(init_page);
 
         writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,7 +205,8 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
 
     void getSnsList(int page){
         InterfaceSnsList list = ApiClient.getClient().create(InterfaceSnsList.class);
-        Call<SnsListDTO> call = list.listSns(page);
+        Log.e("FragmentSns", String.valueOf(KakaoSingleton.getInstance().getId()));
+        Call<SnsListDTO> call = list.listSns(KakaoSingleton.getInstance().getId(), page);
         call.enqueue(new Callback<SnsListDTO>() {
             @Override
             public void onResponse(@NonNull Call<SnsListDTO> call, @NonNull Response<SnsListDTO> response) {
@@ -263,5 +271,50 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
         MenuItem item = menu.findItem(R.id.action_search);
         searchView.setMenuItem(item);
     }
+
+    private void requestMe() {
+        UserManagement.requestMe(new MeResponseCallback() {
+            @Override
+            public void onFailure(ErrorResult errorResult) {
+                String message = "failed to get user info. msg=" + errorResult;
+                Logger.d(message);
+            }
+
+            @Override
+            public void onSessionClosed(ErrorResult errorResult) {
+                Logger.d("onSessionClosed");
+            }
+
+            @Override
+            public void onSuccess(UserProfile userProfile) {
+                Logger.d("UserProfile : " + userProfile);
+                InterfaceReg reg = new Retrofit.Builder()
+                        .baseUrl("http://168.115.226.218:5000/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build().create(InterfaceReg.class);
+                Call<KakaoRegDTO> call = reg.reg(userProfile.getEmail(), userProfile.getNickname(), userProfile.getThumbnailImagePath());
+                call.enqueue(new Callback<KakaoRegDTO>() {
+                    @Override
+                    public void onResponse(Call<KakaoRegDTO> call, Response<KakaoRegDTO> response) {
+                        KakaoSingleton.getInstance().setId(response.body().getResult_code());
+                        getSnsList(init_page);
+                    }
+
+                    @Override
+                    public void onFailure(Call<KakaoRegDTO> call, Throwable t) {
+                        Toast.makeText(getContext(), "로그인 중 에러가 발생했습니다. 앱을 다시 실행해주세요.", Toast.LENGTH_SHORT).show();
+                        t.printStackTrace();
+                    }
+                });
+            }
+
+            @Override
+            public void onNotSignedUp() {
+                Logger.d("onNotSignedUp");
+            }
+        });
+    }
+
+
 
 }

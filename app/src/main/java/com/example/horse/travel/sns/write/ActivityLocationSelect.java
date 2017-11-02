@@ -119,7 +119,7 @@ public class ActivityLocationSelect extends AppCompatActivity {
     @OnClick(R.id.search_loc_btn)
     void searchLocation(){
         InterfaceSnsLocationSearch location = new Retrofit.Builder()
-                .baseUrl("http://168.115.225.120:5000/")
+                .baseUrl("http://168.115.226.218:5000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(InterfaceSnsLocationSearch.class);
         Call<SnsLocationDTO> call = location.searchLocation(location_search_et.getText().toString());

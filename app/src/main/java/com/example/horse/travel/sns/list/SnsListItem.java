@@ -16,6 +16,7 @@ public class SnsListItem {
     private String post;
     private Date updated_at;
     private String imgs;
+    private String user_profile;
     private int comment_count;
     private int user_id;
     private String location;
@@ -123,5 +124,13 @@ public class SnsListItem {
 
     public void setImgs(String imgs) {
         this.imgs = imgs;
+    }
+
+    public String getUser_profile() {
+        return user_profile;
+    }
+
+    public void setUser_profile(String user_profile) {
+        this.user_profile = user_profile;
     }
 }

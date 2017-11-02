@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -19,6 +20,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.horse.travel.R;
 import com.example.horse.travel.TimeCal;
 import com.example.horse.travel.sns.comment.SnsCommentActivity;
@@ -30,10 +33,12 @@ import com.example.horse.travel.sns.like.SnsItemLikeDTO;
 import com.example.horse.travel.sns.like.SnsItemUnLike;
 import com.example.horse.travel.sns.like.SnsItemUnLikeDTO;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
+import com.squareup.picasso.Picasso;
 import com.volokh.danylo.hashtaghelper.HashTagHelper;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -276,6 +281,16 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
                 holder.itemView.getContext().startActivity(intent);
             }
         });
+        Log.e("SnsRecyclerAdapter", item.getUser_profile());
+
+        glide.load(item.getUser_profile()).into(holder.profile_image);
+//        glide.load("https://s3.amazonaws.com/xyz.png")
+//                .into(new SimpleTarget<Bitmap>(35, 35) {
+//                    @Override
+//                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+//
+//                    }
+//                });
     }
 
     private void setHashTagTextView(final ViewHolder holder, Resources res, SnsListItem item) {
@@ -330,6 +345,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         LinearLayout ims_layout;
         ImageView reply;
         TextView sns_updated_at;
+        CircleImageView profile_image;
         //        ImageView main_img;
 //        CustomPager viewPager;
 //        DotsIndicator indicator;
@@ -356,6 +372,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
             reply = itemView.findViewById(R.id.reply);
             sns_updated_at = itemView.findViewById(R.id.sns_updated_at);
             sns_comment_count = itemView.findViewById(R.id.comment_count);
+            profile_image = itemView.findViewById(R.id.profile_image);
         }
     }
 
@@ -364,6 +381,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         this.items = items;
         notifyDataSetChanged();
     }
+
     public void removeAll(){
         this.items.clear();
         this.items = null;

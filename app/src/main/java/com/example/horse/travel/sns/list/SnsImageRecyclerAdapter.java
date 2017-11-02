@@ -101,7 +101,7 @@ public class SnsImageRecyclerAdapter extends RecyclerView.Adapter<SnsImageRecycl
 //                return false;
 //            }
 //        }).into(holder.imageView);
-
+//
 //        holder.imageView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

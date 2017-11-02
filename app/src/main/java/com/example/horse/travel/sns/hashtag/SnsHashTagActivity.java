@@ -21,6 +21,7 @@ import com.example.horse.travel.ApiClient;
 import com.example.horse.travel.SearchViewCustom;
 import com.example.horse.travel.EndlessRecyclerViewScrollListener;
 import com.example.horse.travel.R;
+import com.example.horse.travel.kakao.KakaoSingleton;
 import com.example.horse.travel.sns.list.InterfaceSnsList;
 import com.example.horse.travel.sns.list.SnsListDTO;
 import com.example.horse.travel.sns.list.SnsListItem;
@@ -149,7 +150,7 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
 
     void getSnsList(String hashtag, int category, int page){
         InterfaceSnsList list = ApiClient.getClient().create(InterfaceSnsList.class);
-        Call<SnsListDTO> call = list.listSnsForHashTag(category, hashtag, page);
+        Call<SnsListDTO> call = list.listSnsForHashTag(KakaoSingleton.getInstance().getId(), category, hashtag, page);
         call.enqueue(new Callback<SnsListDTO>() {
             @Override
             public void onResponse(@NonNull Call<SnsListDTO> call, @NonNull Response<SnsListDTO> response) {
