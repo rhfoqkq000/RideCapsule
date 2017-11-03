@@ -25,7 +25,6 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
-import com.npe.horse.travel.tourist.FragmentTourist;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
@@ -33,7 +32,6 @@ import net.danlew.android.joda.JodaTimeAndroid;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.Signature;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
