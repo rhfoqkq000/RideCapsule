@@ -42,17 +42,6 @@ public class FragmentTourist extends Fragment {
 
     @BindView(R.id.city)
     Button cityBtn;
-    @OnClick(R.id.city)
-    void clickCity(){
-        cityDialog(areaData.getCitys());
-    }
-    static AreaData areaData = AreaData.getInstance();
-    String[] region = areaData.getSeoUl(); //초기값 서울
-
-    @BindView(R.id.family_course)
-    ImageView family_course;
-
-    AreaData areaData = new AreaData();
     String[] region = areaData.getSeoUl(); //초기값 서울
 
 

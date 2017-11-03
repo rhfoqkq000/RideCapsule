@@ -12,7 +12,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.npe.horse.travel.EndlessRecyclerViewScrollListener;
-import com.bumptech.glide.Glide;
 import com.npe.horse.travel.R;
 
 import android.widget.ImageView;
@@ -32,6 +31,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.npe.horse.travel.tourist.RetrofitSingleton.areaData;
+
 /**
  * Created by ekekd on 2017-11-01.
  */
@@ -41,11 +42,6 @@ public class ActivityFamilyCourse extends AppCompatActivity {
 
     @BindView(R.id.family_re)
     RecyclerView family_re;
-
-    @BindView(R.id.course_family_img)
-    ImageView course_family_img;
-
-
     private ProgressDialog mProgressDialog;
 
     @BindView(R.id.family_course_progressBar)
@@ -55,23 +51,19 @@ public class ActivityFamilyCourse extends AppCompatActivity {
     ImageView course_family_img;
 
     EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
-  
-
-    @BindView(R.id.weather_sky)
-    TextView weather_sky;
-    @BindView(R.id.weather_tem)
-    TextView weather_tem;
-    @BindView(R.id.weather_img)
-    ImageView weatherImg;
 
     static TourRecyclerAdapter adapter;
 
     RetrofitSingleton singleton = RetrofitSingleton.getInstance();
 
+    ArrayList<TourListRepo.Item> itemList;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_course);
         ButterKnife.bind(this);
+
+        itemList = new ArrayList<>();
 
         Picasso.with(getApplicationContext()).load(R.drawable.course_family_img).into(course_family_img);
 
@@ -81,14 +73,16 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         layoutManager.setInitialPrefetchItemCount(10);
         layoutManager.setItemPrefetchEnabled(true);
         family_re.setLayoutManager(layoutManager);
-        adapter = new TourRecyclerAdapter();        family_re.setAdapter(adapter);
+        adapter = new TourRecyclerAdapter();
+        family_re.setAdapter(adapter);
 
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(final int page, int totalItemsCount, RecyclerView view) {
                 Log.d("SCROLL","END! | "+page);
                 progressBar.setVisibility(View.VISIBLE);
-                RetrofitSingleton.tourRetrofit(adapter, "C0113", page+1);
+//                RetrofitSingleton.tourRetrofit(adapter, "C0113", page+1);
+                tourRetrofit(adapter, "C0112", page+1);
                 progressBar.setVisibility(View.INVISIBLE);
             }
         };
@@ -126,78 +120,36 @@ public class ActivityFamilyCourse extends AppCompatActivity {
                         t.printStackTrace();
                     }
                 });
-
-
-
             }
         });
     }
-}
 
-/*
-
-    public void tourRetrofit() {
-        showProgressDialog();
+    public void tourRetrofit(final TourRecyclerAdapter adapter, String cat2, int page) {
         Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         TourListRepo.TourListAppInterface tourService = client.create(TourListRepo.TourListAppInterface.class);
 
-        Call<TourListRepo>  call = tourService.get_tour_retrofit
-                ("10", "1", "AND",
+        Call<TourListRepo> call = tourService.get_tour_retrofit
+                ("10", String.valueOf(page), "AND",
                         "TourList",
                         "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==",
-                        "Y", "P", "25", "1", "C01","json");
+                        "Y", "P", "25", areaData.getareaCode(), "C01",cat2,"json");
         call.enqueue(new Callback<TourListRepo>() {
             @Override
             public void onResponse(Call<TourListRepo> call, Response<TourListRepo> response) {
-                Log.d("FamilyCourse", response.raw().request().url().toString()); // uri 출력
-                Log.d("FamilyCourse", response.body().getResponse().getHeader().getResultMsg());
-                ArrayList<TourListRepo.Item> itemList = response.body().getResponse().getBody().getItems().getItem();
-//                for (int i = 0; i < response.body().getResponse().getBody().getItems().getItem().size(); i++) {
-////                    itemList.Items.Item.class.items.setTitle(response.body().getResponse().getBody().getItems().getItem().get(i).getTitle());
-////                    repo.setAddr1(response.body().getResponse().getBody().getItems().getItem().get(i).getAddr1());
-////                    repo.setFirstimage(response.body().getResponse().getBody().getItems().getItem().get(i).getFirstimage());
-////                    itemList.add(items);
-//                    itemList.get(i).getAddr1();
-//                }
+                Log.d("RetrofitSingleTon", response.raw().request().url().toString()); // uri 출력
+                Log.d("RetrofitSingleTon", response.body().getResponse().getHeader().getResultMsg());
+                itemList.addAll(response.body().getResponse().getBody().getItems().getItem());
                 adapter.addNew(itemList);
-                Log.d("ActivityFamilyCourse", itemList.toString());
-                hideProgressDialog();
-
-//                final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//아니면 액티비티이름.this
-//                layoutManager.setItemPrefetchEnabled(true);
-//                family_re.setLayoutManager(layoutManager);
-//                adapter = new TourRecyclerAdapter();
-//                //ArrayList<String> arrTitle = new ArrayList<>();
-//                adapter.addNew(itemList);
-//                family_re.setAdapter(adapter);
-
-
-
+                adapter.notifyDataSetChanged();
+                Log.d("RetrofitSingleTon", itemList.toString());
+                TourContentSingleton.getInstance().setTotalCount(response.body().getResponse().getBody().getTotalCount());
             }
             @Override
             public void onFailure(Call<TourListRepo> call, Throwable t) {
-                hideProgressDialog();
                 t.printStackTrace();
             }
         });
     }
-    
-    private void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage("로딩 중입니다.");
-            mProgressDialog.setIndeterminate(true);
-        }
-
-        mProgressDialog.show();
-    }
-
-    private void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.hide();
-            mProgressDialog.dismiss();
-        }
-        }
-    }*/
+}
 

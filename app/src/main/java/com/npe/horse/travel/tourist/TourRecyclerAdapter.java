@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.npe.horse.travel.R;
 import com.squareup.picasso.Picasso;
@@ -24,7 +25,7 @@ public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapte
     //private ArrayList<TourOverviewRepo.Item> overviewitems;
 
 
-    public TourRecyclerAdapter(RequestManager glide) {
+    public TourRecyclerAdapter() {
         this.glide = glide;
     }
 
@@ -54,7 +55,7 @@ public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapte
         holder.family_title.setText(item.getTitle());
         //holder.family_content.setText(overviewitems.get(position).getOverview());
         holder.family_readcount.setText(item.getReadcount());
-        glide.load(item.getFirstimage()).into(holder.family_img);
+        Picasso.with(holder.itemView.getContext()).load(item.getFirstimage()).into(holder.family_img);
 
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
