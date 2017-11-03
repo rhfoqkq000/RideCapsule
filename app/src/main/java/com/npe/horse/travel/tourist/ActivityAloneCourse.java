@@ -10,13 +10,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.npe.horse.travel.EndlessRecyclerViewScrollListener;
 import com.npe.horse.travel.R;
 import com.npe.horse.travel.tourist.detailPage.DetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import com.bumptech.glide.Glide;
+import com.npe.horse.travel.R;
+import com.npe.horse.travel.tourist.detailPage.DetailActivity;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +39,7 @@ public class ActivityAloneCourse extends AppCompatActivity {
 
     @BindView(R.id.family_re)
     RecyclerView family_re;
-
+  
     @BindView(R.id.alone_course_progressBar)
     ProgressBar progressBar;
     EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
