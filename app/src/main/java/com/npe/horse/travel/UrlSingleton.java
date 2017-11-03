@@ -18,7 +18,6 @@ public class UrlSingleton {
 
     public String getSERVER_URL(){
         return "http://dongaboomin.xyz:20090/";
-//        return "http://168.115.229.66:5000/";
     }
   
     public String getPublicServer(){

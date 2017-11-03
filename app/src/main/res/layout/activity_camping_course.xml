@@ -35,7 +35,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="16dp"
                         android:padding="10dp">
-
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -44,7 +43,6 @@
                 </android.support.v7.widget.Toolbar>
             </android.support.design.widget.AppBarLayout>
         </android.support.design.widget.CoordinatorLayout>
-
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

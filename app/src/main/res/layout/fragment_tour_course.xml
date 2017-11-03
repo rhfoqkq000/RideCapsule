@@ -95,7 +95,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            
             android:orientation="vertical"
             android:padding="5dp"
             android:weightSum="10">
@@ -108,7 +108,6 @@
                 android:weightSum="1">
 
                 <LinearLayout
-                    android:id="@+id/course_family"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="5dp"
@@ -116,44 +115,41 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="0.5"
                     android:background="#77000000"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal|center_vertical">
 
                     <ImageView
                         android:id="@+id/family_course"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:src="@drawable/family" />
-
+                        android:src="@drawable/family"
+                        android:layout_marginBottom="5dp"/>
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="20sp"
-                        android:src="@drawable/family_font" />
+                        android:src="@drawable/family_font"/>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/course_walk"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_weight="0.5"
                     android:background="#77000000"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal|center_vertical">
 
                     <ImageView
                         android:id="@+id/walking_course"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:src="@drawable/walk" />
-
+                        android:src="@drawable/walk"
+                        android:layout_marginBottom="5dp"/>
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="20sp"
-                        android:src="@drawable/walk_font" />
+                        android:src="@drawable/walk_font"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -165,7 +161,6 @@
                 android:weightSum="1">
 
                 <LinearLayout
-                    android:id="@+id/course_alone"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentBottom="true"
@@ -174,43 +169,40 @@
                     android:layout_marginEnd="5dp"
                     android:layout_weight="0.5"
                     android:background="#77000000"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal|center_vertical">
 
                     <ImageView
                         android:id="@+id/alone_course"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:src="@drawable/back" />
-
+                        android:src="@drawable/back"
+                        android:layout_marginBottom="5dp"/>
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="20sp"
-                        android:src="@drawable/back_font" />
+                        android:src="@drawable/back_font"/>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/course_healing"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="0.5"
                     android:background="#77000000"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal|center_vertical">
 
                     <ImageView
                         android:id="@+id/healing_course"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:src="@drawable/healing" />
-
+                        android:src="@drawable/healing"
+                        android:layout_marginBottom="5dp"/>
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="20sp"
-                        android:src="@drawable/healing_font" />
+                        android:src="@drawable/healing_font"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -222,48 +214,44 @@
                 android:weightSum="1">
 
                 <LinearLayout
-                    android:id="@+id/course_food"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="0.5"
                     android:background="#77000000"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal|center_vertical">
 
                     <ImageView
                         android:id="@+id/taste_course"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:src="@drawable/rice" />
-
+                        android:src="@drawable/rice"
+                        android:layout_marginBottom="5dp"/>
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="20sp"
-                        android:src="@drawable/rice_font" />
+                        android:src="@drawable/rice_font"/>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/course_camp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.5"
                     android:background="#77000000"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal|center_vertical">
 
                     <ImageView
                         android:id="@+id/camping_course"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:src="@drawable/camping" />
-
+                        android:src="@drawable/camping"
+                        android:layout_marginBottom="5dp"/>
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="20sp"
-                        android:src="@drawable/camping_font" />
+                        android:src="@drawable/camping_font"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

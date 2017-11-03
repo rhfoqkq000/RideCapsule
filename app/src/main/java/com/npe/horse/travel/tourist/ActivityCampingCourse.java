@@ -47,6 +47,8 @@ public class ActivityCampingCourse extends AppCompatActivity {
 
     EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
 
+    ArrayList<TourListRepo.Item> itemList;
+
     static TourRecyclerAdapter adapter;
 
     ArrayList<TourListRepo.Item> itemList;
@@ -57,6 +59,8 @@ public class ActivityCampingCourse extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camping_course);
         ButterKnife.bind(this);
+
+        itemList = new ArrayList<>();
 
         Picasso.with(getApplicationContext()).load(R.drawable.course_camping_img).into(course_camping_img);
 
@@ -69,6 +73,7 @@ public class ActivityCampingCourse extends AppCompatActivity {
         family_re.setLayoutManager(layoutManager);
         adapter = new TourRecyclerAdapter(Glide.with(ActivityCampingCourse.this));
         family_re.setAdapter(adapter);
+        family_re.addOnScrollListener(endlessRecyclerViewScrollListener);
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(final int page, int totalItemsCount, RecyclerView view) {
@@ -79,7 +84,6 @@ public class ActivityCampingCourse extends AppCompatActivity {
             }
         };
 
-        family_re.addOnScrollListener(endlessRecyclerViewScrollListener);
 
         singleton.areaCodeRetrofit();
         //singleton.weatherRetrofit();
@@ -114,14 +118,10 @@ public class ActivityCampingCourse extends AppCompatActivity {
                         t.printStackTrace();
                     }
                 });
-
-
-
             }
         });
-
-
-    }    public void tourRetrofit(final TourRecyclerAdapter adapter, String cat2, int page) {
+    }   
+    public void tourRetrofit(final TourRecyclerAdapter adapter, String cat2, int page) {
         Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         TourListRepo.TourListAppInterface tourService = client.create(TourListRepo.TourListAppInterface.class);
@@ -130,16 +130,18 @@ public class ActivityCampingCourse extends AppCompatActivity {
                 ("10", String.valueOf(page), "AND",
                         "TourList",
                         "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==",
-                        "Y", "P", "25", areaData.getareaCode(), "C01", cat2, "json");
+                        "Y", "P", "25", areaData.getareaCode(), "C01",cat2,"json");
         call.enqueue(new Callback<TourListRepo>() {
             @Override
             public void onResponse(Call<TourListRepo> call, Response<TourListRepo> response) {
                 Log.d("RetrofitSingleTon", response.raw().request().url().toString()); // uri 출력
                 Log.d("RetrofitSingleTon", response.body().getResponse().getHeader().getResultMsg());
+
                 itemList.addAll(response.body().getResponse().getBody().getItems().getItem());
                 int curSize = adapter.getItemCount();
                 adapter.addNew(itemList);
                 adapter.notifyItemRangeChanged(curSize, itemList.size() - 1);
+
                 Log.d("RetrofitSingleTon", itemList.toString());
                 TourContentSingleton.getInstance().setTotalCount(response.body().getResponse().getBody().getTotalCount());
             }

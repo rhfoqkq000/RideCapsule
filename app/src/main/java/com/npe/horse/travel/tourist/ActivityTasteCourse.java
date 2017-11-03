@@ -56,12 +56,15 @@ public class ActivityTasteCourse extends AppCompatActivity {
 
     RetrofitSingleton singleton = RetrofitSingleton.getInstance();
 
+    ArrayList<TourListRepo.Item> itemList;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_taste_course);
         ButterKnife.bind(this);
 
         itemList = new ArrayList<>();
+
         Picasso.with(getApplicationContext()).load(R.drawable.course_taste_img).into(course_taste_img);
 
         progressBar.setVisibility(View.INVISIBLE);
@@ -79,6 +82,7 @@ public class ActivityTasteCourse extends AppCompatActivity {
             public void onLoadMore(final int page, int totalItemsCount, RecyclerView view) {
                 Log.d("SCROLL","END! | "+page);
                 progressBar.setVisibility(View.VISIBLE);
+
                 tourRetrofit(adapter, "C0117", page+1);
                 progressBar.setVisibility(View.INVISIBLE);
             }
@@ -127,6 +131,7 @@ public class ActivityTasteCourse extends AppCompatActivity {
 
 
     }
+
     public void tourRetrofit(final TourRecyclerAdapter adapter, String cat2, int page) {
         Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
@@ -143,8 +148,11 @@ public class ActivityTasteCourse extends AppCompatActivity {
                 Log.d("RetrofitSingleTon", response.raw().request().url().toString()); // uri 출력
                 Log.d("RetrofitSingleTon", response.body().getResponse().getHeader().getResultMsg());
                 itemList.addAll(response.body().getResponse().getBody().getItems().getItem());
+
+                int curSize = adapter.getItemCount();
                 adapter.addNew(itemList);
-                adapter.notifyDataSetChanged();
+                adapter.notifyItemRangeChanged(curSize,itemList.size()-1);
+
                 Log.d("RetrofitSingleTon", itemList.toString());
                 TourContentSingleton.getInstance().setTotalCount(response.body().getResponse().getBody().getTotalCount());
             }

@@ -16,13 +16,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
+import com.npe.horse.travel.ApiClient;
+import com.npe.horse.travel.ProgressDialogController;
 import com.npe.horse.travel.R;
 import com.npe.horse.travel.TimeCal;
+import com.npe.horse.travel.kakao.KakaoSingleton;
 import com.npe.horse.travel.sns.comment.SnsCommentActivity;
 import com.npe.horse.travel.sns.comment.SnsCommentSingleton;
+import com.npe.horse.travel.sns.delete.InterfaceSnsDelete;
+import com.npe.horse.travel.sns.delete.SnsDeleteDTO;
 import com.npe.horse.travel.sns.hashtag.HashTagSingleton;
 import com.npe.horse.travel.sns.hashtag.SnsHashTagActivity;
 import com.npe.horse.travel.sns.like.SnsItemLike;
@@ -51,6 +57,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
     private Context context;
     private ContentResolver contentResolver;
     private boolean isDeletable;
+    private ProgressDialogController progressDialogController;
 
     public SnsRecyclerAdapter(RequestManager glide, ContentResolver contentResolver) {
         this.glide=glide;
@@ -66,6 +73,8 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         // FragmentSns에서 사용함. 전체 SNS를 출력하는 adapter.
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.listview_sns,viewGroup,false);
         final ViewHolder viewHolder = new ViewHolder(view);
+
+        progressDialogController = new ProgressDialogController(context);
 
         viewHolder.imgRe.addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
             @Override
@@ -92,14 +101,37 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         setUI(holder, position);
+
         if (isDeletable){
+            Log.e("SnsrecyclerAdapter", "isDeletable");
             holder.listview_sns_layout.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
                     Log.e("SnsRecyclerAdapter", "onLongClicked");
+                    items.get(position).getId();
+                    InterfaceSnsDelete delete = ApiClient.getClient().create(InterfaceSnsDelete.class);
+                    Call<SnsDeleteDTO> call = delete.deleteSns(items.get(position).getId());
+                    call.enqueue(new Callback<SnsDeleteDTO>() {
+                        @Override
+                        public void onResponse(Call<SnsDeleteDTO> call, Response<SnsDeleteDTO> response) {
+                            if(response.body().getResult_code()==200){
+                                Toast.makeText(context, "삭제 성공!", Toast.LENGTH_SHORT).show();
+                                items.remove(position);
+                                notifyItemRemoved(position);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<SnsDeleteDTO> call, Throwable t) {
+                            progressDialogController.hideProgressDialog();
+                            t.printStackTrace();
+                        }
+                    });
                     return true;
                 }
             });
+        } else {
+            Log.e("SnsRecyclerAdapter", "isDeletable false");
         }
     }
 
@@ -215,7 +247,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
             public void onClick(View view) {
                 if (item.getLike_id()==0){
                     Log.d("LIKE","CLICK");
-                    Call<SnsItemLikeDTO> call = like(holder.contentTextView.getTag().toString(),"1");
+                    Call<SnsItemLikeDTO> call = like(holder.contentTextView.getTag().toString(), String.valueOf(KakaoSingleton.getInstance().getId()));
                     call.enqueue(new Callback<SnsItemLikeDTO>() {
                         @Override
                         public void onResponse(Call<SnsItemLikeDTO> call, Response<SnsItemLikeDTO> response) {
@@ -236,7 +268,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
                     });
                 } else {
                     Log.d("UNLIKE","CLICK");
-                    Call<SnsItemUnLikeDTO> call = unlike(holder.contentTextView.getTag().toString(),"1");
+                    Call<SnsItemUnLikeDTO> call = unlike(holder.contentTextView.getTag().toString(), String.valueOf(KakaoSingleton.getInstance().getId()));
                     call.enqueue(new Callback<SnsItemUnLikeDTO>() {
                         @Override
                         public void onResponse(Call<SnsItemUnLikeDTO> call, Response<SnsItemUnLikeDTO> response) {
@@ -396,7 +428,7 @@ public class SnsRecyclerAdapter extends RecyclerView.Adapter<SnsRecyclerAdapter.
         return Integer.parseInt(sb.toString());
     }
 
-    private void setDeletable(boolean isDeletable){
+    public void setDeletable(boolean isDeletable){
         this.isDeletable = isDeletable;
     }
 }

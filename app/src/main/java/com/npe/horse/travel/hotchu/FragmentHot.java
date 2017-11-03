@@ -46,7 +46,7 @@ public class FragmentHot extends Fragment {
             @Override
             public void onResponse(Call<HotchuDTO> call, Response<HotchuDTO> response) {
                 if (response.body().getResult_code()==200){
-                    horizontalInfiniteCycleViewPager.setAdapter(new HorizontalPagerAdapter(getContext(), false, response.body().getResult_body()));
+                    horizontalInfiniteCycleViewPager.setAdapter(new HorizontalPagerAdapter(getContext(), getActivity(), false, response.body().getResult_body()));
 
                 }
             }

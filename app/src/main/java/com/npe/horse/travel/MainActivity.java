@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.npe.horse.travel.capsule.FragmentCapsule;
@@ -44,7 +46,10 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     Fragment active;
     private MainActivity.SessionCallback callback;
- 
+
+    private final long FINISH_INTERVAL_TIME = 2000;
+    private long backPressedTime = 0;
+
     Fragment fragmentTourist = FragmentTourist.newInstance(1);
     //Fragment fragmentSamplee = FragmentSample.newInstance(2);
     Fragment fragmentSns = FragmentSns.newInstance(2);
@@ -251,6 +256,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        long tempTime = System.currentTimeMillis();
+        long intervalTime = tempTime - backPressedTime;
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        } else {    //뒤로가기 버튼 두 번 누르면 종료
+            if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime)  //연속 누를 때 2초 안에 안누르면 종료 x
+            {
+                super.onBackPressed();
+            } else    //종료
+            {
+                backPressedTime = tempTime;
+                Toast.makeText(this, "'뒤로' 버튼을 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+
+        }
     public static String getKeyHash(final Context context) {
         PackageInfo packageInfo = getPackageInfo(context, PackageManager.GET_SIGNATURES);
         if (packageInfo == null)
@@ -266,5 +287,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return null;
+
     }
 }

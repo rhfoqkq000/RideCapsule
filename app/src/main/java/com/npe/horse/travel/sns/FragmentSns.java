@@ -291,7 +291,6 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
                     @Override
                     public void onResponse(Call<KakaoRegDTO> call, Response<KakaoRegDTO> response) {
                         KakaoSingleton.getInstance().setId(response.body().getResult_code());
-                        Log.e("FragmentSns", "requestMe -> onSuccess -> onResponse");
                         getSnsList(init_page);
                     }
 

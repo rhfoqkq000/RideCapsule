@@ -335,6 +335,26 @@ public class ActivityCapsuleContent extends AppCompatActivity {
 
     void getJson(RequestBody requestBodyCapsuleContent, RequestBody requestBodyCapsuleDate, MultipartBody.Part[] imagesParts, ArrayList<RequestBody> emailArr) {
         InterfaceCapsule uploadImage = ApiClient.getClient().create(InterfaceCapsule.class);
+<<<<<<< HEAD
+        MultipartBody.Part[] imagesParts = new MultipartBody.Part[imgFileArr.size()];
+        for(int i = 0; i < imgFileArr.size(); i++){
+            try {
+                File file = imgFileArr.get(i);
+                File compressedImageFile = new Compressor(this).setQuality(75).compressToFile(file);
+//                  Log.e("AFTER RESIZING SIZE OF FILE"+i, String.valueOf(compressedImageFile.length()/1024));
+                imgFileArr.add(compressedImageFile);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        int user_id = KakaoSingleton.getInstance().getId();
+
+        for (int i = 0; i < imgFileArr.size(); i++) {
+            File file = imgFileArr.get(i);
+            RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+            imagesParts[i] = MultipartBody.Part.createFormData("imagefile", file.getName(), requestBody);
+        }
+=======
 
         for(int i = 0; i < imgFileArr.size(); i++){
             try {
@@ -347,6 +367,7 @@ public class ActivityCapsuleContent extends AppCompatActivity {
             }
         }
         int user_id = KakaoSingleton.getInstance().getId();
+>>>>>>> 050141a4677cd1fa510717001c10bb49e1496ada
 
         Call<CapsuleDTO> call = uploadImage.capsule(requestBodyCapsuleContent, requestBodyCapsuleDate, user_id, imagesParts, emailArr);
         call.enqueue(new Callback<CapsuleDTO>() {

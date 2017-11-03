@@ -140,9 +140,13 @@ public class ActivityFamilyCourse extends AppCompatActivity {
             public void onResponse(Call<TourListRepo> call, Response<TourListRepo> response) {
                 Log.d("RetrofitSingleTon", response.raw().request().url().toString()); // uri 출력
                 Log.d("RetrofitSingleTon", response.body().getResponse().getHeader().getResultMsg());
+
                 itemList.addAll(response.body().getResponse().getBody().getItems().getItem());
+             
+                int curSize = adapter.getItemCount();
                 adapter.addNew(itemList);
-                adapter.notifyDataSetChanged();
+                adapter.notifyItemRangeChanged(curSize,itemList.size()-1);
+
                 Log.d("RetrofitSingleTon", itemList.toString());
                 TourContentSingleton.getInstance().setTotalCount(response.body().getResponse().getBody().getTotalCount());
             }
@@ -153,4 +157,3 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         });
     }
 }
-

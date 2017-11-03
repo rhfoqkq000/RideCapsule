@@ -55,12 +55,15 @@ public class ActivityWakingCourse extends AppCompatActivity {
 
     RetrofitSingleton singleton = RetrofitSingleton.getInstance();
 
+    ArrayList<TourListRepo.Item> itemList;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_walking_course);
         ButterKnife.bind(this);
 
         itemList = new ArrayList<>();
+
         Picasso.with(getApplicationContext()).load(R.drawable.course_walking_img).into(course_walking_img);
 
         progressBar.setVisibility(View.INVISIBLE);
@@ -70,7 +73,9 @@ public class ActivityWakingCourse extends AppCompatActivity {
         layoutManager.setItemPrefetchEnabled(true);
         family_re.setLayoutManager(layoutManager);
         family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
         adapter = new TourRecyclerAdapter(Glide.with(ActivityWakingCourse.this));
+
         family_re.setAdapter(adapter);
 
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
@@ -78,6 +83,7 @@ public class ActivityWakingCourse extends AppCompatActivity {
             public void onLoadMore(final int page, int totalItemsCount, RecyclerView view) {
                 Log.d("SCROLL","END! | "+page);
                 progressBar.setVisibility(View.VISIBLE);
+
                 tourRetrofit(adapter, "C0115", page+1);
                 progressBar.setVisibility(View.INVISIBLE);
             }
@@ -125,6 +131,7 @@ public class ActivityWakingCourse extends AppCompatActivity {
 
 
     }
+
     public void tourRetrofit(final TourRecyclerAdapter adapter, String cat2, int page) {
         Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
@@ -141,8 +148,11 @@ public class ActivityWakingCourse extends AppCompatActivity {
                 Log.d("RetrofitSingleTon", response.raw().request().url().toString()); // uri 출력
                 Log.d("RetrofitSingleTon", response.body().getResponse().getHeader().getResultMsg());
                 itemList.addAll(response.body().getResponse().getBody().getItems().getItem());
+
+                int curSize = adapter.getItemCount();
                 adapter.addNew(itemList);
-                adapter.notifyDataSetChanged();
+                adapter.notifyItemRangeChanged(curSize,itemList.size()-1);
+
                 Log.d("RetrofitSingleTon", itemList.toString());
                 TourContentSingleton.getInstance().setTotalCount(response.body().getResponse().getBody().getTotalCount());
             }

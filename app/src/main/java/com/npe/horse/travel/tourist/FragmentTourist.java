@@ -31,8 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class FragmentTourist extends Fragment {
-    /*    @BindView(R.id.weather_sky)
-        TextView weather_sky;*/
+
     @BindView(R.id.weather_tem)
     TextView weather_tem;
     @BindView(R.id.weather_img)
@@ -109,6 +108,7 @@ public class FragmentTourist extends Fragment {
                 startActivity(aloneintent);
             }
         });
+   
         healing_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,6 +116,7 @@ public class FragmentTourist extends Fragment {
                 startActivity(healingintent);
             }
         });
+
         taste_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
