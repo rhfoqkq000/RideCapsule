@@ -67,15 +67,15 @@ public class CardFragment extends Fragment {
         detail_content = (TextView) view.findViewById(R.id.detail_content) ;
 
         if ( getArguments().getInt("position") == 0 ){
-            TourOverviewRepo.Item item = RetrofitSingleton.getOverview().getResponse().getBody().getItems().getItem();
+            TourOverviewRepo.Item item = RetrofitSingleton.getInstance().getOverview().getResponse().getBody().getItems().getItem();
             detail_title.setText("미리보기");
             Picasso.with(getContext()).load(item.getFirstimage()).into(detail_img);
             detail_content.setText(item.getOverview());
         } else {
-            SubCourseRepo.Item[] items = RetrofitSingleton.getSubCourse().getResponse().getBody().getItems().getItem();
-            detail_title.setText(items[getArguments().getInt("position") - 1].getSubname());
-            Picasso.with(getContext()).load(items[getArguments().getInt("position") -1].getSubdetailimg()).into(detail_img);
-            detail_content.setText(items[getArguments().getInt("position") -1].getSubdetailoverview());
+            SubCourseRepo.Item[] items = RetrofitSingleton.getInstance().getSubCourse().getResponse().getBody().getItems().getItem();
+            detail_title.setText(items[getArguments().getInt("position")-1].getSubname());
+            Picasso.with(getContext()).load(items[getArguments().getInt("position")-1].getSubdetailimg()).into(detail_img);
+            detail_content.setText(items[getArguments().getInt("position")-1].getSubdetailoverview());
         }
         //detail_title.setText(String.format("Card %d", getArguments().getInt("position")));
 /*        detail_button.setOnClickListener(new View.OnClickListener() {

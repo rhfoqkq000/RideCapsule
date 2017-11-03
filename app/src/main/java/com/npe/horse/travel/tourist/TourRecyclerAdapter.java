@@ -25,7 +25,7 @@ public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapte
     //private ArrayList<TourOverviewRepo.Item> overviewitems;
 
 
-    public TourRecyclerAdapter() {
+    public TourRecyclerAdapter(RequestManager glide) {
         this.glide = glide;
     }
 
@@ -55,7 +55,7 @@ public class TourRecyclerAdapter extends RecyclerView.Adapter<TourRecyclerAdapte
         holder.family_title.setText(item.getTitle());
         //holder.family_content.setText(overviewitems.get(position).getOverview());
         holder.family_readcount.setText(item.getReadcount());
-        Picasso.with(holder.itemView.getContext()).load(item.getFirstimage()).into(holder.family_img);
+        glide.load(item.getFirstimage()).into(holder.family_img);
 
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override

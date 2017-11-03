@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -78,6 +79,8 @@ public class ActivityImageSelect extends AppCompatActivity {
                 .setCamera(true)
                 .exceptGif(true)
                 .setReachLimitAutomaticClose(true)
+                .setHomeAsUpIndicatorDrawable(ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_black_24dp))
+                .setOkButtonDrawable(ContextCompat.getDrawable(this, R.drawable.ic_check_black_24dp))
                 .setAllViewTitle("All")
                 .setActionBarTitle("사진선택")
                 .textOnNothingSelected("Please select one or more!")

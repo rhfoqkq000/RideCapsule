@@ -1,9 +1,12 @@
 package com.npe.horse.travel.capsule;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,6 +33,7 @@ import com.sangcomz.fishbun.FishBun;
 import com.sangcomz.fishbun.define.Define;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -110,6 +114,8 @@ public class ActivityCapsuleContent extends AppCompatActivity {
                 .setReachLimitAutomaticClose(true)
                 .setAllViewTitle("All")
                 .setActionBarTitle("사진선택")
+                .setHomeAsUpIndicatorDrawable(ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_black_24dp))
+                .setOkButtonDrawable(ContextCompat.getDrawable(this, R.drawable.ic_check_black_24dp))
                 .textOnNothingSelected("Please select one or more!")
                 .startAlbum();
     }
@@ -186,41 +192,30 @@ public class ActivityCapsuleContent extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "내용을 입력해주세요.", Toast.LENGTH_LONG).show();
             } else {
                 Log.d("SEND", "PASS");
-            //        eidttext내용 저장
-            requestBodyCapsuleContent = RequestBody.create(MediaType.parse("text/plain"), capsule_edit.getText().toString());
+                //        eidttext내용 저장
+                requestBodyCapsuleContent = RequestBody.create(MediaType.parse("text/plain"), capsule_edit.getText().toString());
 //            이메일저장
-            for (int i = 0; i < count; i++) {
-                if (editTextArr.get(i).getText().toString().replace(" ", "").equals("")) {
-                    break;
-                } else {
-                    RequestBody requestBodyEmail = RequestBody.create(MediaType.parse("text/plain"), editTextArr.get(i).getText().toString());
-                    emailArr.add(requestBodyEmail);
-                }
-            }
-//            이미지저장
-            imagesParts = new MultipartBody.Part[imgFileArr.size()];
-
-            for (int i = 0; i < imgFileArr.size(); i++) {
-                File file = imgFileArr.get(i);
-                RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
-                imagesParts[i] = MultipartBody.Part.createFormData("imagefile", file.getName(), requestBody);
-            }
-//            날짜저장
-            requestBodyCapsuleDate = RequestBody.create(MediaType.parse("text/plain"), capsule_date.getText().toString());
-            getJson(requestBodyCapsuleContent, requestBodyCapsuleDate, imagesParts,emailArr);
-
-                AlertDialog.Builder alert = new AlertDialog.Builder(this);
-                alert.setTitle("추억 저장");
-
-                alert.setMessage("에러가 발생 하였습니다.");
-
-                alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                for (int i = 0; i < count; i++) {
+                    if (editTextArr.get(i).getText().toString().replace(" ", "").equals("")) {
+                        break;
+                    } else {
+                        RequestBody requestBodyEmail = RequestBody.create(MediaType.parse("text/plain"), editTextArr.get(i).getText().toString());
+                        emailArr.add(requestBodyEmail);
                     }
-                });
+                }
+//            이미지저장
+                imagesParts = new MultipartBody.Part[imgFileArr.size()];
 
-                alert.show();
+                for (int i = 0; i < imgFileArr.size(); i++) {
+                    File file = imgFileArr.get(i);
+                    RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+                    imagesParts[i] = MultipartBody.Part.createFormData("imagefile", file.getName(), requestBody);
+                }
+//            날짜저장
+                requestBodyCapsuleDate = RequestBody.create(MediaType.parse("text/plain"), capsule_date.getText().toString());
+                getJson(requestBodyCapsuleContent, requestBodyCapsuleDate, imagesParts,emailArr);
+
+                Toast.makeText(getApplicationContext(), "추억이 남겨졌습니다. ^_^", Toast.LENGTH_LONG).show();
             }
         }catch (Exception e){
             Log.e("SEND",e.getMessage());
@@ -336,11 +331,22 @@ public class ActivityCapsuleContent extends AppCompatActivity {
         editTextArr.add(together_mail5);
     }
 
+
+
     void getJson(RequestBody requestBodyCapsuleContent, RequestBody requestBodyCapsuleDate, MultipartBody.Part[] imagesParts, ArrayList<RequestBody> emailArr) {
         InterfaceCapsule uploadImage = ApiClient.getClient().create(InterfaceCapsule.class);
 
+        for(int i = 0; i < imgFileArr.size(); i++){
+            try {
+                File file = imgFileArr.get(i);
+                File compressedImageFile = new Compressor(this).setQuality(75).compressToFile(file);
+//                  Log.e("AFTER RESIZING SIZE OF FILE"+i, String.valueOf(compressedImageFile.length()/1024));
+                imgFileArr.add(compressedImageFile);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         int user_id = KakaoSingleton.getInstance().getId();
-
 
         Call<CapsuleDTO> call = uploadImage.capsule(requestBodyCapsuleContent, requestBodyCapsuleDate, user_id, imagesParts, emailArr);
         call.enqueue(new Callback<CapsuleDTO>() {

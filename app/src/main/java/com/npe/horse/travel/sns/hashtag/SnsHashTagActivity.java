@@ -47,8 +47,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, SearchViewCustom.OnQueryTextListener, SearchViewCustom.SearchViewListener{
-    @BindView(R.id.writeBtn)
-    FloatingActionButton writeBtn;
 
     @BindView(R.id.snsRecyclerView)
     RecyclerView snsRe;
@@ -137,15 +135,6 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
             category = LIKE;
             getSnsListLike(init_page);
         }
-
-        writeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplication(),ActivityImageSelect.class);
-                startActivity(intent);
-            }
-        });
-
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(final int page, int totalItemsCount, RecyclerView view) {

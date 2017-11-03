@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.npe.horse.travel.EndlessRecyclerViewScrollListener;
 import com.npe.horse.travel.R;
 
@@ -73,7 +74,7 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         layoutManager.setInitialPrefetchItemCount(10);
         layoutManager.setItemPrefetchEnabled(true);
         family_re.setLayoutManager(layoutManager);
-        adapter = new TourRecyclerAdapter();
+        adapter = new TourRecyclerAdapter(Glide.with(ActivityFamilyCourse.this));
         family_re.setAdapter(adapter);
 
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
@@ -90,7 +91,7 @@ public class ActivityFamilyCourse extends AppCompatActivity {
 
 
         singleton.areaCodeRetrofit();
-        singleton.tourRetrofit(adapter,"C0112", 1);
+        tourRetrofit(adapter,"C0112", 1);
         adapter.setItemClick(new TourRecyclerAdapter.ItemClick() {
             @Override
             public void onClick(View view, int position) {
@@ -98,12 +99,12 @@ public class ActivityFamilyCourse extends AppCompatActivity {
                 call.enqueue(new Callback<TourOverviewRepo>() {
                     @Override
                     public void onResponse(Call<TourOverviewRepo> call, Response<TourOverviewRepo> response) {
-                        RetrofitSingleton.overview = response.body();
+                        RetrofitSingleton.getInstance().setOverview(response.body());
                         Call<SubCourseRepo> call2 = RetrofitSingleton.subcourseRetrofit();
                         call2.enqueue(new Callback<SubCourseRepo>() {
                             @Override
                             public void onResponse(Call<SubCourseRepo> call, Response<SubCourseRepo> response) {
-                                RetrofitSingleton.subCourse = response.body();
+                                RetrofitSingleton.getInstance().setSubCourse(response.body());
                                 Intent detailintent = new Intent(ActivityFamilyCourse.this, DetailActivity.class);
                                 startActivity(detailintent);
                             }
