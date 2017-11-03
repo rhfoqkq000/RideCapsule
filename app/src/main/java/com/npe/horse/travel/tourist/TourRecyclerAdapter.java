@@ -7,6 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
+
 import com.npe.horse.travel.R;
 import com.squareup.picasso.Picasso;
 

@@ -49,6 +49,8 @@ public class ActivityHealingCourse extends AppCompatActivity {
     ProgressBar progressBar;
     EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
 
+    ArrayList<TourListRepo.Item> itemList;
+
     static TourRecyclerAdapter adapter;
 
     RetrofitSingleton singleton = RetrofitSingleton.getInstance();
@@ -70,7 +72,7 @@ public class ActivityHealingCourse extends AppCompatActivity {
         layoutManager.setInitialPrefetchItemCount(10);
         layoutManager.setItemPrefetchEnabled(true);
         family_re.setLayoutManager(layoutManager);
-        adapter = new TourRecyclerAdapter();
+        adapter = new TourRecyclerAdapter(Glide.with(ActivityHealingCourse.this));
         family_re.setAdapter(adapter);
 
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
@@ -78,6 +80,7 @@ public class ActivityHealingCourse extends AppCompatActivity {
             public void onLoadMore(final int page, int totalItemsCount, RecyclerView view) {
                 Log.d("SCROLL", "END! | " + page);
                 progressBar.setVisibility(View.VISIBLE);
+
 //                RetrofitSingleton.tourRetrofit(adapter, "C0113", page + 1);
                 tourRetrofit(adapter, "C0114", page+1);
                 progressBar.setVisibility(View.INVISIBLE);
@@ -96,12 +99,12 @@ public class ActivityHealingCourse extends AppCompatActivity {
                 call.enqueue(new Callback<TourOverviewRepo>() {
                     @Override
                     public void onResponse(Call<TourOverviewRepo> call, Response<TourOverviewRepo> response) {
-                        RetrofitSingleton.overview = response.body();
+                        RetrofitSingleton.getInstance().setOverview(response.body());
                         Call<SubCourseRepo> call2 = RetrofitSingleton.subcourseRetrofit();
                         call2.enqueue(new Callback<SubCourseRepo>() {
                             @Override
                             public void onResponse(Call<SubCourseRepo> call, Response<SubCourseRepo> response) {
-                                RetrofitSingleton.subCourse = response.body();
+                                RetrofitSingleton.getInstance().setSubCourse(response.body());
                                 Intent detailintent = new Intent(ActivityHealingCourse.this, DetailActivity.class);
                                 startActivity(detailintent);
                             }
@@ -122,11 +125,11 @@ public class ActivityHealingCourse extends AppCompatActivity {
 
             }
         });
-
-
     }
 
+
     public void tourRetrofit(final TourRecyclerAdapter adapter, String cat2, int page) {
+
         Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         TourListRepo.TourListAppInterface tourService = client.create(TourListRepo.TourListAppInterface.class);
@@ -142,9 +145,11 @@ public class ActivityHealingCourse extends AppCompatActivity {
                 Log.d("RetrofitSingleTon", response.raw().request().url().toString()); // uri 출력
                 Log.d("RetrofitSingleTon", response.body().getResponse().getHeader().getResultMsg());
                 itemList.addAll(response.body().getResponse().getBody().getItems().getItem());
+
                 int curSize = adapter.getItemCount();
                 adapter.addNew(itemList);
                 adapter.notifyItemRangeChanged(curSize,itemList.size()-1);
+
                 Log.d("RetrofitSingleTon", itemList.toString());
                 TourContentSingleton.getInstance().setTotalCount(response.body().getResponse().getBody().getTotalCount());
             }
@@ -155,3 +160,4 @@ public class ActivityHealingCourse extends AppCompatActivity {
         });
     }
 }
+

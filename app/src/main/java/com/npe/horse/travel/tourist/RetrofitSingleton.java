@@ -72,20 +72,20 @@ public class RetrofitSingleton extends AppCompatActivity {
     }
 
     //************************************detail 뷰에 넣을 값들
-    static TourOverviewRepo overview;
-    public static TourOverviewRepo getOverview() {
+    TourOverviewRepo overview;
+    public TourOverviewRepo getOverview() {
         return overview;
     }
-    public static void setOverview(TourOverviewRepo overview) {
-        RetrofitSingleton.overview = overview;
+    public void setOverview(TourOverviewRepo overview) {
+        this.overview = overview;
     }
 
-    static SubCourseRepo subCourse;
-    public static SubCourseRepo getSubCourse() {
+    SubCourseRepo subCourse;
+    public SubCourseRepo getSubCourse() {
         return subCourse;
     }
-    public static void setSubCourse(SubCourseRepo subCourse) {
-        RetrofitSingleton.subCourse = subCourse;
+    public void setSubCourse(SubCourseRepo subCourse) {
+        this.subCourse = subCourse;
     }
     //********************************detail 뷰에 넣을 값들
 
@@ -102,7 +102,7 @@ public class RetrofitSingleton extends AppCompatActivity {
                         "Y", "P", "25", areaData.getareaCode(), "C01",cat2,"json");
 
     }*/
-   public static void tourRetrofit(final TourRecyclerAdapter adapter, String cat2, int page) {
+    public void tourRetrofit(final TourRecyclerAdapter adapter, String cat2, int page) {
         Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         TourListRepo.TourListAppInterface tourService = client.create(TourListRepo.TourListAppInterface.class);

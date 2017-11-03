@@ -39,7 +39,7 @@ public class ActivityAloneCourse extends AppCompatActivity {
 
     @BindView(R.id.family_re)
     RecyclerView family_re;
-  
+
     @BindView(R.id.alone_course_progressBar)
     ProgressBar progressBar;
     EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
@@ -59,24 +59,21 @@ public class ActivityAloneCourse extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Picasso.with(getApplicationContext()).load(R.drawable.course_alone_img).into(course_alone_img);
-
         itemList = new ArrayList<>();
 
         progressBar.setVisibility(View.INVISIBLE);
-
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
 //        layoutManager.setInitialPrefetchItemCount(10);
 //        layoutManager.setItemPrefetchEnabled(true);
         family_re.setLayoutManager(layoutManager);
-        adapter = new TourRecyclerAdapter();
+        adapter = new TourRecyclerAdapter(Glide.with(ActivityAloneCourse.this));
         family_re.setAdapter(adapter);
 
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(final int page, int totalItemsCount, RecyclerView view) {
-                Log.d("SCROLL","END! | "+page);
+                Log.d("SCROLL", "END! | " + page);
                 progressBar.setVisibility(View.VISIBLE);
-//                RetrofitSingleton.tourRetrofit(adapter, "C0113", page+1);
                 tourRetrofit(adapter, "C0113", page+1);
                 progressBar.setVisibility(View.INVISIBLE);
             }
@@ -92,12 +89,14 @@ public class ActivityAloneCourse extends AppCompatActivity {
                 call.enqueue(new Callback<TourOverviewRepo>() {
                     @Override
                     public void onResponse(Call<TourOverviewRepo> call, Response<TourOverviewRepo> response) {
-                        RetrofitSingleton.overview = response.body();
+                        RetrofitSingleton.getInstance().setOverview(response.body());
                         Call<SubCourseRepo> call2 = RetrofitSingleton.subcourseRetrofit();
                         call2.enqueue(new Callback<SubCourseRepo>() {
                             @Override
                             public void onResponse(Call<SubCourseRepo> call, Response<SubCourseRepo> response) {
-                                RetrofitSingleton.subCourse = response.body();
+                                Log.d("OVER_URL",response.raw().request().url().toString());
+//                                RetrofitSingleton.subCourse = response.body();
+                                RetrofitSingleton.getInstance().setSubCourse(response.body());
                                 Intent detailintent = new Intent(ActivityAloneCourse.this, DetailActivity.class);
                                 startActivity(detailintent);
                             }

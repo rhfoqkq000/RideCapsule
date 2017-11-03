@@ -11,8 +11,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.npe.horse.travel.EndlessRecyclerViewScrollListener;
 import com.bumptech.glide.Glide;
+import com.npe.horse.travel.EndlessRecyclerViewScrollListener;
 import com.npe.horse.travel.R;
 
 import android.widget.ImageView;
@@ -43,11 +43,6 @@ public class ActivityFamilyCourse extends AppCompatActivity {
 
     @BindView(R.id.family_re)
     RecyclerView family_re;
-
-    @BindView(R.id.course_family_img)
-    ImageView course_family_img;
-
-
     private ProgressDialog mProgressDialog;
 
     @BindView(R.id.family_course_progressBar)
@@ -57,14 +52,6 @@ public class ActivityFamilyCourse extends AppCompatActivity {
     ImageView course_family_img;
 
     EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
-  
-
-    @BindView(R.id.weather_sky)
-    TextView weather_sky;
-    @BindView(R.id.weather_tem)
-    TextView weather_tem;
-    @BindView(R.id.weather_img)
-    ImageView weatherImg;
 
     static TourRecyclerAdapter adapter;
 
@@ -87,7 +74,8 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         layoutManager.setInitialPrefetchItemCount(10);
         layoutManager.setItemPrefetchEnabled(true);
         family_re.setLayoutManager(layoutManager);
-        adapter = new TourRecyclerAdapter();        family_re.setAdapter(adapter);
+        adapter = new TourRecyclerAdapter(Glide.with(ActivityFamilyCourse.this));
+        family_re.setAdapter(adapter);
 
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
@@ -111,12 +99,12 @@ public class ActivityFamilyCourse extends AppCompatActivity {
                 call.enqueue(new Callback<TourOverviewRepo>() {
                     @Override
                     public void onResponse(Call<TourOverviewRepo> call, Response<TourOverviewRepo> response) {
-                        RetrofitSingleton.overview = response.body();
+                        RetrofitSingleton.getInstance().setOverview(response.body());
                         Call<SubCourseRepo> call2 = RetrofitSingleton.subcourseRetrofit();
                         call2.enqueue(new Callback<SubCourseRepo>() {
                             @Override
                             public void onResponse(Call<SubCourseRepo> call, Response<SubCourseRepo> response) {
-                                RetrofitSingleton.subCourse = response.body();
+                                RetrofitSingleton.getInstance().setSubCourse(response.body());
                                 Intent detailintent = new Intent(ActivityFamilyCourse.this, DetailActivity.class);
                                 startActivity(detailintent);
                             }
@@ -152,9 +140,13 @@ public class ActivityFamilyCourse extends AppCompatActivity {
             public void onResponse(Call<TourListRepo> call, Response<TourListRepo> response) {
                 Log.d("RetrofitSingleTon", response.raw().request().url().toString()); // uri 출력
                 Log.d("RetrofitSingleTon", response.body().getResponse().getHeader().getResultMsg());
+
+                itemList.addAll(response.body().getResponse().getBody().getItems().getItem());
+             
                 int curSize = adapter.getItemCount();
                 adapter.addNew(itemList);
                 adapter.notifyItemRangeChanged(curSize,itemList.size()-1);
+
                 Log.d("RetrofitSingleTon", itemList.toString());
                 TourContentSingleton.getInstance().setTotalCount(response.body().getResponse().getBody().getTotalCount());
             }
@@ -165,5 +157,3 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         });
     }
 }
-
-

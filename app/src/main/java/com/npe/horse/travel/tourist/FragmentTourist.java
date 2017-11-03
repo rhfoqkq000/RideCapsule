@@ -31,8 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class FragmentTourist extends Fragment {
-/*    @BindView(R.id.weather_sky)
-    TextView weather_sky;*/
+
     @BindView(R.id.weather_tem)
     TextView weather_tem;
     @BindView(R.id.weather_img)
@@ -109,6 +108,7 @@ public class FragmentTourist extends Fragment {
                 startActivity(aloneintent);
             }
         });
+   
         healing_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,6 +116,7 @@ public class FragmentTourist extends Fragment {
                 startActivity(healingintent);
             }
         });
+
         taste_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -227,11 +228,11 @@ public class FragmentTourist extends Fragment {
                   Log.i("MainActivity", response.body().getWeather().getHourly().get(0).getSky().getName());
 
                   *///하늘 상태에 따른 이미지
-                 setWeatherImg(response.body().getWeather().getHourly().get(0).getSky().getName());
+//                setWeatherImg(response.body().getWeather().getHourly().get(0).getSky().getName());
                 //현재온도
-                Log.i("MainActivity", response.body().getWeather().getHourly().get(0).getTemperature().getTc());
+//                Log.i("MainActivity", response.body().getWeather().getHourly().get(0).getTemperature().getTc());
                 //weather_sky.setText( response.body().getWeather().getHourly().get(0).getTemperature().getTc()+"℃");
-                weather_tem.setText(response.body().getWeather().getHourly().get(0).getTemperature().getTc()+"℃");
+//                weather_tem.setText(response.body().getWeather().getHourly().get(0).getTemperature().getTc()+"℃");
             }
             @Override
             public void onFailure(Call<WeatherRepo> call, Throwable t) {

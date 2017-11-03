@@ -51,6 +51,8 @@ public class ActivityCampingCourse extends AppCompatActivity {
 
     static TourRecyclerAdapter adapter;
 
+    ArrayList<TourListRepo.Item> itemList;
+
     RetrofitSingleton singleton = RetrofitSingleton.getInstance();
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,24 +64,21 @@ public class ActivityCampingCourse extends AppCompatActivity {
 
         Picasso.with(getApplicationContext()).load(R.drawable.course_camping_img).into(course_camping_img);
 
+        itemList = new ArrayList<>();
         progressBar.setVisibility(View.INVISIBLE);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         layoutManager.setInitialPrefetchItemCount(10);
         layoutManager.setItemPrefetchEnabled(true);
         family_re.setLayoutManager(layoutManager);
-        adapter = new TourRecyclerAdapter();
-        family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        adapter = new TourRecyclerAdapter(Glide.with(getApplicationContext()));
+        adapter = new TourRecyclerAdapter(Glide.with(ActivityCampingCourse.this));
         family_re.setAdapter(adapter);
         family_re.addOnScrollListener(endlessRecyclerViewScrollListener);
-
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(final int page, int totalItemsCount, RecyclerView view) {
                 Log.d("SCROLL","END! | "+page);
                 progressBar.setVisibility(View.VISIBLE);
-//                RetrofitSingleton.tourRetrofit(adapter, "C0113", page+1);
                 tourRetrofit(adapter, "C0116", page+1);
                 progressBar.setVisibility(View.INVISIBLE);
             }
@@ -90,7 +89,6 @@ public class ActivityCampingCourse extends AppCompatActivity {
         //singleton.weatherRetrofit();
         tourRetrofit(adapter,"C0116", 1);
 
-
         adapter.setItemClick(new TourRecyclerAdapter.ItemClick() {
             @Override
             public void onClick(View view, int position) {
@@ -98,12 +96,12 @@ public class ActivityCampingCourse extends AppCompatActivity {
                 call.enqueue(new Callback<TourOverviewRepo>() {
                     @Override
                     public void onResponse(Call<TourOverviewRepo> call, Response<TourOverviewRepo> response) {
-                        RetrofitSingleton.overview = response.body();
+                        RetrofitSingleton.getInstance().setOverview(response.body());
                         Call<SubCourseRepo> call2 = RetrofitSingleton.subcourseRetrofit();
                         call2.enqueue(new Callback<SubCourseRepo>() {
                             @Override
                             public void onResponse(Call<SubCourseRepo> call, Response<SubCourseRepo> response) {
-                                RetrofitSingleton.subCourse = response.body();
+                                RetrofitSingleton.getInstance().setSubCourse(response.body());
                                 Intent detailintent = new Intent(ActivityCampingCourse.this, DetailActivity.class);
                                 startActivity(detailintent);
                             }
@@ -122,8 +120,7 @@ public class ActivityCampingCourse extends AppCompatActivity {
                 });
             }
         });
-    }
-
+    }   
     public void tourRetrofit(final TourRecyclerAdapter adapter, String cat2, int page) {
         Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
@@ -139,12 +136,16 @@ public class ActivityCampingCourse extends AppCompatActivity {
             public void onResponse(Call<TourListRepo> call, Response<TourListRepo> response) {
                 Log.d("RetrofitSingleTon", response.raw().request().url().toString()); // uri 출력
                 Log.d("RetrofitSingleTon", response.body().getResponse().getHeader().getResultMsg());
+
+                itemList.addAll(response.body().getResponse().getBody().getItems().getItem());
                 int curSize = adapter.getItemCount();
                 adapter.addNew(itemList);
-                adapter.notifyItemRangeChanged(curSize,itemList.size()-1);
+                adapter.notifyItemRangeChanged(curSize, itemList.size() - 1);
+
                 Log.d("RetrofitSingleTon", itemList.toString());
                 TourContentSingleton.getInstance().setTotalCount(response.body().getResponse().getBody().getTotalCount());
             }
+
             @Override
             public void onFailure(Call<TourListRepo> call, Throwable t) {
                 t.printStackTrace();

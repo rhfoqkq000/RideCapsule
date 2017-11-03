@@ -35,7 +35,6 @@ import net.danlew.android.joda.JodaTimeAndroid;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.Signature;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

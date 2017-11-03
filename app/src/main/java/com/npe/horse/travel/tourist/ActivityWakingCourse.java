@@ -51,6 +51,8 @@ public class ActivityWakingCourse extends AppCompatActivity {
 
     static TourRecyclerAdapter adapter;
 
+    ArrayList<TourListRepo.Item> itemList;
+
     RetrofitSingleton singleton = RetrofitSingleton.getInstance();
 
     ArrayList<TourListRepo.Item> itemList;
@@ -70,12 +72,10 @@ public class ActivityWakingCourse extends AppCompatActivity {
         layoutManager.setInitialPrefetchItemCount(10);
         layoutManager.setItemPrefetchEnabled(true);
         family_re.setLayoutManager(layoutManager);
-        adapter = new TourRecyclerAdapter();
         family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-<<<<<<< HEAD
-=======
-        adapter = new TourRecyclerAdapter(Glide.with(getApplicationContext()));
->>>>>>> ad51b08d1c7d1787bc9528dd7866597304ee77d2
+
+        adapter = new TourRecyclerAdapter(Glide.with(ActivityWakingCourse.this));
+
         family_re.setAdapter(adapter);
 
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
@@ -83,7 +83,7 @@ public class ActivityWakingCourse extends AppCompatActivity {
             public void onLoadMore(final int page, int totalItemsCount, RecyclerView view) {
                 Log.d("SCROLL","END! | "+page);
                 progressBar.setVisibility(View.VISIBLE);
-//                RetrofitSingleton.tourRetrofit(adapter, "C0113", page+1);
+
                 tourRetrofit(adapter, "C0115", page+1);
                 progressBar.setVisibility(View.INVISIBLE);
             }
@@ -101,12 +101,12 @@ public class ActivityWakingCourse extends AppCompatActivity {
                 call.enqueue(new Callback<TourOverviewRepo>() {
                     @Override
                     public void onResponse(Call<TourOverviewRepo> call, Response<TourOverviewRepo> response) {
-                        RetrofitSingleton.overview = response.body();
+                        RetrofitSingleton.getInstance().setOverview(response.body());
                         Call<SubCourseRepo> call2 = RetrofitSingleton.subcourseRetrofit();
                         call2.enqueue(new Callback<SubCourseRepo>() {
                             @Override
                             public void onResponse(Call<SubCourseRepo> call, Response<SubCourseRepo> response) {
-                                RetrofitSingleton.subCourse = response.body();
+                                RetrofitSingleton.getInstance().setSubCourse(response.body());
                                 Intent detailintent = new Intent(ActivityWakingCourse.this, DetailActivity.class);
                                 startActivity(detailintent);
                             }
@@ -148,9 +148,11 @@ public class ActivityWakingCourse extends AppCompatActivity {
                 Log.d("RetrofitSingleTon", response.raw().request().url().toString()); // uri 출력
                 Log.d("RetrofitSingleTon", response.body().getResponse().getHeader().getResultMsg());
                 itemList.addAll(response.body().getResponse().getBody().getItems().getItem());
+
                 int curSize = adapter.getItemCount();
                 adapter.addNew(itemList);
                 adapter.notifyItemRangeChanged(curSize,itemList.size()-1);
+
                 Log.d("RetrofitSingleTon", itemList.toString());
                 TourContentSingleton.getInstance().setTotalCount(response.body().getResponse().getBody().getTotalCount());
             }
