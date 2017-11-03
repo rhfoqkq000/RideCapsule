@@ -23,6 +23,10 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.npe.horse.travel.tourist.RetrofitSingleton.areaData;
 
 /**
  * Created by ekekd on 2017-11-01.
@@ -42,6 +46,8 @@ public class ActivityAloneCourse extends AppCompatActivity {
 
     static TourRecyclerAdapter adapter;
 
+    ArrayList<TourListRepo.Item> itemList;
+
     RetrofitSingleton singleton = RetrofitSingleton.getInstance();
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,8 @@ public class ActivityAloneCourse extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Picasso.with(getApplicationContext()).load(R.drawable.course_alone_img).into(course_alone_img);
+
+        itemList = new ArrayList<>();
 
         progressBar.setVisibility(View.INVISIBLE);
 
@@ -65,14 +73,15 @@ public class ActivityAloneCourse extends AppCompatActivity {
             public void onLoadMore(final int page, int totalItemsCount, RecyclerView view) {
                 Log.d("SCROLL","END! | "+page);
                 progressBar.setVisibility(View.VISIBLE);
-                RetrofitSingleton.tourRetrofit(adapter, "C0113", page+1);
+//                RetrofitSingleton.tourRetrofit(adapter, "C0113", page+1);
+                tourRetrofit(adapter, "C0113", page+1);
                 progressBar.setVisibility(View.INVISIBLE);
             }
         };
         family_re.addOnScrollListener(endlessRecyclerViewScrollListener);
 
         singleton.areaCodeRetrofit();
-        singleton.tourRetrofit(adapter,"C0113", 1);
+        tourRetrofit(adapter,"C0113", 1);
         adapter.setItemClick(new TourRecyclerAdapter.ItemClick() {
             @Override
             public void onClick(View view, int position) {
@@ -102,11 +111,36 @@ public class ActivityAloneCourse extends AppCompatActivity {
                         t.printStackTrace();
                     }
                 });
-
-
-
             }
         });
+    }
 
+    public void tourRetrofit(final TourRecyclerAdapter adapter, String cat2, int page) {
+        Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        TourListRepo.TourListAppInterface tourService = client.create(TourListRepo.TourListAppInterface.class);
+
+        Call<TourListRepo> call = tourService.get_tour_retrofit
+                ("10", String.valueOf(page), "AND",
+                        "TourList",
+                        "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==",
+                        "Y", "P", "25", areaData.getareaCode(), "C01",cat2,"json");
+        call.enqueue(new Callback<TourListRepo>() {
+            @Override
+            public void onResponse(Call<TourListRepo> call, Response<TourListRepo> response) {
+                Log.d("RetrofitSingleTon", response.raw().request().url().toString()); // uri 출력
+                Log.d("RetrofitSingleTon", response.body().getResponse().getHeader().getResultMsg());
+                itemList.addAll(response.body().getResponse().getBody().getItems().getItem());
+                int curSize = adapter.getItemCount();
+                adapter.addNew(itemList);
+                adapter.notifyItemRangeChanged(curSize,itemList.size()-1);
+                Log.d("RetrofitSingleTon", itemList.toString());
+                TourContentSingleton.getInstance().setTotalCount(response.body().getResponse().getBody().getTotalCount());
+            }
+            @Override
+            public void onFailure(Call<TourListRepo> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }

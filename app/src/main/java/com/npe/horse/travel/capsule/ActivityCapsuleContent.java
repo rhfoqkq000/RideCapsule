@@ -22,6 +22,7 @@ import com.npe.horse.travel.ApiClient;
 import com.npe.horse.travel.R;
 import com.npe.horse.travel.capsule.retrofit.InterfaceCapsule;
 import com.npe.horse.travel.capsule.retrofit.CapsuleDTO;
+import com.npe.horse.travel.kakao.KakaoSingleton;
 import com.sangcomz.fishbun.FishBun;
 import com.sangcomz.fishbun.define.Define;
 
@@ -295,8 +296,17 @@ public class ActivityCapsuleContent extends AppCompatActivity {
     void getJson() {
         InterfaceCapsule uploadImage = ApiClient.getClient().create(InterfaceCapsule.class);
         MultipartBody.Part[] imagesParts = new MultipartBody.Part[imgFileArr.size()];
-
-        int user_id = 9;
+        for(int i = 0; i < imgFileArr.size(); i++){
+            try {
+                File file = imgFileArr.get(i);
+                File compressedImageFile = new Compressor(this).setQuality(75).compressToFile(file);
+//                  Log.e("AFTER RESIZING SIZE OF FILE"+i, String.valueOf(compressedImageFile.length()/1024));
+                imgFileArr.add(compressedImageFile);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        int user_id = KakaoSingleton.getInstance().getId();
 
         for (int i = 0; i < imgFileArr.size(); i++) {
             File file = imgFileArr.get(i);
