@@ -1,6 +1,7 @@
 package com.npe.horse.travel.tourist;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.npe.horse.travel.EndlessRecyclerViewScrollListener;
+import com.bumptech.glide.Glide;
 import com.npe.horse.travel.R;
 import com.npe.horse.travel.tourist.detailPage.DetailActivity;
 import com.squareup.picasso.Picasso;
@@ -67,6 +69,8 @@ public class ActivityCampingCourse extends AppCompatActivity {
         layoutManager.setItemPrefetchEnabled(true);
         family_re.setLayoutManager(layoutManager);
         adapter = new TourRecyclerAdapter();
+        family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        adapter = new TourRecyclerAdapter(Glide.with(getApplicationContext()));
         family_re.setAdapter(adapter);
         family_re.addOnScrollListener(endlessRecyclerViewScrollListener);
 

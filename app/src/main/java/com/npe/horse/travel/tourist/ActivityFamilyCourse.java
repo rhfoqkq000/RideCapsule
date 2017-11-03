@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.npe.horse.travel.EndlessRecyclerViewScrollListener;
+import com.bumptech.glide.Glide;
 import com.npe.horse.travel.R;
 
 import android.widget.ImageView;
@@ -42,6 +43,11 @@ public class ActivityFamilyCourse extends AppCompatActivity {
 
     @BindView(R.id.family_re)
     RecyclerView family_re;
+
+    @BindView(R.id.course_family_img)
+    ImageView course_family_img;
+
+
     private ProgressDialog mProgressDialog;
 
     @BindView(R.id.family_course_progressBar)
@@ -52,6 +58,14 @@ public class ActivityFamilyCourse extends AppCompatActivity {
 
     EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
   
+
+    @BindView(R.id.weather_sky)
+    TextView weather_sky;
+    @BindView(R.id.weather_tem)
+    TextView weather_tem;
+    @BindView(R.id.weather_img)
+    ImageView weatherImg;
+
     static TourRecyclerAdapter adapter;
 
     RetrofitSingleton singleton = RetrofitSingleton.getInstance();
@@ -73,8 +87,7 @@ public class ActivityFamilyCourse extends AppCompatActivity {
         layoutManager.setInitialPrefetchItemCount(10);
         layoutManager.setItemPrefetchEnabled(true);
         family_re.setLayoutManager(layoutManager);
-        adapter = new TourRecyclerAdapter();
-        family_re.setAdapter(adapter);
+        adapter = new TourRecyclerAdapter();        family_re.setAdapter(adapter);
 
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
