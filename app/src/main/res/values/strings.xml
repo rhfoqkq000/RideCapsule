@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">발자취</string>
+    <string name="title_tourist">관광지정보</string>
+    <string name="title_sns">SNS</string>
+    <string name="title_capsule">타임캡슐</string>
+    <string name="title_hotten">핫텐</string>
+    <string name="title_mypage">마이페이지</string>
+    <string name="sns_like_count">개</string>
+    <string name="sns_like_title">가볼래</string>
+
+    <string name="imgs_count_text">%1$d / %2$d</string>
+    <string name="comment_count_text">댓글 %1$d 모두 보기</string>
+
+    <string name="comment_write">쓰기</string>
+
+    <string-array name="query_suggestions">
+        <item>Android</item>
+        <item>iOS</item>
+        <item>SCALA</item>
+        <item>Ruby</item>
+        <item>JavaScript</item>
+    </string-array>
+    <string name="title_activity_maps">Map</string>
+</resources>
