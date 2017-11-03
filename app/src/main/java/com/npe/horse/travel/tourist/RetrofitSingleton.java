@@ -8,7 +8,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.npe.horse.travel.ApiClient;
 import com.npe.horse.travel.R;
+import com.npe.horse.travel.UrlSingleton;
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -42,8 +47,16 @@ public class RetrofitSingleton extends AppCompatActivity {
         cityDialog(areaData.getCitys());
     }
 
+    private static final String NUMOFROW = "10";
+    private static final String PAGE_NO = "1";
+    private static final String OS = "AND";
+    private static final String APPNAME = "tourlist";
+    private static final String CONTENTTYPEID = "25";
+    private static final String DETAILYN = "Y";
+    private static final String TYPE = "json";
 
-    AreaData areaData = new AreaData();
+
+    static AreaData areaData = AreaData.getInstance();
     String[] region = areaData.getSeoUl(); //초기값 서울
 
 
@@ -58,40 +71,57 @@ public class RetrofitSingleton extends AppCompatActivity {
         return Singleton.instance;
     }
 
+    //************************************detail 뷰에 넣을 값들
+    static TourOverviewRepo overview;
+    public static TourOverviewRepo getOverview() {
+        return overview;
+    }
+    public static void setOverview(TourOverviewRepo overview) {
+        RetrofitSingleton.overview = overview;
+    }
+
+    static SubCourseRepo subCourse;
+    public static SubCourseRepo getSubCourse() {
+        return subCourse;
+    }
+    public static void setSubCourse(SubCourseRepo subCourse) {
+        RetrofitSingleton.subCourse = subCourse;
+    }
+    //********************************detail 뷰에 넣을 값들
 
 
     //Tour Retorofit
-    public void tourRetrofit(final TourRecyclerAdapter adapter, String cat2) {
+/*    public static Call<TourListRepo> tourRetrofit(final TourRecyclerAdapter adapter, String cat2) {
+        Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        TourListRepo.TourListAppInterface tourService = client.create(TourListRepo.TourListAppInterface.class);
+
+        //Call<TourListRepo> call =
+        return tourService.get_tour_retrofit("10", "1", "AND", "TourList",
+                        "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==",
+                        "Y", "P", "25", areaData.getareaCode(), "C01",cat2,"json");
+
+    }*/
+   public static void tourRetrofit(final TourRecyclerAdapter adapter, String cat2, int page) {
         Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         TourListRepo.TourListAppInterface tourService = client.create(TourListRepo.TourListAppInterface.class);
 
         Call<TourListRepo> call = tourService.get_tour_retrofit
-                ("3", "1", "AND",
+                ("10", String.valueOf(page), "AND",
                         "TourList",
                         "mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==",
-                        "Y", "P", "25", "1", "C01",cat2,"json");
+                        "Y", "P", "25", areaData.getareaCode(), "C01",cat2,"json");
         call.enqueue(new Callback<TourListRepo>() {
             @Override
             public void onResponse(Call<TourListRepo> call, Response<TourListRepo> response) {
                 Log.d("RetrofitSingleTon", response.raw().request().url().toString()); // uri 출력
                 Log.d("RetrofitSingleTon", response.body().getResponse().getHeader().getResultMsg());
                 ArrayList<TourListRepo.Item> itemList = response.body().getResponse().getBody().getItems().getItem();
-                /*
-                ArrayList<TourOverviewRepo.Item> overviewitemList = new ArrayList<TourOverviewRepo.Item>();
-                String[] overviews = new String[response.body().getResponse().getBody().getItems().getItem().size()];
-                for (int index = 0; index < response.body().getResponse().getBody().getItems().getItem().size(); index++) {
-                    //overviews[index] = overviewRetrofit(response.body().getResponse().getBody().getItems().getItem().get(index).getContentid(), index);
-                    Log.i("summer", "2");
-                    overviewRetrofit(response.body().getResponse().getBody().getItems().getItem().get(index).getContentid(), index);
-                    Log.i("summer", index+"");
-                    Log.i("summer", overviewitemList.get(index).getOverview().toString());
-                    overviewitemList.set(index, overviewOneItem);
-
-                }*/
-
                 adapter.addNew(itemList);
+                adapter.notifyDataSetChanged();
                 Log.d("RetrofitSingleTon", itemList.toString());
+                TourContentSingleton.getInstance().setTotalCount(response.body().getResponse().getBody().getTotalCount());
             }
             @Override
             public void onFailure(Call<TourListRepo> call, Throwable t) {
@@ -99,28 +129,18 @@ public class RetrofitSingleton extends AppCompatActivity {
             }
         });
     }
+    public static Call<TourOverviewRepo> overviewRetrofit() {
+        TourOverviewRepo.TourOverviewAppInterface retrofit = ApiClient.getPublicClient().create(TourOverviewRepo.TourOverviewAppInterface.class);
+        return retrofit.get_overview_retrofit(UrlSingleton.getInstance().serviceKey(),NUMOFROW,PAGE_NO,OS,APPNAME,
+                TourContentSingleton.getInstance().getContent_id(), CONTENTTYPEID, "Y","Y","Y", TYPE);
 
-    //공통정보조회 Retrofit (코스에 대한 개요, 주소 얻어오기 위해)
-    public void overviewRetrofit(String ContentId, final int index) {
-        Retrofit client = new Retrofit.Builder().baseUrl("http://api.visitkorea.or.kr/").addConverterFactory(GsonConverterFactory.create()).build();
-        TourOverviewRepo.TourOverviewAppInterface overviewService = client.create(TourOverviewRepo.TourOverviewAppInterface.class);
-        Call<TourOverviewRepo> call = overviewService.get_overview_retrofit
-                ("mWOUP6hFibrsdKm56wULHkl93YWqbqfALbjYOD9XH/1ASgmGqBlXVo5YZIpfA5P5DgSlFTaggM2zrYBUWiHQug==","1", "1",
-                        "AND","TourList",ContentId, "25", "Y", "Y", "json");
-        call.enqueue(new Callback<TourOverviewRepo>() {
-            @Override
-            public void onResponse(Call<TourOverviewRepo> call, Response<TourOverviewRepo> response) {
-                Log.d("RetrofitSingleTon", response.raw().request().url().toString()); // uri 출력
-                Log.d("RetrofitSingleTon", response.body().getResponse().getHeader().getResultMsg());
-                //overviewOneItem.setOverview(response.body().getResponse().getBody().getItems().getItem().getOverview().toString());
-                //overviewitemList.get(index).setOverview(response.body().getResponse().getBody().getItems().getItem().getOverview());
-            }
-            @Override
-            public void onFailure(Call<TourOverviewRepo> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
     }
+
+    public static Call<SubCourseRepo> subcourseRetrofit(){
+        SubCourseRepo.SubCourseAppInterface retrofit = ApiClient.getPublicClient().create(SubCourseRepo.SubCourseAppInterface.class);
+        return retrofit.get_subcourse_retrofit(UrlSingleton.getInstance().serviceKey(),NUMOFROW,PAGE_NO,OS,APPNAME, TourContentSingleton.getInstance().getContent_id(),CONTENTTYPEID,DETAILYN,TYPE);
+    }
+
 
     //날씨, 도시 관련 설정 Start
     private void cityDialog(final String[] region) {
@@ -141,7 +161,7 @@ public class RetrofitSingleton extends AppCompatActivity {
                         // 선택 버튼 클릭시 , 여기서 선택한 값을 메인 Activity 로 넘기면 된다.
                         weatherRetrofit(areaData.getLat(), areaData.getLon());
                         areaCodeRetrofit();
-                        tourRetrofit(ActivityFamilyCourse.adapter, "C0112");
+                        tourRetrofit(ActivityFamilyCourse.adapter, "C0112", 1);
                         //tourRetrofit("C01"); //여행코스
 /*                        tourRetrofit(false, "A05"); //맛집
                         tourRetrofit(false, "A02"); //예술, 문화, 역사

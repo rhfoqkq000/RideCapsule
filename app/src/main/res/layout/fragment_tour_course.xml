@@ -1,145 +1,242 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:orientation="vertical"
+    tools:context="com.npe.horse.travel.tourist.FragmentTourist">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_home"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/actionbar" />
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.CoordinatorLayout>
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+        <Button
+            android:id="@+id/city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:text="서울특별시"
+            android:textColor="#fff" />
+
+        <ImageView
+            android:id="@+id/weather_img"
+            android:layout_marginLeft="8dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/weather38" />
+        <TextView
+            android:id="@+id/weather_tem"
+            android:textSize="13dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp" />
+
+
+
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/backgroundColor"
-        tools:context="com.npe.horse.travel.tourist.FragmentTourist">
-
-        <android.support.design.widget.CoordinatorLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <android.support.design.widget.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
-
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar_home"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:popupTheme="@style/AppTheme.PopupOverlay">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="16dp"
-                        android:padding="10dp">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/actionbar" />
-                    </RelativeLayout>
-                </android.support.v7.widget.Toolbar>
-            </android.support.design.widget.AppBarLayout>
-        </android.support.design.widget.CoordinatorLayout>
-
-
-
+        android:background="@drawable/test_img">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            
             android:orientation="vertical"
+            android:padding="5dp"
             android:weightSum="10">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:orientation="horizontal"
                 android:layout_weight="3.34"
+                android:orientation="horizontal"
                 android:weightSum="1">
-                <RelativeLayout
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.5">
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="0.5"
+                    android:background="#77000000"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal|center_vertical">
+
                     <ImageView
-                        android:src="@drawable/family_course"
                         android:id="@+id/family_course"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/family"
+                        android:layout_marginBottom="5dp"/>
+                    <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginRight="6dp"
-                        />
-                </RelativeLayout>
-                <RelativeLayout
+                        android:layout_height="20sp"
+                        android:src="@drawable/family_font"/>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.5">
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="0.5"
+                    android:background="#77000000"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal|center_vertical">
+
                     <ImageView
-                        android:src="@drawable/walking_course"
                         android:id="@+id/walking_course"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/walk"
+                        android:layout_marginBottom="5dp"/>
+                    <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginRight="6dp"/>
-                </RelativeLayout>
+                        android:layout_height="20sp"
+                        android:src="@drawable/walk_font"/>
+                </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:orientation="horizontal"
                 android:layout_weight="3.34"
+                android:orientation="horizontal"
                 android:weightSum="1">
-                <RelativeLayout
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.5">
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="0.5"
+                    android:background="#77000000"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal|center_vertical">
+
                     <ImageView
-                        android:src="@drawable/alone_course"
                         android:id="@+id/alone_course"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/back"
+                        android:layout_marginBottom="5dp"/>
+                    <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginRight="6dp"/>
-                </RelativeLayout>
-                <RelativeLayout
+                        android:layout_height="20sp"
+                        android:src="@drawable/back_font"/>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.5">
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="0.5"
+                    android:background="#77000000"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal|center_vertical">
+
                     <ImageView
-                        android:src="@drawable/healing_course"
                         android:id="@+id/healing_course"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/healing"
+                        android:layout_marginBottom="5dp"/>
+                    <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginRight="6dp"/>
-                </RelativeLayout>
+                        android:layout_height="20sp"
+                        android:src="@drawable/healing_font"/>
+                </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:orientation="horizontal"
                 android:layout_weight="3.34"
+                android:orientation="horizontal"
                 android:weightSum="1">
-                <RelativeLayout
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.5">
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="0.5"
+                    android:background="#77000000"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal|center_vertical">
+
                     <ImageView
-                        android:src="@drawable/taste_course"
                         android:id="@+id/taste_course"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/rice"
+                        android:layout_marginBottom="5dp"/>
+                    <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginRight="6dp"/>
-                </RelativeLayout>
-                <RelativeLayout
+                        android:layout_height="20sp"
+                        android:src="@drawable/rice_font"/>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.5">
+                    android:layout_weight="0.5"
+                    android:background="#77000000"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal|center_vertical">
+
                     <ImageView
-                        android:src="@drawable/camping_course"
                         android:id="@+id/camping_course"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/camping"
+                        android:layout_marginBottom="5dp"/>
+                    <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginRight="6dp"/>
-                </RelativeLayout>
+                        android:layout_height="20sp"
+                        android:src="@drawable/camping_font"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
+</LinearLayout>

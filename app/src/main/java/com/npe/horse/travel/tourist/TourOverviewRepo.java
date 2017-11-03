@@ -116,7 +116,7 @@ public class TourOverviewRepo {
     public class Item{
         private String contentid;
         private String contenttypeid;
-        private long createdtime;
+        private String firstimage;
         private Double mapx;
         private Double mapy;
         private String mlevel;
@@ -138,12 +138,12 @@ public class TourOverviewRepo {
             this.contenttypeid = contenttypeid;
         }
 
-        public long getCreatedtime() {
-            return createdtime;
+        public String getFirstimage() {
+            return firstimage;
         }
 
-        public void setCreatedtime(long createdtime) {
-            this.createdtime = createdtime;
+        public void setFirstimage(String firstimage) {
+            this.firstimage = firstimage;
         }
 
         public Double getMapx() {
@@ -182,7 +182,7 @@ public class TourOverviewRepo {
         @GET("/openapi/service/rest/KorService/detailCommon")
         Call<TourOverviewRepo> get_overview_retrofit(@Query("ServiceKey") String ServiceKey, @Query("numOfRows") String numOfRows, @Query("pageNo") String pageNo, @Query("MobileOS") String MobileOS, @Query("MobileApp") String MobileApp,
                                                  @Query("contentId") String contentId, @Query("contentTypeId") String contentTypeId,
-                                                 @Query("mapinfoYN") String mapinfoYN, @Query("overviewYN") String overviewYN ,@Query("_type") String type);
+                                                 @Query("firstImageYN") String firstImageYN, @Query("mapinfoYN") String mapinfoYN, @Query("overviewYN") String overviewYN ,@Query("_type") String type);
     }
 
 

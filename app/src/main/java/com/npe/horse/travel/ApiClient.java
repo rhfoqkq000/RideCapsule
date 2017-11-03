@@ -17,6 +17,7 @@ public class ApiClient {
       private static String BASE_URL = UrlSingleton.getInstance().getSERVER_URL();
 
     private static Retrofit retrofit = null;
+    private static Retrofit pubRetrofit = null;
 
     public static Retrofit getClient() {
         if (retrofit==null) {
@@ -31,14 +32,15 @@ public class ApiClient {
         return retrofit;
     }
 
-    public static Retrofit getScalarClient() {
-        if (retrofit==null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(ScalarsConverterFactory.create())
+
+    public static Retrofit getPublicClient() {
+        if (pubRetrofit==null) {
+            pubRetrofit = new Retrofit.Builder()
+                    .baseUrl(UrlSingleton.getInstance().getPublicServer())
+                    .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-        return retrofit;
+        return pubRetrofit;
     }
 //
 //    public Retrofit getClient(){
