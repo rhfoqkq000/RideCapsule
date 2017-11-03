@@ -69,6 +69,11 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="com.npe.horse.travel.tourist.detailPage.DetailActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name="com.thefinestartist.finestwebview.FinestWebViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="sensor"
+            android:theme="@style/FinestWebViewTheme.Light" />
     </application>
 
 </manifest>

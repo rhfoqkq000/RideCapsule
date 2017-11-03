@@ -64,14 +64,14 @@ public class FragmentMypage extends Fragment {
     @OnClick(R.id.mypage_writtenBtn)
     void writtenBtnClicked(){
         Intent intent = new Intent(getContext(), SnsHashTagActivity.class);
-        HashTagSingleton.getInstance().setHash("@"+KakaoSingleton.getInstance().getNickname());
+        HashTagSingleton.getInstance().setHash("@@"+KakaoSingleton.getInstance().getNickname());
         startActivity(intent);
     }
 
     @OnClick(R.id.mypage_likeBtn)
     void likeBtnClicked(){
         Intent intent = new Intent(getContext(), SnsHashTagActivity.class);
-        HashTagSingleton.getInstance().setHash("*");
+        HashTagSingleton.getInstance().setHash("***");
         startActivity(intent);
     }
 }

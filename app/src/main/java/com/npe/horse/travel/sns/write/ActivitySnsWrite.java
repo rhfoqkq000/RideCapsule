@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.npe.horse.travel.ApiClient;
 import com.npe.horse.travel.MainActivity;
 import com.npe.horse.travel.R;
+import com.npe.horse.travel.kakao.KakaoSingleton;
 import com.volokh.danylo.hashtaghelper.HashTagHelper;
 
 import java.io.File;
@@ -60,7 +61,8 @@ public class ActivitySnsWrite extends AppCompatActivity {
         RequestBody requestBodyLocation = RequestBody.create(MediaType.parse("text/plain"), location);
         RequestBody requestBodyLocation_alias = RequestBody.create(MediaType.parse("text/plain"), location_alias);
         Call<SnsWriteDTO> call = write.writeSns(requestBodyPost, hashtagToRequestBodyArray(allHashTags),
-                uriArrToImagesParts(ImageSingleton.getInstance().getImgUri()), 1, requestBodyLocation, requestBodyLocation_alias);
+                uriArrToImagesParts(ImageSingleton.getInstance().getImgUri()), KakaoSingleton.getInstance().getId(),
+                requestBodyLocation, requestBodyLocation_alias);
         call.enqueue(new Callback<SnsWriteDTO>() {
             @Override
             public void onResponse(Call<SnsWriteDTO> call, Response<SnsWriteDTO> response) {
@@ -68,7 +70,8 @@ public class ActivitySnsWrite extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),response.body().getResult_body(),Toast.LENGTH_SHORT).show();
                 Log.e("ActivitySnsWrite", response.body().getResult_body());
                 Intent i = new Intent(ActivitySnsWrite.this, MainActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
             }
 
