@@ -68,25 +68,24 @@
             android:value="@string/kakao_app_key" 
             android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/app_name" />
-        
+
+        <activity android:name="com.npe.horse.travel.tourist.ActivityWakingCourse"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.npe.horse.travel.tourist.ActivityAloneCourse"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.npe.horse.travel.tourist.ActivityHealingCourse"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.npe.horse.travel.tourist.ActivityTasteCourse"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.npe.horse.travel.tourist.ActivityCampingCourse"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.npe.horse.travel.tourist.detailPage.DetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".tourist.ActivityWakingCourse"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".tourist.ActivityAloneCourse"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".tourist.ActivityHealingCourse"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".tourist.ActivityTasteCourse"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".tourist.ActivityCampingCourse"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".tourist.detailPage.DetailActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name="com.thefinestartist.finestwebview.FinestWebViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="sensor"
+            android:theme="@style/FinestWebViewTheme.Light" />
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -99,7 +98,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.npe.horse.travel.hotchu;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.npe.horse.travel.R;
+import com.thefinestartist.finestwebview.FinestWebView;
 
 import java.util.ArrayList;
 
@@ -21,14 +23,16 @@ public class HorizontalPagerAdapter extends PagerAdapter {
 
 
     private Context mContext;
+    private Activity activity;
     private LayoutInflater mLayoutInflater;
 
     private boolean mIsTwoWay;
 
     private ArrayList<HotchuItem> items;
 
-    public HorizontalPagerAdapter(final Context context, final boolean isTwoWay, ArrayList<HotchuItem> items) {
+    public HorizontalPagerAdapter(final Context context, Activity activity, final boolean isTwoWay, ArrayList<HotchuItem> items) {
         mContext = context;
+        this.activity = activity;
         mLayoutInflater = LayoutInflater.from(context);
         mIsTwoWay = isTwoWay;
         this.items = items;
@@ -56,6 +60,14 @@ public class HorizontalPagerAdapter extends PagerAdapter {
             // 두번째부터 마지막까지 뉴스
             view = mLayoutInflater.inflate(R.layout.hot_item, container, false);
             setupItem(view, items.get(position-1),position);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // 주소
+//                    items.get(position-1).getContent();
+                    new FinestWebView.Builder(activity).show(items.get(position-1).getContent());
+                }
+            });
         }
 
 

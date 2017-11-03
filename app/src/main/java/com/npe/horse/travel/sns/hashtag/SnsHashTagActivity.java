@@ -79,6 +79,8 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
 
     final int LIKE = 3;
 
+    final int MYLOOK = 4;
+
     int category = 0;
 
     @Override
@@ -118,7 +120,14 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
         adapter.setContext(getApplicationContext());
         snsRe.setAdapter(adapter);
 
-        if (hashtag.charAt(0) == '#'){
+        if (hashtag.substring(0, 2).equals("@@")){
+            Toast.makeText(this, "해당 글의 빈칸을 길게 누르시면 글이 삭제됩니다.", Toast.LENGTH_SHORT).show();
+            Log.e("SnsHashTagActivity", "hashtag2::::"+hashtag.substring(0, 2));
+            Log.e("SnsHashTagActivity", "hashtag3::::"+hashtag.substring(2, hashtag.length()));
+            category = MYLOOK;
+            hashtag = hashtag.substring(2, hashtag.length());
+            getSnsList(hashtag, 1, init_page);
+        } else if (hashtag.charAt(0) == '#'){
             category = HASHTAG;
             hashtag = hashtag.substring(1, hashtag.length());
             getSnsList(hashtag, category, init_page);
@@ -162,22 +171,29 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
         snsRe.addOnScrollListener(endlessRecyclerViewScrollListener);
     }
 
-    void getSnsList(String hashtag, int category, int page){
+    void getSnsList(String hashtag, int category2, int page){
         InterfaceSnsList list = ApiClient.getClient().create(InterfaceSnsList.class);
-        Call<SnsListDTO> call = list.listSnsForHashTag(KakaoSingleton.getInstance().getId(), category, hashtag, page);
+        Call<SnsListDTO> call = list.listSnsForHashTag(KakaoSingleton.getInstance().getId(), category2, hashtag, page);
         call.enqueue(new Callback<SnsListDTO>() {
             @Override
             public void onResponse(@NonNull Call<SnsListDTO> call, @NonNull Response<SnsListDTO> response) {
                 Log.d("URL",response.raw().request().url().toString());
                 if (response.body().getItems_count()!=0){
                     allItems.addAll(response.body().getResult_body());
+                    Log.e("SnsHashTagActivity", "1");
                     int curSize = adapter.getItemCount();
                     adapter.addNew(allItems);
+                    Log.e("SnsHashTagActivity", "2");
                     snsRe.getRecycledViewPool().setMaxRecycledViews(0,allItems.size());
+                    Log.e("SnsHashTagActivity", "3");
                     if (isRe){
                         adapter.notifyDataSetChanged();
                     } else {
                         adapter.notifyItemRangeChanged(curSize,allItems.size()-1);
+                        Log.e("SnsHashTagActivity", "4");
+                    }
+                    if(category == MYLOOK){
+                        adapter.setDeletable(true);
                     }
                 } else {
                     Log.d("SCROLL","END!");
@@ -190,17 +206,13 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
             public void onFailure(@NonNull Call<SnsListDTO> call, @NonNull Throwable t) {
                 t.getStackTrace();
                 Log.e("RETROFIT", t.getMessage());
-                Toast.makeText(getApplicationContext(),"글을 불러오는데 실패했습니다. 잠시후 다시 시도해 주세요.",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"글을 불러오는데 실패했습니다. 잠시후 다시 시도해 주세요.1",Toast.LENGTH_LONG).show();
             }
         });
     }
 
     void getSnsListLike(int page){
         InterfaceSnsList list = ApiClient.getClient().create(InterfaceSnsList.class);
-//        InterfaceSnsList list = new Retrofit.Builder()
-//                .baseUrl("http://168.115.224.15:5000/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build().create(InterfaceSnsList.class);
         Call<SnsListDTO> call = list.listSnsLike(KakaoSingleton.getInstance().getId(), page);
         call.enqueue(new Callback<SnsListDTO>() {
             @Override
@@ -216,6 +228,7 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
                     } else {
                         adapter.notifyItemRangeChanged(curSize,allItems.size()-1);
                     }
+
                 } else {
                     Log.d("SCROLL","END!");
                 }
@@ -227,7 +240,7 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
             public void onFailure(@NonNull Call<SnsListDTO> call, @NonNull Throwable t) {
                 t.getStackTrace();
                 Log.e("RETROFIT", t.getMessage());
-                Toast.makeText(getApplicationContext(),"글을 불러오는데 실패했습니다. 잠시후 다시 시도해 주세요.",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"글을 불러오는데 실패했습니다. 잠시후 다시 시도해 주세요.2",Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -246,7 +259,11 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
             if (category == LIKE) {
                 getSnsListLike(1);
             }else{
-                getSnsList(hashtag,category,1);
+                if (category == MYLOOK){
+                    getSnsList(hashtag,1,1);
+                }else{
+                    getSnsList(hashtag,category,1);
+                }
             }
         }
     }
@@ -289,7 +306,7 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
 
             @Override
             public void onFailure(Call<SnsKeyWordDTO> call, Throwable t) {
-
+                t.printStackTrace();
             }
         });
     }
@@ -335,4 +352,11 @@ public class SnsHashTagActivity extends AppCompatActivity implements SwipeRefres
 //            super.onBackPressed();
 //        }
 //    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        adapter.setDeletable(false);
+    }
 }

@@ -88,4 +88,6 @@ dependencies {
     compile 'io.nlopez.smartlocation:library:3.3.3'
     compile group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
     compile 'com.android.support:design:26.1.0'
+    compile 'com.thefinestartist:finestwebview:1.2.7'
+
 }
