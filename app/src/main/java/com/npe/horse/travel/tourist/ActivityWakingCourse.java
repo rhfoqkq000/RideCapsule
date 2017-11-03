@@ -72,6 +72,10 @@ public class ActivityWakingCourse extends AppCompatActivity {
         family_re.setLayoutManager(layoutManager);
         adapter = new TourRecyclerAdapter();
         family_re.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+<<<<<<< HEAD
+=======
+        adapter = new TourRecyclerAdapter(Glide.with(getApplicationContext()));
+>>>>>>> ad51b08d1c7d1787bc9528dd7866597304ee77d2
         family_re.setAdapter(adapter);
 
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
