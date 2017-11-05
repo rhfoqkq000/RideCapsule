@@ -22,6 +22,14 @@
             android:textSize="13sp"
             android:visibility="visible" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="첫 번째 사진이 메인입니다"
+            android:textColor="#8D8D8D"
+            android:textSize="9sp" />
+
         <android.support.v4.view.ViewPager
             android:id="@+id/capsule_viewPager"
             android:layout_width="match_parent"
@@ -49,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="top"
                 android:hint="글을 입력하세요"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:minHeight="200dp"
                 android:padding="8dp"
                 android:textSize="13sp" />
@@ -77,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:hint="함께 받을 메일을 적으세요."
-                    android:inputType="text"
+                    android:inputType="textEmailAddress"
                     android:padding="10dp"
                     android:textSize="13sp"
                     android:visibility="gone" />
@@ -104,7 +112,7 @@
                     android:layout_marginEnd="5dp"
                     android:layout_marginLeft="5dp"
                     android:hint="함께 받을 메일을 적으세요."
-                    android:inputType="text"
+                    android:inputType="textEmailAddress"
                     android:padding="10dp"
                     android:textSize="13sp"
                     android:visibility="gone" />
@@ -131,7 +139,7 @@
                     android:layout_marginEnd="5dp"
                     android:layout_marginLeft="5dp"
                     android:hint="함께 받을 메일을 적으세요."
-                    android:inputType="text"
+                    android:inputType="textEmailAddress"
                     android:padding="10dp"
                     android:textSize="13sp"
                     android:visibility="gone" />
@@ -157,7 +165,7 @@
                     android:layout_marginEnd="5dp"
                     android:layout_marginLeft="5dp"
                     android:hint="함께 받을 메일을 적으세요."
-                    android:inputType="text"
+                    android:inputType="textEmailAddress"
                     android:padding="10dp"
                     android:textSize="13sp"
                     android:visibility="gone" />
@@ -183,8 +191,8 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginLeft="5dp"
-                    android:hint="함께 받을 메일을 적으세요."
-                    android:inputType="text"
+                    android:hint="추억을 받을 메일을 적으세요."
+                    android:inputType="textEmailAddress"
                     android:padding="10dp"
                     android:textSize="13sp"
                     android:visibility="gone" />
@@ -196,7 +204,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@color/colorAccent"
-                android:text="캡슐 받을 날짜 선택"
+                android:text="추억 받을 날짜 선택"
                 android:textColor="#fff"
                 android:textSize="13sp" />
 

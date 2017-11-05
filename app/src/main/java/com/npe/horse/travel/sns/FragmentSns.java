@@ -120,6 +120,7 @@ public class FragmentSns extends Fragment implements SwipeRefreshLayout.OnRefres
 
         final View rootview = inflater.inflate(R.layout.fragment_sns, container, false);
 
+        Toast.makeText(getActivity(),"검색요령! 사람은 @, 지역은 # 입니다.", Toast.LENGTH_LONG).show();
         ButterKnife.bind(this, rootview);
         // 해시태그, 닉네임, 지역 받아오기
         InterfaceSnsHashtag hashtag = ApiClient.getClient().create(InterfaceSnsHashtag.class);

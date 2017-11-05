@@ -49,8 +49,6 @@ public class ActivityHealingCourse extends AppCompatActivity {
     ProgressBar progressBar;
     EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
 
-    ArrayList<TourListRepo.Item> itemList;
-
     static TourRecyclerAdapter adapter;
 
     RetrofitSingleton singleton = RetrofitSingleton.getInstance();

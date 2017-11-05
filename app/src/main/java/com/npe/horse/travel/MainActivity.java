@@ -1,15 +1,11 @@
 package com.npe.horse.travel;
 
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -27,19 +23,15 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
+import com.npe.horse.travel.mypage.FragmentMypage;
 import com.npe.horse.travel.tourist.FragmentTourist;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.kakao.util.helper.Utility.getPackageInfo;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -83,8 +75,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         JodaTimeAndroid.init(this);
-
-        getKeyHash(getApplicationContext());
 
         fragmentManager = getSupportFragmentManager();
 //        createFragments();
@@ -161,11 +151,11 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(@IdRes int tabId) {
                 switch (tabId) {
                     case R.id.bottom_tourist:
-                    if (active != fragmentTourist)
-                        hideShowFragment(active,fragmentTourist);
+                        if (active != fragmentTourist)
+                            hideShowFragment(active,fragmentTourist);
 //                    else
 //                        fm.beginTransaction().show(fragmentSample).commit();
-                    active = fragmentTourist;
+                        active = fragmentTourist;
                         break;
                     case R.id.bottom_sns:
                         hideShowFragment(active, fragmentSns);
@@ -187,19 +177,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-//
+    //
     //Method to add and hide all of the fragments you need to. In my case I hide 4 fragments, while 1 is visible, that is the first one.
     private void addHideFragment(Fragment fragment) {
         if(!fragment.isAdded()){
             fragmentManager.beginTransaction().add(R.id.content, fragment).hide(fragment).commit();
         }
     }
-//
+    //
     //Method to hide and show the fragment you need. It is called in the BottomBar click listener.
     private void hideShowFragment(Fragment hide, Fragment show) {
         fragmentManager.beginTransaction().hide(hide).show(show).commit();
     }
-//
+    //
     //Add all the fragments that need to be added and hidden. Also, add the one that is supposed to be the starting one, that one is not hidden.
     private void createFragments() {
         addHideFragment(fragmentTourist);
@@ -263,30 +253,14 @@ public class MainActivity extends AppCompatActivity {
 //        if (drawer.isDrawerOpen(GravityCompat.START)) {
 //            drawer.closeDrawer(GravityCompat.START);
 //        } else {    //뒤로가기 버튼 두 번 누르면 종료
-            if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime)  //연속 누를 때 2초 안에 안누르면 종료 x
-            {
-                super.onBackPressed();
-            } else    //종료
-            {
-                backPressedTime = tempTime;
-                Toast.makeText(this, "'뒤로' 버튼을 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+        if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime)  //연속 누를 때 2초 안에 안누르면 종료 x
+        {
+            super.onBackPressed();
+        } else    //종료
+        {
+            backPressedTime = tempTime;
+            Toast.makeText(this, "'뒤로' 버튼을 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
 
         }
-    public static String getKeyHash(final Context context) {
-        PackageInfo packageInfo = getPackageInfo(context, PackageManager.GET_SIGNATURES);
-        if (packageInfo == null)
-            return null;
-
-        for (android.content.pm.Signature signature : packageInfo.signatures) {
-            try {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                return Base64.encodeToString(md.digest(), Base64.NO_WRAP);
-            } catch (NoSuchAlgorithmException e) {
-                Log.w("SIGNATURE", "Unable to get MessageDigest. signature=" + signature, e);
-            }
-        }
-        return null;
-
     }
 }

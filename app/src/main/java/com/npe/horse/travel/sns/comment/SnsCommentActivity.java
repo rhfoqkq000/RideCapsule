@@ -9,9 +9,11 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.npe.horse.travel.ApiClient;
 import com.npe.horse.travel.R;
 import com.npe.horse.travel.TimeCal;
+import com.npe.horse.travel.kakao.KakaoSingleton;
 import com.npe.horse.travel.sns.list.SnsListItem;
 import com.volokh.danylo.hashtaghelper.HashTagHelper;
 
@@ -22,6 +24,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,6 +52,9 @@ public class SnsCommentActivity extends AppCompatActivity{
     @BindView(R.id.sns_comment_write_edit)
     EditText sns_comment_write;
 
+    @BindView(R.id.sns_comment_profile)
+    CircleImageView sns_comment_profile;
+
     @OnClick(R.id.sns_comment_write_btn)
     void writeComment(){
         // 댓글 쓰기
@@ -70,7 +76,7 @@ public class SnsCommentActivity extends AppCompatActivity{
 
     int content_id = 0;
 
-    int user_id = 1;
+    int user_id = KakaoSingleton.getInstance().getId();
 
     String postArticle;
 
@@ -83,6 +89,7 @@ public class SnsCommentActivity extends AppCompatActivity{
         setContentView(R.layout.activity_sns_comment);
         ButterKnife.bind(this);
 
+        Glide.with(SnsCommentActivity.this).load(KakaoSingleton.getInstance().getSmallImage()).into(sns_comment_profile);
         SnsCommentSingleton singleton = SnsCommentSingleton.getInstance();
         SnsListItem item = singleton.getItem();
         content_id = item.getId();
@@ -109,7 +116,7 @@ public class SnsCommentActivity extends AppCompatActivity{
 
 
         allItems = new ArrayList<>();
-        adapter = new SnsCommentRecyclerAdapter();
+        adapter = new SnsCommentRecyclerAdapter(SnsCommentActivity.this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         sns_comment_re.setLayoutManager(linearLayoutManager);
         sns_comment_re.setAdapter(adapter);

@@ -47,7 +47,6 @@ public class ActivityCampingCourse extends AppCompatActivity {
 
     EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
 
-    ArrayList<TourListRepo.Item> itemList;
 
     static TourRecyclerAdapter adapter;
 
