@@ -78,7 +78,8 @@
             android:id="@+id/sns_comment_write_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="8.5"/>
+            android:layout_weight="8.5"
+            android:inputType="textMultiLine"/>
         <TextView
             android:id="@+id/sns_comment_write_btn"
             android:layout_width="0dp"

@@ -51,8 +51,6 @@ public class ActivityWakingCourse extends AppCompatActivity {
 
     static TourRecyclerAdapter adapter;
 
-    ArrayList<TourListRepo.Item> itemList;
-
     RetrofitSingleton singleton = RetrofitSingleton.getInstance();
 
     ArrayList<TourListRepo.Item> itemList;

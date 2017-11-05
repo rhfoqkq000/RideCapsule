@@ -1,6 +1,7 @@
 package com.npe.horse.travel.sns.comment;
 
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.npe.horse.travel.R;
 import com.npe.horse.travel.TimeCal;
 import com.volokh.danylo.hashtaghelper.HashTagHelper;
@@ -22,7 +24,12 @@ import java.util.List;
 public class SnsCommentRecyclerAdapter extends RecyclerView.Adapter<SnsCommentRecyclerAdapter.ViewHolder> {
     private List<SnsCommentItem> items;
 
+    Context context;
 
+
+    public SnsCommentRecyclerAdapter(Context context) {
+        this.context = context;
+    }
 
     void addNew(List<SnsCommentItem> items)
     {
@@ -51,6 +58,7 @@ public class SnsCommentRecyclerAdapter extends RecyclerView.Adapter<SnsCommentRe
         mTextHashTagHelper.handle(holder.sns_article_main_re);
         holder.sns_article_main_re.setText(item.getArticle());
 
+        Glide.with(context).load(item.getProfile()).into(holder.sns_comment_profile_re);
 
         holder.sns_comment_updated_at_main_re.setText(TimeCal.formatTimeString(item.getUpdated_at().getTime()));
 

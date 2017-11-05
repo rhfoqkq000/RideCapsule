@@ -53,11 +53,13 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         public void onSessionOpened() {
+            Log.e("LoginActivity", "onSessionOpened");
             redirectSignupActivity();
         }
 
         @Override
         public void onSessionOpenFailed(KakaoException exception) {
+            Log.e("LoginActivity", "onSessionFailed");
             if(exception != null) {
                 Logger.e(exception);
             }

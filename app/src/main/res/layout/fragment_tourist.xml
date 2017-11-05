@@ -89,7 +89,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/tour_search"
-        android:text="Search..."/>
+        android:text="Search..."
+        android:inputType="textMultiLine"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/tour_recyclerview"

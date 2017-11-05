@@ -64,6 +64,37 @@ public class FragmentTourist extends Fragment {
     @BindView(R.id.taste_course)
     ImageView taste_course;
 
+    @OnClick(R.id.family_bt)
+    void family_bt(){
+        Intent familyintent = new Intent(getActivity(), ActivityFamilyCourse.class);
+        startActivity(familyintent);
+    }
+    @OnClick(R.id.walk_bt)
+    void walk_bt(){
+        Intent walkingintent = new Intent(getActivity(), ActivityWakingCourse.class);
+        startActivity(walkingintent);
+    } @OnClick(R.id.back_bt)
+    void back_bt(){
+        Intent aloneintent = new Intent(getActivity(), ActivityAloneCourse.class);
+        startActivity(aloneintent);
+    }
+    @OnClick(R.id.healing_bt)
+    void healing_bt(){
+        Intent healingintent = new Intent(getActivity(), ActivityHealingCourse.class);
+        startActivity(healingintent);
+    }
+    @OnClick(R.id.food_bt)
+    void food_bt(){
+        Intent tasteintent = new Intent(getActivity(), ActivityTasteCourse.class);
+        startActivity(tasteintent);
+    }
+    @OnClick(R.id.camp_bt)
+    void camp_bt(){
+        Intent campingintent = new Intent(getActivity(), ActivityCampingCourse.class);
+        startActivity(campingintent);
+    }
+
+
 
     public FragmentTourist() {
 //        Required empty public constructor
@@ -86,51 +117,6 @@ public class FragmentTourist extends Fragment {
 
         //날씨 불러옴
         weatherRetrofit(areaData.getLat(), areaData.getLon());
-
-        family_course.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent familyintent = new Intent(getActivity(), ActivityFamilyCourse.class);
-                startActivity(familyintent);
-            }
-        });
-        walking_course.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent walkingintent = new Intent(getActivity(), ActivityWakingCourse.class);
-                startActivity(walkingintent);
-            }
-        });
-        alone_course.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent aloneintent = new Intent(getActivity(), ActivityAloneCourse.class);
-                startActivity(aloneintent);
-            }
-        });
-   
-        healing_course.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent healingintent = new Intent(getActivity(), ActivityHealingCourse.class);
-                startActivity(healingintent);
-            }
-        });
-
-        taste_course.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent tasteintent = new Intent(getActivity(), ActivityTasteCourse.class);
-                startActivity(tasteintent);
-            }
-        });
-        camping_course.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent campingintent = new Intent(getActivity(), ActivityCampingCourse.class);
-                startActivity(campingintent);
-            }
-        });
 
         return rootview;
     }

@@ -11,6 +11,7 @@ class SnsCommentItem {
     private String article;
     private String nickname;
     private Date updated_at;
+    private String profile;
 
     public int getId() {
         return id;
@@ -42,5 +43,13 @@ class SnsCommentItem {
 
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
     }
 }
