@@ -211,14 +211,14 @@ public class FragmentTourist extends Fragment {
             public void onResponse(Call<WeatherRepo> call, Response<WeatherRepo> response) {
 
                  /* //현재 하늘 상태
-                  Log.i("MainActivity", response.body().getWeather().getHourly().get(0).getSky().getName());
+//                  Log.i("MainActivity", response.body().getWeather().getHourly().get(0).getSky().getName());
 
                   *///하늘 상태에 따른 이미지
-//                setWeatherImg(response.body().getWeather().getHourly().get(0).getSky().getName());
+                setWeatherImg(response.body().getWeather().getHourly().get(0).getSky().getName());
                 //현재온도
 //                Log.i("MainActivity", response.body().getWeather().getHourly().get(0).getTemperature().getTc());
                 //weather_sky.setText( response.body().getWeather().getHourly().get(0).getTemperature().getTc()+"℃");
-//                weather_tem.setText(response.body().getWeather().getHourly().get(0).getTemperature().getTc()+"℃");
+                weather_tem.setText(response.body().getWeather().getHourly().get(0).getTemperature().getTc()+"℃");
             }
             @Override
             public void onFailure(Call<WeatherRepo> call, Throwable t) {
